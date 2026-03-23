@@ -1,0 +1,629 @@
+import os  # For working with environment variables and file system
+from dotenv import load_dotenv  # To load environment variables from .env file
+
+# Load environment variables from the .env file
+load_dotenv()
+
+# Define social media accounts with environment variables for credentials
+social_media_accounts = {
+    "fetlife": {
+        "user_id": "11501379",
+        "credentials": (os.getenv("FETLIFE_USERNAME"), os.getenv("FETLIFE_PASSWORD")),
+        "profile_link": "https://fetlife.com/users/11501379"
+    },
+    "gmail": {
+        "username": os.getenv("GMAIL_USERNAME"),
+        "credentials": (os.getenv("GMAIL_USERNAME"), os.getenv("GMAIL_PASSWORD")),
+        "inbox_link": "https://mail.google.com/mail/u/3/#inbox"
+    },
+    "gmail": {
+        "username": os.getenv("GMAIL_USERNAME"),
+        "credentials": (os.getenv("GMAIL_USERNAME"), os.getenv("GMAIL_PASSWORD")),
+        "inbox_link": "https://mail.google.com/mail/u/0/#inbox"
+    },
+    "adult_friend_finder": {
+        "username": os.getenv("AFF_USERNAME"),
+        "credentials": (os.getenv("AFF_USERNAME"), os.getenv("AFF_PASSWORD")),
+        "link": "https://adultfriendfinder.com/go/page/home_delta.html?#main?{}"
+    },
+    "snapchat": {
+        "username": os.getenv("SNAPCHAT_USERNAME"),
+        "credentials": (os.getenv("SNAPCHAT_USERNAME"), os.getenv("SNAPCHAT_PASSWORD")),
+        "profile_link": "https://www.snapchat.com/add/dr_smirch?share_id=TKInLMEwd0I&locale=en-US"
+    },
+    "swingtowns": {
+        "user_id": "1821244",
+        "credentials": (os.getenv("SWINGTOWNS_USERNAME"), os.getenv("SWINGTOWNS_PASSWORD")),
+        "profile_link": "https://www.swingtowns.com/member_profile2.php?id=1821244"
+    },
+    "instagram": {
+        "username": os.getenv("INSTAGRAM_USERNAME"),
+        "credentials": (os.getenv("INSTAGRAM_USERNAME"), os.getenv("INSTAGRAM_PASSWORD")),
+        "alternate_handle": "@dr_smirch",
+        "profile_link": "https://www.instagram.com/dr_smirch/?__pwa=1"
+    },
+    "reddit": {
+        "username": os.getenv("REDDIT_USERNAME"),
+        "credentials": (os.getenv("REDDIT_USERNAME"), os.getenv("REDDIT_PASSWORD")),
+        "profile_link": "https://www.reddit.com/user/Longjumping_Team7885/"
+    },
+    "mailchimp": {
+        "login_admin": (os.getenv("MAILCHIMP_ADMIN_USER"), os.getenv("MAILCHIMP_ADMIN_PASSWORD"))
+    },
+    "aff_secure": {
+        "credentials": (os.getenv("AFF_USER"), os.getenv("AFF_PASSWORD"))
+    },
+    "twitter": { 
+       "username": os.getenv("TWITTER_USERNAME"),         "credentials": (os.getenv("TWITTER_USERNAME"), os.getenv("TWITTER_PASSWORD")),
+        "profile_link": "twitter.com/Dr_Smirch"
+    },
+    "pornhub": {
+       "username": os.getenv("PORNHUB_USERNAME"),
+        "credentials": (os.getenv("PORNHUB_USERNAME"), os.getenv("PORNHUB_PASSWORD")),
+        "model_page": "https://www.pornhub.com/model/delta-drill"
+        },
+    "xhamster": {
+        "username": os.getenv("XHAMSTER_USERNAME"),
+        "credentials": (os.getenv("XHAMSTER_USERNAME"), os.getenv("XHAMSTER_PASSWORD")),
+        "profile": "https://xhamster.com/users/papa_smirch"
+        },
+    "xvideos": {
+        "username": os.getenv("XVIDEOS_USERNAME"),
+        "credentials": (os.getenv("XVIDEOS_USERNAME"), os.getenv("XVIDEOS_PASSWORD")),
+        "profile": "https://www.xvideos.com/profiles/chicosuave24"
+    }
+}
+
+def get_account_info(platform):
+    """
+    Retrieves account information for a given platform.
+    """
+    return social_media_accounts.get(platform.lower())
+
+def main():
+    """
+    Main function to demonstrate usage and access information.
+    """
+    # Example usage for Twitter
+    twitter_info = get_account_info("twitter")
+    if twitter_info:
+        print(f"Twitter Username: {twitter_info['username']}")
+        print(f"Twitter Link: {twitter_info['link']}")
+    else:
+        print("Twitter information not found.")
+
+    # Get Snapchat credentials
+    snapchat_info = get_account_info("snapchat")
+    if snapchat_info:
+        username = snapchat_info['username']
+        print(f"Snapchat username: {username}")
+        print("Snapchat credentials found (password not printed for security).")
+    else:
+        print("Snapchat information not found.")
+
+    # Get FetLife User ID
+    fetlife_info = get_account_info("fetlife")
+    if fetlife_info:
+        print(f"FetLife User ID: {fetlife_info['user_id']}")
+        print(f"FetLife Profile: {fetlife_info['profile_link']}")
+    else:
+        print("FetLife information not found.")
+
+    # Get Instagram information
+    instagram_info = get_account_info("instagram")
+    if instagram_info:
+        print(f"Instagram User: {instagram_info['username']}")
+        print(f"Instagram Alt: {instagram_info['alternate_handle']}")
+        print(f"Instagram Profile: {instagram_info['profile_link']}")
+    else:
+        print("Instagram information not found.")
+
+    # Get Pornhub User ID
+    pornhub_info = get_account_info("pornhub")
+    if pornhub_info:
+        print(f"Pornhub User ID: {pornhub_info['user_id']}")
+        print(f"Pornhub Profile: {pornhub_info['profile_link']}")
+    else:
+        print("Pornhub information not found.")
+
+    # Get Xvideos User ID
+    xvideos_info = get_account_info("xvideos")
+    if pornhub_info:
+        print(f"Xvideos User ID: {xvideos_info['user_id']}")
+        print(f"Xvideos Profile: {xvideos_info['profile_link']}")
+    else:
+        print("Xvideos information not found.")
+    # Get Xhamster User ID
+    xhamster_info = get_account_info("xhamster")
+    if xhamster_info # type: ignore:
+        print(f"Xhamster User ID: {xhamster_info['user_id']}")
+        print(f"Xhamster Profile: {xhamster_info['profile_link']}")
+    else:
+        print("Xhamster information not found.") 
+        "self".session.proxies = {
+         "http": os.getenv("HTTP_PROXY"),"https": os.getenv ["HTTPS_PROXY"]}
+        if __name__ == "__main__" "else": 
+          main()
+
+import os
+import time
+import logging
+from dotenv import load_dotenv
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import praw
+import instaloader
+import tweepy
+
+# Load environment variables
+load_dotenv()
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),  # Log to console
+        logging.FileHandler("bot.log", mode='a')  # Log to file
+    ]
+)
+
+# Selenium WebDriver setup
+def setup_driver():
+    driver = webdriver.Chrome()
+    return driver
+
+# Generic login function
+def login_platform(driver, url, username_field, password_field, username, password, submit_button):
+    """
+    Logs into a platform using Selenium.
+    """
+    driver.get(url)
+    time.sleep(3)
+    driver.find_element(By.NAME, username_field).send_keys(username)
+    driver.find_element(By.NAME, password_field).send_keys(password)
+    driver.find_element(By.NAME, submit_button).click()
+    logging.info(f"Login attempt made for {url}")
+
+# Login to Snapchat
+def login_snapchat(driver):
+    login_platform(driver, "https://accounts.snapchat.com/accounts/login", "username", "password", os.getenv("SNAPCHAT_USERNAME"), os.getenv("SNAPCHAT_PASSWORD"), "login-button")
+
+# Login to Reddit via API
+def login_reddit():
+    """
+    Logs into Reddit using PRAW API.
+    """
+    reddit = praw.Reddit(
+        client_id=os.getenv("REDDIT_CLIENT_ID"),
+        client_secret=os.getenv("REDDIT_CLIENT_SECRET"),
+        username=os.getenv("REDDIT_USERNAME"),
+        password=os.getenv("REDDIT_PASSWORD"),
+        user_agent="my_bot"
+    )
+    logging.info(f"Logged into Reddit as {reddit.user.me()}")
+
+# Login to Instagram via API
+def login_instagram():
+    """
+    Logs into Instagram using Instaloader API.
+    """
+    bot = instaloader.Instaloader()
+    bot.login(os.getenv("INSTAGRAM_USERNAME"), os.getenv("INSTAGRAM_PASSWORD"))
+    logging.info(f"Logged into Instagram as {os.getenv('INSTAGRAM_USERNAME')}")
+
+# Login to Twitter via API
+def login_twitter():
+    """
+    Logs into Twitter using Tweepy API.
+    """
+    auth = tweepy.OAuth1UserHandler(
+        os.getenv("TWITTER_CONSUMER_KEY"),
+        os.getenv("TWITTER_CONSUMER_SECRET"),
+        os.getenv("TWITTER_ACCESS_TOKEN"),
+        os.getenv("TWITTER_ACCESS_SECRET")
+    )
+    api = tweepy.API(auth)
+    logging.info(f"Logged into Twitter as {api.verify_credentials().screen_name}")
+
+# Login to various websites using Selenium
+def login_aff(driver):
+    login_platform(driver, "https://secure.adultfriendfinder.com", "username", "password", os.getenv("AFF_USER"), os.getenv("AFF_PASSWORD"), "login_submit")
+
+def login_swingtowns(driver):
+    login_platform(driver, "https://www.swingtowns.com", "username", "password", os.getenv("SWINGTOWNS_USERNAME"), os.getenv("SWINGTOWNS_PASSWORD"), "login_submit")
+
+def login_mailchimp(driver):
+    login_platform(driver, "https://login.mailchimp.com/", "username", "password", os.getenv("MAILCHIMP_ADMIN_USER"), os.getenv("MAILCHIMP_ADMIN_PASSWORD"), "login_submit")
+
+def login_fetlife(driver):
+    login_platform(driver, "https://fetlife.com/login", "nickname", "password", os.getenv("FETLIFE_USERNAME"), os.getenv("FETLIFE_PASSWORD"), "submit")
+
+def login_pornhub(driver):
+    login_platform(driver, "https://www.pornhub.com/login", "username", "password", os.getenv("PORNHUB_USERNAME"), os.getenv("PORNHUB_PASSWORD"), "submit")
+
+def login_xhamster(driver):
+    login_platform(driver, "https://xhamster.com/login", "username", "password", os.getenv("XHAMSTER_USERNAME"), os.getenv("XHAMSTER_PASSWORD"), "submit")
+
+def login_xvideos(driver):
+    login_platform(driver, "https://www.xvideos.com/account#_account-dashboard", "username", "password", os.getenv("XVIDEOS_USERNAME"), os.getenv("XVIDEOS_PASSWORD"), "submit")
+    
+ def login_onlyfans(driver):
+    login_platform(driver, "https://www.onlyfans.com/account#_account-dashboard", "username", "password", os.getenv("ONLYFANS_USERNAME"), os.getenv("ONLYFANS_PASSWORD"), "submit")
+    
+ def login_patreon(driver):
+    login_platform(driver, "https://www.patreon.com/account#_account-dashboard", "username", "password", os.getenv("PATREON_USERNAME"), os.getenv("PATREON_PASSWORD"), "submit")
+    
+ def login_telegram(driver):
+    login_platform(driver, "https://www.telegram.com/account#_account-dashboard", "username", "password", os.getenv("TELEGRAM_USERNAME"), os.getenv("TELEGRAM_PASSWORD"), "submit")
+   
+ def login_fansly(driver):
+    login_platform(driver, "https://www.fansly.com/account#_account-dashboard", "username", "password", os.getenv("FANSLY_USERNAME"), os.getenv("FANSLY_PASSWORD"), "submit")
+    
+ def login_discord(driver):
+    login_platform(driver, "https://www.discord.com/account#_account-dashboard", "username", "password", os.getenv("DISCORD_USERNAME"), os.getenv("DISCORD_PASSWORD"), "submit")
+    
+ def login_alt(driver):
+    login_platform(driver, "https://www.alt.com/account#_account-dashboard", "username", "password", os.getenv("ALT_USERNAME"), os.getenv("ALT_PASSWORD"), "submit")
+    
+ def login_tiktok(driver):
+    login_platform(driver, "https://www.tiktok.com/account#_account-dashboard", "username", "password", os.getenv("TIKTOK_USERNAME"), os.getenv("TIKTOK_PASSWORD"), "submit")
+    
+ def login_gmail(driver):
+    login_platform(driver, "https://www.tiktok.com/account#_account-dashboard", "username", "password", os.getenv("GMAIL_USERNAME"), os.getenv("GMAIL_PASSWORD"), "submit")
+    
+ def login_gmail(driver):
+    login_platform(driver, "https://www.gmail.com/account#_account-dashboard", "username", "password", os.getenv("GMAIL_USERNAME"), os.getenv("GMAIL_PASSWORD"), "submit")
+
+# Main function to execute logins
+def main():
+    driver = setup_driver()
+    login_snapchat(driver)
+    login_reddit(driver)
+    login_instagram(driver)
+    login_twitter(driver)
+    login_aff(driver)
+    login_swingtowns(driver)
+    login_mailchimp(driver)
+    login_fetlife(driver)
+    login_pornhub(driver)
+    login_xhamster(driver)
+    login_xvideos(driver)
+    login_onlyfans(driver)
+    login_patreon(driver)
+    login_gmail(driver)
+    login_gmail(driver)
+    login_telegram(driver)
+    login_discord(driver)
+    login_fansly(driver)
+    login_tiktok(driver)
+    driver.quit()
+
+if __name__ == "__main__":
+    main()
+
+    import os
+import time
+import logging
+import requests
+from dotenv import load_dotenv
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import praw
+import instaloader
+import tweepy
+
+# Load environment variables
+load_dotenv()
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),  # Log to console
+        logging.FileHandler("bot.log", mode='a')  # Log to file
+    ]
+)
+
+# Selenium WebDriver setup
+def setup_driver():
+    driver = webdriver.Chrome()
+    return driver
+
+# Generic login function
+def login_platform(driver, url, username_field, password_field, username, password, submit_button):
+    """
+    Logs into a platform using Selenium.
+    """
+    driver.get(url)
+    time.sleep(3)
+    driver.find_element(By.NAME, username_field).send_keys(username)
+    driver.find_element(By.NAME, password_field).send_keys(password)
+    driver.find_element(By.NAME, submit_button).click()
+    logging.info(f"Login attempt made for {url}")
+
+# Login to Snapchat
+def login_snapchat(driver):
+    login_platform(driver, "https://accounts.snapchat.com/accounts/login", "username", "password", os.getenv("SNAPCHAT_USERNAME"), os.getenv("SNAPCHAT_PASSWORD"), "login-button")
+
+# Login to Reddit via API
+def login_reddit():
+    """
+    Logs into Reddit using PRAW API.
+    """
+    reddit = praw.Reddit(
+        client_id=os.getenv("REDDIT_CLIENT_ID"),
+        client_secret=os.getenv("REDDIT_CLIENT_SECRET"),
+        username=os.getenv("REDDIT_USERNAME"),
+        password=os.getenv("REDDIT_PASSWORD"),
+        user_agent="my_bot"
+    )
+    logging.info(f"Logged into Reddit as {reddit.user.me()}")
+
+# Login to Instagram via API
+def login_instagram():
+    """
+    Logs into Instagram using Instaloader API.
+    """
+    bot = instaloader.Instaloader()
+    bot.login(os.getenv("INSTAGRAM_USERNAME"), os.getenv("INSTAGRAM_PASSWORD"))
+    logging.info(f"Logged into Instagram as {os.getenv('INSTAGRAM_USERNAME')}")
+
+# Login to Twitter via API
+def login_twitter():
+    """
+    Logs into Twitter using Tweepy API.
+    """
+    auth = tweepy.OAuth1UserHandler(
+        os.getenv("TWITTER_CONSUMER_KEY"),
+        os.getenv("TWITTER_CONSUMER_SECRET"),
+        os.getenv("TWITTER_ACCESS_TOKEN"),
+        os.getenv("TWITTER_ACCESS_SECRET")
+    )
+    api = tweepy.API(auth)
+    logging.info(f"Logged into Twitter as {api.verify_credentials().screen_name}")
+
+# Adult Content Optimizer Bot class
+class AdultContentOptimizerBot:
+    """A bot to optimize content on adult platforms."""
+    def __init__(self, site, username=None, password=None):
+        self.site = site
+        self.username = username or os.getenv(f'{site.upper()}_USERNAME')
+        self.password = password or os.getenv(f'{site.upper()}_PASSWORD')
+        if not self.username or not self.password:
+            raise ValueError(f"{site.upper()} credentials not set in environment variables.")
+        self.session = requests.Session()
+
+    def login(self):
+        """Logs into the adult site."""
+        login_urls = {
+            "pornhub": "https://www.pornhub.com/login",
+            "xvideos": "https://www.xvideos.com/login",
+            "xhamster": "https://xhamster.com/login"
+        }
+        login_data = {
+            "username": self.username,
+            "password": self.password,
+            "submit": "Login"
+        }
+        try:
+            response = self.session.post(login_urls[self.site], data=login_data)
+            response.raise_for_status()
+            if "Welcome back" in response.text:
+                logging.info(f"Successfully logged in to {self.site}.")
+                return True
+            else:
+                logging.error(f"Login to {self.site} failed. Check credentials.")
+                return False
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Login request failed for {self.site}: {e}")
+            return False
+
+    def optimize_videos(self, video_id, title, description, tags, category):
+        """Optimizes a video on the site."""
+        if not self.login():
+            return False
+        optimize_urls = {
+            "pornhub": f"https://www.pornhub.com/edit_video/{video_id}",
+            "xvideos": f"https://www.xvideos.com/edit_video/{video_id}",
+            "xhamster": f"https://xhamster.com/edit_video/{video_id}"
+        }
+        optimize_data = {
+            "title": title,
+            "description": description,
+            "tags": tags,
+            "category": category,
+            "submit": "Save Changes"
+        }
+        try:
+            response = self.session.post(optimize_urls[self.site], data=optimize_data)
+            response.raise_for_status()
+            if response.status_code == 200:
+                logging.info(f"Successfully optimized video {video_id} on {self.site}.")
+                return True
+            else:
+                logging.error(f"Failed to optimize video {video_id} on {self.site}.")
+                return False
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Optimization request failed for {self.site}: {e}")
+            return False
+    
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(),  # Log to console
+        logging.FileHandler("bot.log", mode='a')  # Log to file
+    ]
+)
+
+# Selenium WebDriver setup
+def setup_driver():
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")  # Run in headless mode
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(options=options)
+    return driver
+
+# Generic login function
+def login_platform(driver, url, username_field, password_field, username, password, submit_button):
+    """
+    Logs into a platform using Selenium.
+    """
+    driver.get(url)
+    time.sleep(3)
+    driver.find_element(By.NAME, username_field).send_keys(username)
+    driver.find_element(By.NAME, password_field).send_keys(password)
+    driver.find_element(By.NAME, submit_button).click()
+    logging.info(f"Login attempt made for {url}")
+
+# Login to Snapchat
+def login_snapchat(driver):
+    login_platform(driver, "https://accounts.snapchat.com/accounts/login", "username", "password", os.getenv("SNAPCHAT_USERNAME"), os.getenv("SNAPCHAT_PASSWORD"), "login-button")
+
+# Login to Reddit via API
+def login_reddit():
+    """
+    Logs into Reddit using PRAW API.
+    """
+    reddit = praw.Reddit(
+        client_id=os.getenv("REDDIT_CLIENT_ID"),
+        client_secret=os.getenv("REDDIT_CLIENT_SECRET"),
+        username=os.getenv("REDDIT_USERNAME"),
+        password=os.getenv("REDDIT_PASSWORD"),
+        user_agent="my_bot"
+    )
+    logging.info(f"Logged into Reddit as {reddit.user.me()}")
+
+# Login to Instagram via API
+def login_instagram():
+    """
+    Logs into Instagram using Instaloader API.
+    """
+    bot = instaloader.Instaloader()
+    bot.login(os.getenv("INSTAGRAM_USERNAME"), os.getenv("INSTAGRAM_PASSWORD"))
+    logging.info(f"Logged into Instagram as {os.getenv('INSTAGRAM_USERNAME')}")
+
+# Login to Twitter via API
+def login_twitter():
+    """
+    Logs into Twitter using Tweepy API.
+    """
+    auth = tweepy.OAuth1UserHandler(
+        os.getenv("TWITTER_CONSUMER_KEY"),
+        os.getenv("TWITTER_CONSUMER_SECRET"),
+        os.getenv("TWITTER_ACCESS_TOKEN"),
+        os.getenv("TWITTER_ACCESS_SECRET")
+    )
+    api = tweepy.API(auth)
+    logging.info(f"Logged into Twitter as {api.verify_credentials().screen_name}")
+
+# Adult Content Optimizer Bot class
+class AdultContentOptimizerBot:
+    """A bot to optimize content on adult platforms."""
+    def __init__(self, site, username=None, password=None):
+        self.site = site
+        self.username = username or os.getenv(f'{site.upper()}_USERNAME')
+        self.password = password or os.getenv(f'{site.upper()}_PASSWORD')
+        if not self.username or not self.password:
+            raise ValueError(f"{site.upper()} credentials not set in environment variables.")
+        self.session = requests.Session()
+        self.cookies_file = f"{self.site}_cookies.pkl"
+        self.load_cookies()
+    
+    def save_cookies(self):
+        with open(self.cookies_file, 'wb') as f:
+            pickle.dump(self.session.cookies, f)
+
+    def load_cookies(self):
+        try:
+            with open(self.cookies_file, 'rb') as f:
+                self.session.cookies.update(pickle.load(f))
+        except FileNotFoundError:
+            pass
+
+    def login(self):
+        """Logs into the adult site."""
+        login_urls = {
+            "pornhub": "https://www.pornhub.com/login",
+            "xvideos": "https://www.xvideos.com/login",
+            "xhamster": "https://xhamster.com/login"
+        }
+        login_data = {
+            "username": self.username,
+            "password": self.password,
+            "submit": "Login"
+        }
+        try:
+            response = self.session.post(login_urls[self.site], data=login_data)
+            response.raise_for_status()
+            if "Welcome back" in response.text:
+                logging.info(f"Successfully logged in to {self.site}.")
+                self.save_cookies()
+                return True
+            else:
+                logging.error(f"Login to {self.site} failed. Check credentials.")
+                return False
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Login request failed for {self.site}: {e}")
+            return False
+
+    def optimize_videos(self, video_id, title, description, tags, category):
+        """Optimizes a video on the site."""
+        if not self.login():
+            return False
+        optimize_urls = {
+            "pornhub": f"https://www.pornhub.com/edit_video/{video_id}",
+            "xvideos": f"https://www.xvideos.com/edit_video/{video_id}",
+            "xhamster": f"https://xhamster.com/edit_video/{video_id}"
+        }
+        optimize_data = {
+            "title": title,
+            "description": description,
+            "tags": tags,
+            "category": category,
+            "submit": "Save Changes"
+        }
+        try:
+            response = self.session.post(optimize_urls[self.site], data=optimize_data)
+            response.raise_for_status()
+            if response.status_code == 200:
+                logging.info(f"Successfully optimized video {video_id} on {self.site}.")
+                return True
+            else:
+                logging.error(f"Failed to optimize video {video_id} on {self.site}.")
+                return False
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Optimization request failed for {self.site}: {e}")
+            return False
+
+# Main function to execute logins
+def main():
+    driver = setup_driver()
+    login_snapchat(driver)
+    login_reddit()
+    login_instagram()
+    login_twitter()
+    
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        executor.map(AdultContentOptimizerBot, ["pornhub", "xvideos", "xhamster"])
+        
+    # Initialize and use the bots for Pornhub, Xvideos, and Xhamster
+    for site in ["pornhub", "xvideos", "xhamster"]:
+        try:
+            bot = AdultContentOptimizerBot(site)
+            if bot.login():
+            bot.optimize_videos("123456", "New Title", "New Description", "tag1, tag2", "Adult")
+        except ValueError as e:
+            logging.error(f"Error: {e}")
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Request exception: {e}")
+    
+        driver.quit()
+        if __name__ == "__main__":
+           main()

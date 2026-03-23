@@ -1,0 +1,423 @@
+﻿heart-football-league-469602
+    ├── ARCHITECTURE.md
+    ├── README.md
+    ├── config
+    │   └── settings.py
+    ├── dashboard
+    │   ├── index.html
+    │   └── static
+    │       ├── css
+    │       │   └── styles.css
+    │       └── js
+    │           └── scripts.js[a]
+    ├── data
+    │   ├── ai_coach.py
+    │   ├── contract_system.py
+    │   ├── daily_fantasy
+    │   │   └── fantasy_monetization_system.py
+    │   ├── finance_ledger.py
+    │   ├── game_coordinator.py
+    │   ├── injury_system.py
+    │   ├── league_manager.py
+    │   ├── league_structure.json
+    │   ├── media_relations.py
+    │   ├── monetization_system.py
+    │   ├── personnel_manager.py
+    │   ├── playbooks
+    │   ├── player_templates.json
+    │   ├── stadiums
+    │   ├── ultimate_team
+    │   │   ├── blueprints.json
+    │   │   ├── foundry_parts.json
+    │   │   ├── hut_player_pool.json
+    │   │   ├── hut_user_rosters.json
+    │   │   └── mod_definitions.json
+    │   └── unlockables
+    │       └── foundry_unlockable_content.py
+    ├── deploy-web.sh
+    ├── firebase.rules
+    ├── main.py
+    ├── package.json
+    ├── public
+    │   └── index.html
+    ├── roles
+    │   ├── digital_technology_roles.py
+    │   ├── facilities_operations_roles.py
+    │   ├── fan_engagement_roles.py
+    │   ├── finance_accounting_roles.py
+    │   ├── game_operations_roles.py
+    │   ├── human_resources_roles.py
+    │   ├── legal_compliance_roles.py
+    │   └── press_media_roles.py
+    ├── src
+    │   ├── App.js
+    │   ├── components
+    │   │   └── ProgressDashboard.js
+    │   ├── hooks
+    │   │   └── usePyodide.js
+    │   ├── python
+    │   │   ├── __init__.py
+    │   │   ├── ball.py
+    │   │   ├── cornerback.py
+    │   │   ├── defensive_lineman.py
+    │   │   ├── draft_class.py
+    │   │   ├── field.py
+    │   │   ├── free_agent.py
+    │   │   ├── free_safety.py
+    │   │   ├── game.py
+    │   │   ├── kick_returner.py
+    │   │   ├── kicker.py
+    │   │   ├── linebacker.py
+    │   │   ├── long_snapper.py
+    │   │   ├── offensive_lineman.py
+    │   │   ├── player.py
+    │   │   ├── practice_squad.py
+    │   │   ├── punt_returner.py
+    │   │   ├── punter.py
+    │   │   ├── quarterback.py
+    │   │   ├── running_back.py
+    │   │   ├── strong_safety.py
+    │   │   └── wide_receiver.py
+    │   └── services
+    │       ├── AccessibilityService.js
+    │       ├── AdService.js
+    │       ├── GuildService.js
+    │       ├── OfflineModeService.js
+    │       ├── PlayerPreferencesService.js
+    │       └── RetentionEngine.js
+    ├── systems
+    │   ├── daily_fantasy
+    │   │   ├── contest_data.py
+    │   │   └── daily_fantasy_manager.py
+    │   └── ultimate_team
+    │       ├── __init__.py
+    │       ├── api.py
+    │       ├── chemistry_system.py
+    │       ├── hut_event_scheduler.py
+    │       ├── hut_marketplace.py
+    │       ├── spirit_chief_hut_foundry.py
+    │       └── ultimate_team_manager.py
+    └── tests
+        ├── test_gameplay.py
+        └── test_systems.py
+
+
+* Heart Football League Project Architecture:
+The Heart Football League (HfL) project is a comprehensive sports simulation built with a modern, modular architecture. It is designed to be a cross-platform web application that can run on both desktop and mobile devices, with a focus on a mobile-first user experience.Core ComponentsThe project is structured into three main components that work together to create the full application experience.Python Backend (Core Simulation):Purpose: This is the brain of the HfL universe. It contains all the core game logic, player definitions (player.py), game simulations (game.py), and systems for managing data like player contracts, injuries, and league dynamics.Technology: Python. The entire simulation engine is written in Python, allowing for complex and detailed game mechanics.Deployment: The Python backend is designed to be run in a variety of environments, including a web server (such as FastAPI) for a full-scale application or locally for testing. A key design principle is to make it runnable in a browser environment using a technology like Pyodide, enabling an offline-first, portable experience.Web Frontend (User Interface):Purpose: The user-facing part of the application. It provides dashboards, user interfaces for managing teams, viewing stats, and interacting with the game world. This includes the dashboard/index.html and its associated static assets.Technology: React. The main application (src/App.js and src/components/) is a Single Page Application (SPA) built with React for a dynamic and responsive experience.Deployment: The frontend is served as a static site, intended for deployment on a service like Firebase Hosting or Vercel.Firebase (Data Persistence & Cloud Services):Purpose: A real-time, scalable backend-as-a-service (BaaS) that handles data storage, user authentication, and real-time updates. It acts as the bridge between the Python simulation and the web frontend.Services Used:Firestore: Used for storing persistent game data (player rosters, league structure, user profiles) in a NoSQL document database. This allows for real-time synchronization between users and across devices.Firebase Authentication: Handles user sign-in and management.Firebase Hosting: Serves the static web application files.Firebase Functions: Can be used in the future to run server-side Python code that interacts with the simulation engine.Data Flow and InteractionThe system is designed with a clear separation of concerns:The Web Frontend interacts directly with Firebase Firestore. It reads data to display dashboards and writes data based on user actions (e.g., updating a team roster).The Python Backend is the source of truth for all game simulation logic. When the user initiates a game event (e.g., "Simulate Week 1"), a function or service on the frontend would trigger the Python engine.The Python Engine reads the necessary data from Firestore, runs the simulation, and then writes the updated game state back to Firestore. This ensures that all changes are persistent and immediately reflected across all user devices.This architecture ensures a performant, scalable, and highly available application, with the core logic separated from the presentation layer. It also leverages modern cloud services to handle the complexities of data management and deployment.
+
+
+
+
+Heart Football League (HfL)Welcome to the Heart Football League project! This is a modern, web-based football simulation game designed with a mobile-first approach. It combines a powerful Python-based simulation engine with a dynamic React-based frontend and a Firebase backend for real-time data persistence.Project StructureThe project is organized into the following key directories:ARCHITECTURE.md: A high-level overview of the project's design and technology stack.README.md: This file! Contains project information and setup instructions.config/: Configuration files for the project.dashboard/: Static HTML, CSS, and JS files for a lightweight, mobile-friendly dashboard.data/: JSON and Python files containing core game data (e.g., player templates, league structure).public/: Public-facing static assets for the React app.roles/: Python scripts defining various "roles" or personas for the AI, media, and other systems.src/: The main source code for the React frontend, including components, services, and a python directory for the simulation engine.systems/: Modular Python systems for specific gameplay features, like Ultimate Team and Daily Fantasy.tests/: Unit and integration tests to ensure the game works as expected.Getting StartedFollow these steps to set up and run the project locally.PrerequisitesPython 3.x: Installed on your system.Node.js & npm: Installed on your system.Google Cloud SDK: Authenticated and configured for your project.gcloud auth logingcloud config set project [YOUR_PROJECT_ID]1. Project SetupFirst, ensure your project directory is correctly set up. You can use the create_hfl_project.py script provided earlier.2. Configure FirebaseNavigate to your Firebase console and create a new project. You'll need the following information to update your configuration files:Project IDAPI KeyAuth DomainStorage Bucket3. Install DependenciesFrom the project root directory, run the following commands to install the necessary packages for both the Python and Node.js parts of the project:# Install Node.js dependencies for the frontend
+npm install
+
+
+# Install Python dependencies for the simulation
+pip install -r requirements.txt # (assuming you have a requirements.txt file, or install manually)
+4. Run the ProjectYou can run the frontend and backend components separately.To run the React frontend:npm run dev
+This will start a local development server, typically at http://localhost:3000.To run the Python simulation:python main.py
+This will execute the main game loop or other core logic defined in main.py.5. DeploymentDeployment is handled using Firebase. The deploy-web.sh script is designed to build and deploy the application to Firebase Hosting../deploy-web.sh
+This will build your React application and upload the static files to your Firebase project.Have fun building the Heart Football League!
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HFL Dashboard</title>
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+    <!-- Custom CSS for additional styling -->
+    <link rel="stylesheet" href="./static/css/styles.css">
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+
+    <!-- Header -->
+    <header class="bg-white shadow-md p-4 rounded-b-xl">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-900">Heart Football League</h1>
+            <nav>
+                <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors duration-200 ease-in-out font-medium px-3">Dashboard</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors duration-200 ease-in-out font-medium px-3">Team</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600 transition-colors duration-200 ease-in-out font-medium px-3">Simulate</a>
+            </nav>
+        </div>
+    </header>
+
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto mt-8 p-4 md:p-8">
+        <h2 class="text-3xl font-semibold text-gray-900 mb-6">Welcome, Head Coach!</h2>
+        
+        <!-- Player Stats & Team Overview Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Card 1: Team Record -->
+            <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+                <span class="text-5xl font-extrabold text-blue-600">3 - 1</span>
+                <p class="mt-2 text-gray-500 font-medium">Season Record</p>
+            </div>
+            <!-- Card 2: Next Opponent -->
+            <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+                <span class="text-3xl font-bold text-gray-700">vs. Titans</span>
+                <p class="mt-2 text-gray-500 font-medium">Week 5 Matchup</p>
+            </div>
+            <!-- Card 3: Top Performer -->
+            <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+                <span class="text-3xl font-bold text-gray-700">QB "Ace Arm"</span>
+                <p class="mt-2 text-gray-500 font-medium">Player of the Week</p>
+            </div>
+        </div>
+
+
+        <!-- News & Updates Section -->
+        <section class="bg-white rounded-xl shadow-lg p-6">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Latest League News</h3>
+            <ul class="space-y-3">
+                <li class="border-b pb-3 last:border-b-0">
+                    <span class="block text-gray-900 font-medium">Trade Deadline Approaching!</span>
+                    <span class="text-sm text-gray-500">The trade deadline is in 3 weeks. Start making your moves!</span>
+                </li>
+                <li class="border-b pb-3 last:border-b-0">
+                    <span class="block text-gray-900 font-medium">Injury Report: RB "Swift Runner"</span>
+                    <span class="text-sm text-gray-500">Out for 1 week with an ankle sprain.</span>
+                </li>
+                <li class="border-b pb-3 last:border-b-0">
+                    <span class="block text-gray-900 font-medium">Weekly Power Rankings Released</span>
+                    <span class="text-sm text-gray-500">Your team has moved up 2 spots to #5.</span>
+                </li>
+            </ul>
+        </section>
+
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white p-4 mt-8 rounded-t-xl">
+        <div class="container mx-auto text-center text-sm">
+            <p>&copy; 2024 Heart Football League. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <!-- Custom JavaScript for interactivity -->
+    <script src="./static/js/scripts.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+# config/settings.py
+# This file holds all global configuration variables for the Heart Football League simulation.
+
+
+import os
+
+
+# --- CORE PROJECT SETTINGS ---
+# Set the root directory. This is used to build absolute paths for data files.
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+# --- API AND SERVICE INTEGRATION ---
+# Firebase project ID. Used for connecting to the Firestore database.
+# Replace this with your actual Firebase Project ID.
+FIREBASE_PROJECT_ID = "heart-football-league-469602"
+
+
+# API key for Firebase services.
+# Replace with your Firebase Web App's API key.
+FIREBASE_API_KEY = "YOUR_FIREBASE_API_KEY"
+
+
+# --- GAMEPLAY CONFIGURATION ---
+# The number of teams in the league.
+NUMBER_OF_TEAMS = 32
+
+
+# The length of a regular season, in weeks.
+SEASON_LENGTH_WEEKS = 17
+
+
+# The maximum number of players on a single team roster.
+ROSTER_SIZE = 53
+
+
+# The minimum and maximum overall rating for a newly generated player.
+NEW_PLAYER_OVERALL_RATING_RANGE = (50, 85)
+
+
+# --- DEBUGGING AND DEVELOPMENT SETTINGS ---
+# Enable or disable debug logging.
+DEBUG_MODE = True
+
+
+# Path for log files.
+LOG_FILE_PATH = os.path.join(PROJECT_ROOT, "logs", "game_log.txt")
+
+
+# --- FILE PATHS ---
+# Relative paths to important data files.
+LEAGUE_STRUCTURE_PATH = os.path.join(PROJECT_ROOT, "data", "league_structure.json")
+PLAYER_TEMPLATES_PATH = os.path.join(PROJECT_ROOT, "data", "player_templates.json")
+ULTIMATE_TEAM_PLAYER_POOL_PATH = os.path.join(PROJECT_ROOT, "data", "ultimate_team", "hut_player_pool.json")
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    dashboard/static/css/styles.css
+
+
+    This file contains custom CSS rules for the HFL dashboard.
+    It is used for more complex or specific styling that is not
+    easily achieved with Tailwind CSS utility classes alone.
+*/
+
+
+/* You can add custom styles here, for example: */
+
+
+/* General body and container styles */
+/* Not needed with Tailwind, but good for custom fonts or global overrides */
+:root {
+    --primary-color: #2563eb; /* A nice blue */
+    --secondary-color: #6b7280; /* A dark gray */
+}
+
+
+/* Example of a custom class for a specific element, if needed */
+.highlight-card {
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 10px rgba(37, 99, 235, 0.5);
+    transition: transform 0.3s ease-in-out;
+}
+
+
+.highlight-card:hover {
+    transform: translateY(-5px);
+}
+
+
+/* Example of a custom animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+
+/* Dark mode styles can also go here if not using Tailwind's JIT mode */
+/* .dark-mode {
+    background-color: #1a202c;
+    color: #e2e8f0;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+// dashboard/static/js/scripts.js
+// This script contains interactive functionality for the HFL dashboard.
+
+
+/**
+ * Toggles a dark mode class on the body.
+ */
+function toggleDarkMode() {
+    const body = document.body;
+    body.classList.toggle('dark-mode');
+    // You could also save the user's preference to localStorage here.
+    const isDarkMode = body.classList.contains('dark-mode');
+    console.log(`Dark mode is now ${isDarkMode ? 'on' : 'off'}.`);
+}
+
+
+/**
+ * Initializes the dashboard when the page is loaded.
+ * This is a good place to fetch initial data or set up event listeners.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('HFL Dashboard is loaded and ready.');
+
+
+    // Example of an event listener for a button
+    // const darkModeButton = document.getElementById('darkModeButton');
+    // if (darkModeButton) {
+    //     darkModeButton.addEventListener('click', toggleDarkMode);
+    // }
+
+
+    // You could add logic here to fetch player data or game stats
+    // fetchGameData();
+});
+
+
+/**
+ * A placeholder function to simulate fetching data from a backend.
+ */
+function fetchGameData() {
+    console.log('Fetching game data...');
+    // In a real application, you would make a fetch() request here.
+    // fetch('/api/stats')
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log('Data fetched:', data);
+    //         // Update the dashboard UI with the new data
+    //     })
+    //     .catch(error => console.error('Error fetching data:', error));
+}
+
+
+
+

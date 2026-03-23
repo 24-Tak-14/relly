@@ -1,0 +1,23 @@
+// File: data/ultimate_team/mod_definitions.json
+
+// This file defines all available player mods and their effects.
+// Mods are small, temporary or permanent boosts that can be applied to players.
+[
+    {
+        "mod_id": "mod_endurance_booster",
+        "name": "Endurance Booster",
+        "effect_type": "temporary",
+        "duration_games": 3,
+        "effects": {
+            "stamina": 10
+        }
+    },
+    {
+        "mod_id": "mod_strength_amp",
+        "name": "Strength Amplifier",
+        "effect_type": "permanent",
+        "effects": {
+            "strength": 5
+        }
+    }
+]

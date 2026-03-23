@@ -1,0 +1,16 @@
+// File: data/ultimate_team/blueprints.json
+
+// This file contains the "recipes" or blueprints for forging new, specific players.
+// It maps a set of required ingredients to a specific outcome player.
+[
+    {
+        "blueprint_id": "bp_elite_qb",
+        "name": "Third Year Terrell Turner Elite QB Blueprint",
+        "description": "Forges an elite quarterback from rare player cards.",
+        "ingredients": [
+            {"player_type": "QB", "rarity": "rare", "quantity": 3},
+            {"part_id": "part_speed_booster_1", "quantity": 1}
+        ],
+        "output_player_id": "player_001"
+    }
+]

@@ -1,0 +1,31 @@
+# File: create_core_branch_players.ps1
+# This script creates the 'core' directory and the initial player-related files within it
+# for the HFL project: __init__.py, player.py, and quarterback.py.
+
+Write-Host "Creating 'core' directory and initial player files..." -ForegroundColor Green
+
+# Define the main project folder.
+$projectRoot = "C:\HFL-hut-build"
+New-Item -ItemType Directory -Force -Path $projectRoot | Out-Null
+Set-Location -Path $projectRoot
+
+# Define the specific structure for this branch
+$structure = @(
+   "core/__init__.py",
+   "core/player.py",
+   "core/quarterback.py"
+)
+
+# Loop to create directories and files
+foreach ($path in $structure) {
+   $dirName = Split-Path -Parent $path
+   if ($dirName -ne "") {
+       New-Item -ItemType Directory -Force -Path $dirName | Out-Null
+   }
+   if (-not (Test-Path -Path $path)) {
+       New-Item -ItemType File -Force -Path $path | Out-Null
+   }
+}
+
+Write-Host "'core' branch (initial player files) created successfully at: $projectRoot\core" -ForegroundColor Green
+Write-Host "Next, we'll populate these files with their Python code, Ta'K!" -ForegroundColor Yellow

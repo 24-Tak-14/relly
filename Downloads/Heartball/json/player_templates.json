@@ -1,0 +1,93 @@
+// File: data/player_templates.json
+// This file defines the base templates for generating players
+// in the Heart Football League. Each template includes core attributes,
+// skill modifiers, and growth potential based on position.
+
+{
+  "templates": {
+    "QB": {
+      "base_attributes": {
+        "speed": 60,
+        "strength": 70,
+        "agility": 75,
+        "accuracy": 90,
+        "vision": 85,
+        "endurance": 80
+      },
+      "rarity_modifiers": {
+        "Clay": { "overall_modifier": 0.8, "potential_growth": 0.5 },
+        "Iron": { "overall_modifier": 0.9, "potential_growth": 0.6 },
+        "Bronze": { "overall_modifier": 1.0, "potential_growth": 0.7 },
+        "Silver": { "overall_modifier": 1.1, "potential_growth": 0.8 },
+        "Gold": { "overall_modifier": 1.2, "potential_growth": 0.9 },
+        "Glamour": { "overall_modifier": 1.3, "potential_growth": 1.0 },
+        "$Glamour-Bean$": { "overall_modifier": 1.5, "potential_growth": 1.2 },
+        "@~ZORI~@": { "overall_modifier": 1.7, "potential_growth": 1.5 }
+      },
+      "skill_focus": ["accuracy", "vision"]
+    },
+    "RB": {
+      "base_attributes": {
+        "speed": 90,
+        "strength": 85,
+        "agility": 95,
+        "accuracy": 40,
+        "vision": 80,
+        "endurance": 90
+      },
+      "rarity_modifiers": {
+        "Clay": { "overall_modifier": 0.8, "potential_growth": 0.5 },
+        "Iron": { "overall_modifier": 0.9, "potential_growth": 0.6 },
+        "Bronze": { "overall_modifier": 1.0, "potential_growth": 0.7 },
+        "Silver": { "overall_modifier": 1.1, "potential_growth": 0.8 },
+        "Gold": { "overall_modifier": 1.2, "potential_growth": 0.9 },
+        "Glamour": { "overall_modifier": 1.3, "potential_growth": 1.0 },
+        "$Glamour-Bean$": { "overall_modifier": 1.5, "potential_growth": 1.2 },
+        "@~ZORI~@": { "overall_modifier": 1.7, "potential_growth": 1.5 }
+      },
+      "skill_focus": ["speed", "agility", "endurance"]
+    },
+    "WR": {
+      "base_attributes": {
+        "speed": 95,
+        "strength": 70,
+        "agility": 90,
+        "accuracy": 50,
+        "vision": 75,
+        "endurance": 85
+      },
+      "rarity_modifiers": {
+        "Clay": { "overall_modifier": 0.8, "potential_growth": 0.5 },
+        "Iron": { "overall_modifier": 0.9, "potential_growth": 0.6 },
+        "Bronze": { "overall_modifier": 1.0, "potential_growth": 0.7 },
+        "Silver": { "overall_modifier": 1.1, "potential_growth": 0.8 },
+        "Gold": { "overall_modifier": 1.2, "potential_growth": 0.9 },
+        "Glamour": { "overall_modifier": 1.3, "potential_growth": 1.0 },
+        "$Glamour-Bean$": { "overall_modifier": 1.5, "potential_growth": 1.2 },
+        "@~ZORI~@": { "overall_modifier": 1.7, "potential_growth": 1.5 }
+      },
+      "skill_focus": ["speed", "agility"]
+    },
+    "DB": {
+      "base_attributes": {
+        "speed": 90,
+        "strength": 80,
+        "agility": 90,
+        "accuracy": 60,
+        "vision": 85,
+        "endurance": 80
+      },
+      "rarity_modifiers": {
+        "Clay": { "overall_modifier": 0.8, "potential_growth": 0.5 },
+        "Iron": { "overall_modifier": 0.9, "potential_growth": 0.6 },
+        "Bronze": { "overall_modifier": 1.0, "potential_growth": 0.7 },
+        "Silver": { "overall_modifier": 1.1, "potential_growth": 0.8 },
+        "Gold": { "overall_modifier": 1.2, "potential_growth": 0.9 },
+        "Glamour": { "overall_modifier": 1.3, "potential_growth": 1.0 },
+        "$Glamour-Bean$": { "overall_modifier": 1.5, "potential_growth": 1.2 },
+        "@~ZORI~@": { "overall_modifier": 1.7, "potential_growth": 1.5 }
+      },
+      "skill_focus": ["speed", "agility", "vision"]
+    }
+  }
+}

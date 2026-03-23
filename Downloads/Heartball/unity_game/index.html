@@ -1,0 +1,38 @@
+<!-- File: frontend/public/unity_game/index.html -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heart Football League</title>
+    <style>
+      /* Basic styling to make the canvas fit the page */
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #0d1117;
+      }
+      #game-container {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- This container will hold our Three.js canvas -->
+    <div id="game-container"></div>
+    
+    <!-- Three.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Our custom game script will be linked here -->
+    <script type="module" src="game.js"></script>
+  </body>
+</html>

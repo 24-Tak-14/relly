@@ -1,0 +1,111 @@
+C:\HFL-hut-build\
+├── config/
+│   └── settings.py
+├── **core/**
+│   ├── __init__.py
+│   ├── player.py
+│   ├── quarterback.py
+│   ├── running_back.py
+│   ├── wide_receiver.py
+│   ├── linebacker.py
+│   ├── offensive_lineman.py
+│   ├── defensive_lineman.py
+│   ├── cornerback.py
+│   ├── strong_safety.py
+│   ├── free_safety.py
+│   ├── kicker.py
+│   ├── punter.py
+│   ├── kick_returner.py
+│   ├── punt_returner.py
+│   ├── long_snapper.py
+│   ├── **PRACTICE_SQUAD.PY**
+│   ├── **DRAFT_CLASS.PY**
+│   ├── **FREE_AGENT.PY**
+│   ├── **BALL.PY**
+│   ├── **FIELD.PY**
+│   ├── **TEAM.PY**
+│   └── **GAME.PY**
+├── systems/
+│   ├── game_engine/
+│   │   ├── __init__.py
+│   │   ├── dice_system.py
+│   │   └── game_logic.py
+│   ├── monetization/
+│   │   └── monetization_core.py
+│   └── ultimate_team/
+│       ├── __init__.py
+│       ├── ultimate_team_manager.py
+│       ├── hut_marketplace.py
+│       ├── chemistry_system.py
+│       ├── hut_event_scheduler.py
+│       ├── spirit_chief_hut_foundry.py
+│       └── api.py
+├── data/
+│   ├── __init__.py
+│   ├── ultimate_team/
+│   │   ├── __init__.py
+│   │   ├── hut_player_pool.json
+│   │   ├── hut_user_rosters.json
+│   │   ├── foundry_parts.json
+│   │   ├── blueprints.json
+│   │   └── mod_definitions.json
+│   ├── contract_system.py
+│   ├── finance_ledger.py
+│   ├── personnel_manager.py
+│   ├── media_relations.py
+│   ├── ai_coach.py
+│   ├── injury_system.py
+│   ├── league_manager.py
+│   ├── game_coordinator.py
+│   ├── monetization_system.py
+│   ├── daily_fantasy/
+│   │   ├── __init__.py
+│   │   └── fantasy_monetization_systIiiiem.py
+│   ├── league_structure.json
+│   ├── stadiums/
+│   │   └── stadium_data.json
+│   ├── playbooks/
+│   │   └── west_coast_offense.json
+│   │   └── custom_playbook.json
+│   ├── player_templates.json
+│   └── unlockables/
+│       ├── __init__.py
+│       └── foundry_unlockable_content.py
+├── frontend/
+│   ├── public/
+│   │   ├── index.html
+│   │   └── unity_game/
+│   │       ├── index.html
+│   │       └── game.js
+│   ├── src/
+│   │   ├── App.jsx
+│   │   ├── index.js
+│   │   ├── styles.css
+│   │   └── components/
+│   │       ├── GameCanvas.jsx
+│   │       └── PlayerCard.jsx
+│   └── package.json
+├── dashboard/
+│   ├── __init__.py
+│   ├── index.html
+│   └── static/
+│       ├── css/
+│       │   └── styles.css
+│       └── js/
+│           └── scripts.js
+├── roles/
+│   ├── __init__.py
+│   ├── press_media_roles.py
+│   ├── fan_engagement_roles.py
+│   ├── game_operations_roles.py
+│   ├── digital_technology_roles.py
+│   ├── legal_compliance_roles.py
+│   ├── finance_accounting_roles.py
+│   ├── human_resources_roles.py
+│   └── facilities_operations_roles.py
+├── tests/
+│   ├── __init__.py
+│   ├── test_gameplay.py
+│   ├── test_systems.py
+├── main.py
+└── README.md

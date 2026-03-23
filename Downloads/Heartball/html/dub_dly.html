@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Football Contest Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./lib/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="./dist/output.css" rel="stylesheet">
+    <!-- Chosen Palette: Vibrant Emerald Splash -->
+    <!-- Application Structure Plan: The application is designed as an interactive dashboard to give users a comprehensive tool for exploring fantasy contests. The architecture is top-down: 1) Global controls (search, sliders, category filters) at the top for immediate data manipulation. 2) A visual analytics section with dynamic charts to provide high-level insights into the filtered data. 3) A detailed, sortable grid of contest cards for granular exploration. This structure was chosen to support a natural user flow from broad discovery (viewing all contests) to narrow analysis (finding specific games), making the large dataset of 60 contests manageable and insightful. A new section, "Fantasy Foundations: Rosters & Emblems," has been added at the bottom to explore conceptual permanent rosters and logo art, enriching the user's understanding of fantasy football's core elements beyond just contests. -->
+    <!-- Visualization & Content Choices:
+        - Report Info: Full list of contests. Goal: Allow users to browse, filter, and compare contests. Viz/Presentation: Interactive card grid. Interaction: Filtered by category, fee, prize, and search; sortable. Justification: A card grid is more scannable and visually appealing than a table for this type of Browse and discovery task. Library/Method: HTML/Tailwind/JS.
+        - Report Info: Entry Fee and Prize Pool data. Goal: Visualize the risk/reward profile of contests. Viz/Presentation: Scatter Plot. Interaction: Updates with filters, tooltips show contest names. Justification: A scatter plot is the ideal method for showing the relationship between two numerical variables and identifying outliers or trends. Library/Method: Chart.js.
+        - Report Info: Contest categories. Goal: Show the proportional distribution of contest types. Viz/Presentation: Doughnut Chart. Interaction: Updates with filters, provides a quick overview of contest variety. Justification: A doughnut chart clearly and attractively displays parts-of-a-whole data. Library/Method: Chart.js.
+        - Report Info: Conceptual permanent rosters. Goal: Present foundational team structures. Viz/Presentation: Structured HTML/CSS grid of "roster cards." Interaction: Static display. Justification: Visual representation of team archetypes using text and unicode characters. Library/Method: HTML/Tailwind.
+        - Report Info: Conceptual logo art. Goal: Showcase visual branding concepts. Viz/Presentation: Structured HTML/CSS grid of "logo cards." Interaction: Static display. Justification: Demonstrates logo concepts using pure CSS shapes and unicode characters, adhering to graphic constraints. Library/Method: HTML/Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0fdf4; /* emerald-50 */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            max-height: 45vh;
+        }
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #059669; /* emerald-600 */
+            cursor: pointer;
+            border-radius: 50%;
+            margin-top: -8px;
+        }
+        .range-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #059669; /* emerald-600 */
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        .active-filter {
+            background-color: #059669 !important; /* emerald-600 */
+            color: white !important;
+            border-color: #059669 !important; /* emerald-600 */
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-emerald-900">Fantasy Contest Explorer</h1>
+            <p class="mt-3 text-lg text-emerald-700 max-w-2xl mx-auto">An interactive dashboard to discover, analyze, and compare Daily Fantasy Football games.</p>
+        </header>
+        <main>
+            <!-- Filters Section -->
+            <section id="filters" class="mb-8 p-6 bg-white rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold mb-4 text-slate-900">Find Your Perfect Game</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
+                    <div class="lg:col-span-1">
+                        <label for="search-input" class="block text-sm font-medium text-slate-700 mb-2">Search by Name</label>
+                        <input type="text" id="search-input" placeholder="e.g., Sack Attack" aria-label="Search contests by name" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+                    </div>
+                    <div class="lg:col-span-1">
+                        <label for="fee-slider" class="block text-sm font-medium text-slate-700 mb-2">Max Entry Fee: <span id="fee-value" class="font-bold text-emerald-600">$6</span></label>
+                        <input type="range" id="fee-slider" min="2" max="6" value="6" step="1" aria-valuemin="2" aria-valuemax="6" aria-valuenow="6" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer range-slider">
+                    </div>
+                    <div class="lg:col-span-2">
+                        <label for="prize-slider" class="block text-sm font-medium text-slate-700 mb-2">Min Prize Pool: <span id="prize-value" class="font-bold text-emerald-600">$400</span></label>
+                        <input type="range" id="prize-slider" min="400" max="2500" value="400" step="50" aria-valuemin="400" aria-valuemax="2500" aria-valuenow="400" class="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer range-slider">
+                    </div>
+                </div>
+                <div class="mt-6">
+                    <h3 class="text-sm font-medium text-slate-700 mb-3">Filter by Category</h3>
+                    <div id="category-filters" class="flex flex-wrap gap-2"></div>
+                </div>
+            </section>
+            <!-- Visualizations Section -->
+            <section id="visualizations" class="mb-8 p-6 bg-white rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold mb-2 text-slate-900">Contest Analytics</h2>
+                <p class="text-slate-600 mb-6 max-w-4xl">
+                    This section provides a high-level overview of the available contests based on your current filters. Use these charts to compare the prize potential across different game types and understand the relationship between entry fees and prize pools. Interact with the charts by hovering over data points for more details.
+                </p>
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                    <div class="lg:col-span-2 p-4 rounded-lg border border-slate-200">
+                        <h3 class="text-lg font-semibold text-center mb-2">Contest Type Distribution</h3>
+                        <div class="chart-container mx-auto max-w-sm">
+                            <canvas id="category-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-3 p-4 rounded-lg border border-slate-200">
+                        <h3 class="text-lg font-semibold text-center mb-2">Entry Fee vs. Prize Pool</h3>
+                        <div class="chart-container">
+                            <canvas id="scatter-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Contests Grid -->
+            <section id="contests-display">
+                <div class="flex flex-col md:flex-row justify-between items Center mb-6 gap-4">
+                    <h2 class="text-2xl font-bold text-slate-900">Available Contests (<span id="contest-count">0</span>)</h2>
+                    <div class="flex items-center gap-3">
+                        <label for="sort-select" class="text-sm font-medium text-slate-700">Sort by:</label>
+                        <select id="sort-select" class="bg-white border border-slate-300 rounded-md px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            <option value="default">Default Order</option>
+                            <option value="prize-desc">Prize: High to Low</option>
+                            <option value="prize-asc">Prize: Low to High</option>
+                            <option value="fee-desc">Fee: High to Low</option>
+                            <option value="fee-asc">Fee: Low to High</option>
+                            <option value="name-asc">Name: A-Z</option>
+                        </select>
+                    </div>
+                </div>
+                <p class="text-slate-600 mb-8 max-w-4xl">
+                    Below is the list of all contests that match your selected filters. Each card provides key details about the game, including its primary objective, entry fee, and total prize pool. Use the filters and sorting options above to narrow down your options and find the perfect game for you.
+                </p>
+                <div id="contests-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+                <div id="loading-spinner" class="hidden animate-spin h-5 w-5 border-4 border-emerald-600 border-t-transparent rounded-full mx-auto my-4"></div>
+                <div id="no-results" class="hidden text-center py-16 px-6 bg-white rounded-lg shadow-md" role="alert">
+                    <div class="mx-auto w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-3xl text-emerald-500" aria-label="Search icon">🔍</div>
+                    <h3 class="text-xl font-semibold text-slate-800">No Contests Found</h3>
+                    <p class="text-slate-500 mt-2">Try adjusting your search or filter settings.</p>
+                </div>
+            </section>
+            <!-- Fantasy Foundations Section -->
+            <section id="fantasy-foundations" class="mt-12 p-6 bg-white rounded-xl shadow-lg">
+                <h2 class="text-2xl font-bold mb-2 text-slate-900">Fantasy Foundations: Rosters & Emblems</h2>
+                <p class="text-slate-600 mb-8 max-w-4xl">
+                    Dive into the conceptual backbone of fantasy football with a look at iconic team formations and the visual identity of legendary franchises. This section highlights the structure of a strong team and creative emblem ideas.
+                </p>
+                <!-- Legendary Lineups (Rosters) -->
+                <div class="mb-10">
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">Legendary Lineups (Conceptual Rosters)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <h4 class="text-lg font-semibold text-emerald-800 mb-3">The Gridiron Gurus</h4>
+                            <ul class="space-y-2 text-slate-700">
+                                <li class="flex items-center"><span class="mr-2 text-xl" aria-label="Football emoji">🏈</span><strong class="mr-1">QB:</strong> Field General (Master Strategist)</li>
+                                <li class="flex items-center"><span class="mr-2 text-xl" aria-label="Running emoji">🏃</span><strong class="mr-1">RB:</strong> Ground Pounder (Reliable Yards)</li>
+                                <li class="flex items-center"><span class="mr-2 text-xl" aria-label="Hand emoji">🖐️</span><strong class="mr-1">WR:</strong> Deep Threat (Big Play Hunter)</li>
+                                <li class="flex items-center"><span class="mr-2 text-xl" aria-label="Shield emoji">🛡️</span><strong class="mr-1">DL:</strong> Sack Artist (QB Pressure)</li>
+                                <li class="flex items-center"><span class="mr-2 text-xl" aria-label="Explosion emoji">💥</span><strong class="mr-1">LB:</strong> Tackle Machine (Run Stopper)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-lg border border-slate-200">
+                            <h4 class="text-lg font-semibold text-emerald-800 mb-3">The Turnover Titans</h4>
+                            <ul class="space-y-2 text-slate-700">
+                                <li class="flex items-center"><span class="mr-2 text-xl" aria-label="Brain emoji">🧠</span><strong class="mr-1">FS:</strong> Ball Hawk (Interception King)</li>
+                                <li class="flex items-center"><span class="mr-2 text-xl" aria-label="Muscle emoji">💪</span><strong class="mr-1">MLB:</strong> Defensive Anchor (Team Leader)</li>
+                                <li class="flex items-center"><span class="mr-2 text-xl" aria-label="Lightning emoji">⚡</span><strong class="mr-1">CB:</strong> Shutdown Corner (Coverage Lock-down)</li>
+                                <li class="flex items-center"><span class="mr-2 text-xl" aria-label="Explosion emoji">💥</span><strong class="mr-1">DE:</strong> Edge Rusher (Forced Fumbles)</li>
+                                <li class="flex items-center"><span class="mr-2 text-xl" aria-label="Leg emoji">🦵</span><strong class="mr-1">K:</strong> Clutch Kicker (Game Winner)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fantasy Franchise Emblems (Logo Art) -->
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-4">Fantasy Franchise Emblems (Conceptual Logo Art)</h3>
+                    <div class="flex flex-wrap justify-center gap-8">
+                        <div class="flex flex-col items-center">
+                            <div class="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center shadow-lg text-5xl text-white" aria-label="Champions logo">
+                                🏈
+                            </div>
+                            <p class="mt-2 text-sm font-medium text-slate-700">Champions</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-24 h-24 bg-red-600 rounded-lg flex items-center justify-center shadow-lg text-5xl text-white" aria-label="Star Power logo">
+                                ⭐
+                            </div>
+                            <p class="mt-2 text-sm font-medium text-slate-700">Star Power</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-24 h-24 bg-green-600 rounded-md flex items-center justify-center shadow-lg text-5xl text-white" aria-label="Strength logo">
+                                💪
+                            </div>
+                            <p class="mt-2 text-sm font-medium text-slate-700">Strength</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-24 h-24 bg-purple-600 rounded-t-full flex items-center justify-center shadow-lg text-5xl text-white" aria-label="Royalty logo">
+                                👑
+                            </div>
+                            <p class="mt-2 text-sm font-medium text-slate-700">Royalty</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script>
+        const contestData = [
+            { id: 1, name: "High-Stakes QB Duel", fee: 5, prize: 1000, category: "Quarterback", objective: "Focuses on quarterbacks' performance." },
+            { id: 2, name: "Running Back Rush 1", fee: 2, prize: 500, category: "Running Back", objective: "Emphasizes running backs' ground game." },
+            { id: 3, name: "Wide Receiver Showcase", fee: 3, prize: 750, category: "Wide Receiver", objective: "Showcases wide receivers' catching ability." },
+            { id: 4, name: "Tight End Takedown 1", fee: 4, prize: 600, category: "Tight End", objective: "Highlights tight ends' versatility." },
+            { id: 5, name: "Defensive Dominance 1", fee: 3, prize: 700, category: "Defense", objective: "Focuses on defensive positions (DE, DT, OLB, MLB, CB, SS, FS)." },
+            { id: 6, name: "Special Teams Spotlight", fee: 2, prize: 400, category: "Special Teams", objective: "Highlights special teams roles (K, P, KR, PR, LS)." },
+            { id: 7, name: "Offensive Power Play", fee: 5, prize: 1500, category: "All-Around", objective: "Emphasizes high-scoring offensive positions (QB, RB, WR, TE)." },
+            { id: 8, name: "Defensive Standout", fee: 4, prize: 1000, category: "Defense", objective: "Highlights defensive prowess (DE, DT, OLB, MLB, CB, SS, FS)." },
+            { id: 9, name: "Special Teams Showdown", fee: 3, prize: 800, category: "Special Teams", objective: "Focuses on special teams impact (K, P, KR, PR, LS)." },
+            { id: 10, name: "Quarterback vs. Defense", fee: 6, prize: 2000, category: "Hybrid", objective: "A head-to-head contest between quarterbacks and defensive players." },
+            { id: 11, name: "Rushing and Receiving Rivalry", fee: 4, prize: 1200, category: "Hybrid", objective: "Highlights running backs and wide receivers' dual impact." },
+            { id: 12, name: "All-Around Athlete", fee: 3, prize: 900, category: "All-Around", objective: "Balances scoring across all positions." },
+            { id: 13, name: "Defensive Dominance 2", fee: 5, prize: 1500, category: "Defense", objective: "Focuses exclusively on defensive players' impact." },
+            { id: 14, name: "Sack Attack 1", fee: 4, prize: 1200, category: "Defense", objective: "Highlights defensive pass rushers." },
+            { id: 15, name: "Cornerback Clash", fee: 3, prize: 900, category: "Defense", objective: "A showcase of shutdown cornerbacks." },
+            { id: 16, name: "Safety Squad", fee: 4, prize: 1000, category: "Defense", objective: "Emphasizes the impact of safeties in the secondary." },
+            { id: 17, name: "Linebacker Legends", fee: 5, prize: 1500, category: "Defense", objective: "Celebrates the impact of linebackers in both run-stopping and pass coverage." },
+            { id: 18, name: "Defensive End Domination", fee: 4, prize: 1200, category: "Defense", objective: "Highlights the dominant play of defensive ends." },
+            { id: 19, name: "Tackle Titans", fee: 3, prize: 900, category: "Defense", objective: "Focuses on the tackling ability of defensive tackles." },
+            { id: 20, name: "Ball Hawk Cornerbacks", fee: 4, prize: 1000, category: "Defense", objective: "Spotlights the playmaking ability of cornerbacks." },
+            { id: 21, name: "Quarterback Kingpin", fee: 5, prize: 2000, category: "Quarterback", objective: "Celebrates the leadership and passing prowess of quarterbacks." },
+            { id: 22, name: "Running Back Rush 2", fee: 4, prize: 1500, category: "Running Back", objective: "Highlights the ground game and versatility of running backs." },
+            { id: 23, name: "Wide Receiver Wizardry", fee: 3, prize: 1200, category: "Wide Receiver", objective: "Showcases the catching ability and route-running skills of wide receivers." },
+            { id: 24, name: "Tight End Takedown 2", fee: 4, prize: 1400, category: "Tight End", objective: "Highlights the dual-threat capability of tight ends in blocking and receiving." },
+            { id: 25, name: "Versatile Player Vanguard", fee: 5, prize: 2500, category: "All-Around", objective: "Celebrates players who excel in multiple positions across offense and defense." },
+            { id: 26, name: "Special Teams Spectacle", fee: 3, prize: 1000, category: "Special Teams", objective: "Highlights the often-overlooked role of special teams players." },
+            { id: 27, name: "Guarding the Gridiron", fee: 4, prize: 1200, category: "Offensive Line", objective: "Focuses on the key role of offensive guards." },
+            { id: 28, name: "Trench Warfare", fee: 4, prize: 1500, category: "Hybrid", objective: "Celebrates the battle in the trenches with offensive and defensive linemen." },
+            { id: 29, name: "Sack Attack 2", fee: 4, prize: 1300, category: "Defense", objective: "Highlights the impact of defensive ends and tackles." },
+            { id: 30, name: "Run Stuffing Royals", fee: 3, prize: 1000, category: "Defense", objective: "Showcases the ability of defensive tackles and ends in stopping the run." },
+            { id: 31, name: "Dual-Threat Quarterbacks", fee: 6, prize: 2000, category: "Quarterback", objective: "Celebrates quarterbacks who excel in both passing and rushing." },
+            { id: 32, name: "Red Zone Renegades (RB/TE)", fee: 4, prize: 1300, category: "Hybrid", objective: "Focuses on running backs and tight ends who are primary scoring threats inside the 20-yard line." },
+            { id: 33, name: "Big Play Receivers", fee: 5, prize: 1700, category: "Wide Receiver", objective: "Highlights wide receivers known for explosive plays and long touchdowns." },
+            { id: 34, name: "Turnover Tycoons", fee: 5, prize: 1800, category: "Defense", objective: "Rewards defensive players who consistently create turnovers." },
+            { id: 35, name: "Coverage Kings (CB/S)", fee: 4, prize: 1400, category: "Defense", objective: "Focuses on defensive backs who excel in pass coverage." },
+            { id: 36, name: "Blitz Brigade (OLB/MLB/S)", fee: 3, prize: 1100, category: "Defense", objective: "Celebrates linebackers and safeties who are effective in blitzing." },
+            { id: 37, name: "Offensive Line Dominance", fee: 5, prize: 1600, category: "Offensive Line", objective: "Honors the best offensive line units based on collective performance." },
+            { id: 38, name: "Defensive Front Fortresses", fee: 5, prize: 1700, category: "Defense", objective: "Rewards defensive linemen and edge rushers for disrupting the run and pass game." },
+            { id: 39, name: "Kicking Commanders", fee: 2, prize: 700, category: "Special Teams", objective: "Focuses purely on the performance of kickers." },
+            { id: 40, name: "Punting Prowess", fee: 2, prize: 600, category: "Special Teams", objective: "Highlights the strategic impact of punters." },
+            { id: 41, name: "Game Flow Gurus", fee: 4, prize: 1500, category: "All-Around", objective: "Rewards players who perform best in specific game situations." },
+            { id: 42, name: "Rookie Impact", fee: 3, prize: 1000, category: "All-Around", objective: "Focuses exclusively on the performance of rookie players across all positions." },
+            { id: 43, name: "Veteran Vanguard", fee: 3, prize: 1000, category: "All-Around", objective: "Celebrates the enduring performance of veteran players." },
+            { id: 44, name: "Return Game Royalty", fee: 3, prize: 900, category: "Special Teams", objective: "Highlights the explosive plays generated by kick and punt returners." },
+            { id: 45, name: "Defensive Snap Specialists", fee: 4, prize: 1300, category: "Defense", objective: "Focuses on defensive players who make the most impact on a per-snap basis." },
+            { id: 46, name: "Underdog Uprising", fee: 3, prize: 1100, category: "Unique", objective: "Rewards players from teams with losing records or against strong opponents." },
+            { id: 47, name: "Comeback Kids", fee: 4, prize: 1400, category: "Unique", objective: "Focuses on players who excel in high-pressure, late-game situations." },
+            { id: 48, name: "Special Teams Blitz", fee: 3, prize: 950, category: "Special Teams", objective: "Highlights defensive and special teams players who create blocked kicks or force muffs." },
+            { id: 49, name: "Efficiency Experts", fee: 5, prize: 1600, category: "All-Around", objective: "Rewards offensive players for maximizing production on fewer opportunities." },
+            { id: 50, name: "Defensive Scheme Dominators", fee: 4, prize: 1300, category: "Defense", objective: "Celebrates defensive players excelling in specific strategic roles." },
+            { id: 51, name: "Sustained Drive Stars", fee: 3, prize: 1050, category: "All-Around", objective: "Focuses on offensive players who contribute significantly to long, scoring drives." },
+            { id: 52, name: "Goal Line Gladiators", fee: 4, prize: 1250, category: "Hybrid", objective: "Rewards players who are most effective in short-yardage and goal-line situations." },
+            { id: 53, name: "Punt Block Party", fee: 2, prize: 700, category: "Special Teams", objective: "Highlights players specializing in blocking punts and creating short fields." },
+            { id: 54, name: "Two-Point Conversion Kings", fee: 2, prize: 600, category: "Unique", objective: "Celebrates offensive players who successfully convert two-point attempts." },
+            { id: 55, name: "Fantasy Rookie Rumble", fee: 3, prize: 1100, category: "Unique", objective: "A variation focusing on offensive and defensive impact plays from rookie players." },
+            { id: 56, name: "Fourth Down Fury", fee: 4, prize: 1300, category: "Unique", objective: "Rewards players who make crucial plays on 4th down." },
+            { id: 57, name: "No-Fly Zone Defenders", fee: 5, prize: 1600, category: "Defense", objective: "Focuses on defensive backs and linebackers who shut down opposing passing games." },
+            { id: 58, name: "Gridiron Generals (Coaches/QBs)", fee: 6, prize: 2200, category: "Hybrid", objective: "Integrates team-level offensive efficiency metrics, led by QBs and potentially head coaches." },
+            { id: 59, name: "Fantasy Team DST Blitz", fee: 4, prize: 1400, category: "Defense", objective: "Focuses on the overall performance of team defenses and special teams units." },
+            { id: 60, name: "Clutch Kicker Challenge", fee: 3, prize: 900, category: "Special Teams", objective: "Highlights kickers who perform best in high-pressure, game-deciding moments." },
+            { id: 61, name: "Screen Pass Specialists", fee: 3, prize: 850, category: "Offensive", objective: "Rewards players effective at gaining yards on screen passes." },
+            { id: 62, name: "Line of Scrimmage Monsters", fee: 5, prize: 1800, category: "Defensive Line", objective: "Focuses on interior defensive linemen disrupting the run and pass." },
+            { id: 63, name: "Receiving Back Revival", fee: 4, prize: 1150, category: "Running Back", objective: "Highlights running backs with significant receiving contributions." },
+            { id: 64, name: "Pocket Protector Power", fee: 4, prize: 1350, category: "Offensive Line", objective: "Rewards offensive linemen for elite pass protection." },
+            { id: 65, name: "Big Arm, Deep Threat", fee: 5, prize: 1900, category: "Quarterback", objective: "Celebrates QBs and receivers excelling in long-yardage passing plays." },
+            { id: 66, name: "Coverage Linebackers", fee: 4, prize: 1200, category: "Defense", objective: "Focuses on linebackers' ability in pass coverage." },
+            { id: 67, name: "Return Coverage Kings", fee: 3, prize: 800, category: "Special Teams", objective: "Highlights players who excel in limiting opponent's return yards." },
+            { id: 68, name: "Safety Valve Saviors (QB/TE)", fee: 4, prize: 1300, category: "Hybrid", objective: "Rewards QBs and TEs for connecting on crucial short-yardage or check-down passes." },
+            { id: 69, name: "Penalty Protectors", fee: 3, prize: 950, category: "Offensive Line", objective: "Honors offensive linemen for minimizing penalties." },
+            { id: 70, name: "Pass Rush Perfection", fee: 5, prize: 1750, category: "Defensive Line", objective: "Focuses on players with elite pass-rushing skills (sacks, pressures)." },
+            { id: 71, name: "QB-WR Connection", fee: 5, prize: 1700, category: "Combo", objective: "Rewards high production between a Quarterback and Wide Receiver." },
+            { id: 72, name: "RB-O Line Power Run", fee: 4, prize: 1300, category: "Combo", objective: "Focuses on strong rushing performance enabled by offensive line blocking." },
+            { id: 73, name: "Defensive Front 7 Dominance", fee: 5, prize: 1600, category: "Combo", objective: "Highlights the collective impact of Defensive Linemen and Linebackers." },
+            { id: 74, name: "Secondary Shutdown", fee: 4, prize: 1200, category: "Combo", objective: "Rewards collective performance of Cornerbacks and Safeties in pass defense." },
+            { id: 75, name: "Offensive Coordinator's Dream", fee: 6, prize: 2000, category: "Combo", objective: "Focuses on overall offensive unit success (QB, RB, WR, TE)." },
+            { id: 76, name: "Defensive Coordinator's Nightmare", fee: 6, prize: 2000, category: "Combo", objective: "Highlights players who create significant negative plays for opponents (Sacks, Interceptions, Fumbles)." },
+            { id: 77, name: "Special Teams Game Changers", fee: 3, prize: 900, category: "Combo", objective: "Rewards explosive plays from Special Teams (Returners, Kickers, Punters)." },
+            { id: 78, name: "Receiving Corps All-Stars", fee: 5, prize: 1500, category: "Combo", objective: "Focuses on combined receiving yards and touchdowns from Wide Receivers and Tight Ends." },
+            { id: 79, name: "Tackle Machine Duo (LB/S)", fee: 4, prize: 1100, category: "Combo", objective: "Highlights high-volume tackling performance from Linebackers and Safeties." },
+            { id: 80, name: "Backfield Threat (RB/FB/TE)", fee: 4, prize: 1300, category: "Combo", objective: "Rewards combined rushing and receiving impact from Running Backs, Fullbacks, and versatile Tight Ends." },
+            { id: 81, name: "Red Zone Specialists", fee: 5, prize: 1700, category: "Combo", objective: "Focuses on offensive players (QB, RB, WR, TE) who excel at scoring within the 20-yard line." },
+            { id: 82, name: "Big Playmakers (QB/WR/RB)", fee: 6, prize: 2200, category: "Combo", objective: "Rewards offensive players for explosive plays over 20+ yards (pass, rush, reception)." },
+            { id: 83, name: "Defensive Impact Players (DL/LB/DB)", fee: 6, prize: 2100, category: "Combo", objective: "Focuses on top defensive players across all major positions creating turnovers and negative plays." },
+            { id: 84, name: "All-Purpose Yards Masters", fee: 5, prize: 1800, category: "Combo", objective: "Highlights players (RB, WR, KR, PR) who accumulate significant yards from rushing, receiving, kick returns, and punt returns." },
+            { id: 85, name: "Short Yardage Saviors", fee: 4, prize: 1200, category: "Combo", objective: "Rewards offensive players (RB, QB, TE) for successful conversions on 3rd & short and 4th & short." },
+            { id: 86, name: "Offensive Dynamo (QB/RB/WR)", fee: 5, prize: 1900, category: "Combo", objective: "Focuses on the core trio of offensive playmakers generating high total yards and touchdowns." },
+            { id: 87, name: "Defensive Backbone (DL/LB)", fee: 5, prize: 1700, category: "Combo", objective: "Rewards the combined efforts of defensive linemen and linebackers in stopping the run and pressuring the passer." },
+            { id: 88, name: "Aerial Assault (QB/WR/TE)", fee: 5, prize: 1850, category: "Combo", objective: "Highlights the passing game's primary contributors: Quarterbacks, Wide Receivers, and Tight Ends." },
+            { id: 89, name: "Ground & Pound Duo (RB/O-Line)", fee: 4, prize: 1400, category: "Combo", objective: "Focuses on the synergy between a strong Running Back and a dominant Offensive Line." },
+            { id: 90, name: "Secondary Ball Hawks (CB/S)", fee: 4, prize: 1300, category: "Combo", objective: "Rewards Cornerbacks and Safeties for creating turnovers and defending passes." },
+            { id: 91, name: "Red Zone Warriors", fee: 5, prize: 1700, category: "Combo", objective: "Focuses on offensive players (QB, RB, WR, TE) who excel at scoring touchdowns from inside the 20-yard line." },
+            { id: 92, name: "Special Teams Aces (K/P/Returners)", fee: 3, prize: 1000, category: "Combo", objective: "Highlights the overall impact of special teams players, including kickers, punters, and returners." },
+            { id: 93, name: "Third Down Threats (QB/WR/TE/RB)", fee: 4, prize: 1500, category: "Combo", objective: "Rewards players who consistently make plays to convert third downs for the offense." },
+            { id: 94, name: "Two-Way Talent (Any Off/Def/ST)", fee: 4, prize: 1600, category: "Combo", objective: "Celebrates players who contribute significantly on both offense and defense, or special teams." },
+            { id: 95, name: "Game Manager & Target Hog (QB/Specific WR/TE)", fee: 5, prize: 1950, category: "Combo", objective: "Focuses on the Quarterback's efficiency paired with a primary receiving target's volume." },
+            { id: 96, name: "Offensive Power Trio (QB/RB/WR)", fee: 5, prize: 2000, category: "Combo", objective: "Combines the top performers from Quarterback, Running Back, and Wide Receiver roles for maximum offensive output." },
+            { id: 97, name: "Defensive Playmakers (DL/LB/DB)", fee: 5, prize: 1850, category: "Combo", objective: "Focuses on key defensive positions (Defensive Line, Linebacker, Defensive Back) that consistently generate big plays like sacks, interceptions, and forced fumbles." },
+            { id: 98, name: "Air & Ground Tandem (QB/RB)", fee: 4, prize: 1500, category: "Combo", objective: "Rewards the combined passing and rushing production of the Quarterback and Running Back." },
+            { id: 99, name: "Big Target Specialists (TE/WR)", fee: 4, prize: 1400, category: "Combo", objective: "Highlights the collective receiving impact of Tight Ends and Wide Receivers, especially in red zone or contested catch situations." },
+            { id: 100, name: "Trench Dominators (OLine/DLine)", fee: 5, prize: 1700, category: "Combo", objective: "Celebrates the battle at the line of scrimmage, rewarding offensive linemen for run blocking/pass protection and defensive linemen for run stuffing/pass rush." },
+            { id: 101, name: "Special Teams Coordinators (K/P/LS)", fee: 3, prize: 800, category: "Combo", objective: "Focuses on the precision and consistency of the kicking unit: Kicker, Punter, and Long Snapper." },
+            { id: 102, name: "Third Down Conversion Masters (QB/WR/RB)", fee: 4, prize: 1600, category: "Combo", objective: "Rewards players who are instrumental in converting crucial third downs through passing, rushing, or receiving." },
+            { id: 103, name: "Turnover Chain Gang (CB/S/LB)", fee: 5, prize: 1900, category: "Combo", objective: "Highlights defensive players (Cornerbacks, Safeties, Linebackers) who consistently create turnovers (interceptions, fumbles)." },
+            { id: 104, name: "Offensive Line Anchors (C/G/T)", fee: 4, prize: 1300, category: "Offensive Line", objective: "Focuses on the collective performance of the entire offensive line in protecting the QB and opening run lanes." },
+            { id: 105, name: "Situational Masters (All Positions)", fee: 5, prize: 1750, category: "Combo", objective: "Rewards players who excel in specific game situations, such as 2-minute drills, goal-line stands, or crucial 4th-down plays." }
+        ];
+        const categoryColors = {
+            'Quarterback': '#3b82f6',
+            'Running Back': '#16a34a',
+            'Wide Receiver': '#f97316',
+            'Tight End': '#a855f7',
+            'Defense': '#ef4444',
+            'Special Teams': '#eab308',
+            'Offensive Line': '#6366f1',
+            'Hybrid': '#14b8a6',
+            'All-Around': '#64748b',
+            'Unique': '#d946ef',
+            'Offensive': '#22c55e',
+            'Defensive Line': '#84cc16',
+            'Combo': '#0ea5e9',
+            'Default': '#cccccc'
+        };
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            const feeSlider = document.getElementById('fee-slider');
+            const prizeSlider = document.getElementById('prize-slider');
+            const feeValue = document.getElementById('fee-value');
+            const prizeValue = document.getElementById('prize-value');
+            const categoryFiltersContainer = document.getElementById('category-filters');
+            const contestsGrid = document.getElementById('contests-grid');
+            const contestCount = document.getElementById('contest-count');
+            const noResultsDiv = document.getElementById('no-results');
+            const sortSelect = document.getElementById('sort-select');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            let activeCategory = localStorage.getItem('activeCategory') || 'All';
+            let charts = {};
+            let debounceTimeout;
+            const uniqueCategories = [...new Set(contestData.map(c => c.category))];
+            const categories = ['All', ...uniqueCategories.sort()];
+            // Load saved filters
+            searchInput.value = localStorage.getItem('searchTerm') || '';
+            feeSlider.value = localStorage.getItem('maxFee') || '6';
+            prizeSlider.value = localStorage.getItem('minPrize') || '400';
+            sortSelect.value = localStorage.getItem('sortBy') || 'default';
+            feeValue.textContent = `$${feeSlider.value}`;
+            prizeValue.textContent = `$${parseInt(prizeSlider.value).toLocaleString()}`;
+            function setupCategoryFilters() {
+                categoryFiltersContainer.innerHTML = '';
+                categories.forEach(category => {
+                    const button = document.createElement('button');
+                    button.dataset.category = category;
+                    button.textContent = category;
+                    const baseClasses = 'px-4 py-2 text-sm font-semibold rounded-full border-2 transition-colors duration-200';
+                    const inactiveClasses = 'bg-white text-slate-700 border-slate-300 hover:bg-slate-100 hover:border-slate-400';
+                    button.className = `${baseClasses} ${category === activeCategory ? 'active-filter' : inactiveClasses}`;
+                    button.addEventListener('click', () => {
+                        activeCategory = category;
+                        localStorage.setItem('activeCategory', category);
+                        document.querySelectorAll('#category-filters button').forEach(btn => {
+                            btn.classList.remove('active-filter');
+                            btn.className = `${baseClasses} ${inactiveClasses}`;
+                        });
+                        button.className = `${baseClasses} active-filter`;
+                        applyFilters();
+                    });
+                    categoryFiltersContainer.appendChild(button);
+                });
+            }
+            function renderCards(contests) {
+                contestsGrid.innerHTML = '';
+                if (contests.length === 0) {
+                    noResultsDiv.classList.remove('hidden');
+                    contestsGrid.classList.add('hidden');
+                } else {
+                    noResultsDiv.classList.add('hidden');
+                    contestsGrid.classList.remove('hidden');
+                }
+                contests.forEach(contest => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-transform duration-300 flex flex-col border border-slate-200';
+                    card.innerHTML = `
+                        <div class="p-5 flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-lg font-bold text-slate-900 pr-2">${contest.name}</h3>
+                                <span class="text-xs font-semibold py-1 px-2.5 rounded-full whitespace-nowrap" style="background-color: ${categoryColors[contest.category] || categoryColors['Default']}20; color: ${categoryColors[contest.category] || categoryColors['Default']}; border: 1px solid ${categoryColors[contest.category] || categoryColors['Default']}80;">${contest.category}</span>
+                            </div>
+                            <p class="text-sm text-slate-600 mt-2">${contest.objective}</p>
+                        </div>
+                        <div class="p-5 bg-slate-50 border-t border-slate-200 grid grid-cols-2 gap-4">
+                            <div>
+                                <p class="text-xs text-slate-500 uppercase tracking-wider">Entry Fee</p>
+                                <p class="text-2xl font-bold text-green-600">$${contest.fee}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xs text-slate-500 uppercase tracking-wider">Prize Pool</p>
+                                <p class="text-2xl font-bold text-indigo-700">$${contest.prize.toLocaleString()}</p>
+                            </div>
+                        </div>
+                    `;
+                    contestsGrid.appendChild(card);
+                });
+            }
+            function createOrUpdateCharts(contests) {
+                const categoryCounts = contests.reduce((acc, contest) => {
+                    acc[contest.category] = (acc[contest.category] || 0) + 1;
+                    return acc;
+                }, {});
+                const categoryChartData = {
+                    labels: Object.keys(categoryCounts).sort(),
+                    datasets: [{
+                        data: Object.keys(categoryCounts).sort().map(key => categoryCounts[key]),
+                        backgroundColor: Object.keys(categoryCounts).sort().map(cat => categoryColors[cat] || categoryColors['Default']),
+                        borderColor: '#f8fafc',
+                        borderWidth: 3,
+                        hoverOffset: 10
+                    }]
+                };
+                if (charts.categoryChart) {
+                    charts.categoryChart.data = categoryChartData;
+                    charts.categoryChart.update();
+                } else {
+                    const ctx = document.getElementById('category-chart').getContext('2d');
+                    charts.categoryChart = new Chart(ctx, {
+                        type: 'doughnut',
+                        data: categoryChartData,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: { display: false },
+                                tooltip: {
+                                    backgroundColor: '#1e293b',
+                                    titleFont: { size: 14, weight: 'bold' },
+                                    bodyFont: { size: 12 },
+                                    padding: 10,
+                                    cornerRadius: 4,
+                                    boxPadding: 4,
+                                }
+                            },
+                            cutout: '60%'
+                        }
+                    });
+                }
+                const scatterData = {
+                    datasets: [{
+                        data: contests.map(c => ({x: c.fee, y: c.prize, name: c.name})),
+                        backgroundColor: contests.map(c => (categoryColors[c.category] || categoryColors['Default']) + 'bf'),
+                        borderColor: contests.map(c => (categoryColors[c.category] || categoryColors['Default'])),
+                        borderWidth: 1.5,
+                        radius: 6,
+                        hoverRadius: 9
+                    }]
+                };
+                if (charts.scatterChart) {
+                    charts.scatterChart.data = scatterData;
+                    charts.scatterChart.options.scales.x.max = contests.length ? Math.max(...contests.map(c => c.fee)) + 1 : 6;
+                    charts.scatterChart.options.scales.y.max = contests.length ? Math.max(...contests.map(c => c.prize)) + 100 : 2500;
+                    charts.scatterChart.update();
+                } else {
+                    const scatterCtx = document.getElementById('scatter-chart').getContext('2d');
+                    charts.scatterChart = new Chart(scatterCtx, {
+                        type: 'scatter',
+                        data: scatterData,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: {
+                                    beginAtZero: true,
+                                    max: contests.length ? Math.max(...contests.map(c => c.fee)) + 1 : 6,
+                                    title: { display: true, text: 'Entry Fee ($)', font: { size: 14 }},
+                                    grid: { color: '#e2e8f0' }
+                                },
+                                y: {
+                                    beginAtZero: true,
+                                    max: contests.length ? Math.max(...contests.map(c => c.prize)) + 100 : 2500,
+                                    title: { display: true, text: 'Prize Pool ($)', font: { size: 14 }},
+                                    grid: { color: '#e2e8f0' }
+                                }
+                            },
+                            plugins: {
+                                legend: { display: false },
+                                tooltip: {
+                                    backgroundColor: '#1e293b',
+                                    titleFont: { size: 14, weight: 'bold' },
+                                    bodyFont: { size: 12 },
+                                    padding: 10,
+                                    cornerRadius: 4,
+                                    callbacks: {
+                                        label: function(context) {
+                                            const dataPoint = context.raw;
+                                            return `${dataPoint.name}: ($${dataPoint.x}, $${dataPoint.y.toLocaleString()})`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+            function sortContests(contests, sortBy) {
+                return contests.sort((a, b) => {
+                    switch (sortBy) {
+                        case 'default': return a.id - b.id;
+                        case 'prize-desc': return b.prize - a.prize;
+                        case 'prize-asc': return a.prize - b.prize;
+                        case 'fee-desc': return b.fee - a.fee;
+                        case 'fee-asc': return a.fee - b.fee;
+                        case 'name-asc': return a.name.localeCompare(b.name);
+                        default: return 0;
+                    }
+                });
+            }
+            function applyFilters() {
+                loadingSpinner.classList.remove('hidden');
+                noResultsDiv.classList.add('hidden');
+                contestsGrid.classList.add('hidden');
+                setTimeout(() => {
+                    const searchTerm = searchInput.value.toLowerCase();
+                    const maxFee = parseInt(feeSlider.value);
+                    const minPrize = parseInt(prizeSlider.value);
+                    const sortBy = sortSelect.value;
+                    let filteredContests = contestData.filter(contest => {
+                        const matchesCategory = activeCategory === 'All' || contest.category === activeCategory;
+                        const matchesSearch = contest.name.toLowerCase().includes(searchTerm);
+                        const matchesFee = contest.fee <= maxFee;
+                        const matchesPrize = contest.prize >= minPrize;
+                        return matchesCategory && matchesSearch && matchesFee && matchesPrize;
+                    });
+                    const sortedContests = sortContests(filteredContests, sortBy);
+                    contestCount.textContent = sortedContests.length;
+                    renderCards(sortedContests);
+                    createOrUpdateCharts(filteredContests);
+                    loadingSpinner.classList.add('hidden');
+                    // Save filters
+                    localStorage.setItem('searchTerm', searchInput.value);
+                    localStorage.setItem('maxFee', feeSlider.value);
+                    localStorage.setItem('minPrize', prizeSlider.value);
+                    localStorage.setItem('sortBy', sortSelect.value);
+                }, 100);
+            }
+            feeSlider.addEventListener('input', (e) => {
+                feeValue.textContent = `$${e.target.value}`;
+                e.target.setAttribute('aria-valuenow', e.target.value);
+            });
+            prizeSlider.addEventListener('input', (e) => {
+                prizeValue.textContent = `$${e.target.value.toLocaleString()}`;
+                e.target.setAttribute('aria-valuenow', e.target.value);
+            });
+            feeSlider.addEventListener('change', applyFilters);
+            prizeSlider.addEventListener('change', applyFilters);
+            sortSelect.addEventListener('change', applyFilters);
+            searchInput.addEventListener('input', () => {
+                clearTimeout(debounceTimeout);
+                debounceTimeout = setTimeout(applyFilters, 300);
+            });
+            setupCategoryFilters();
+            applyFilters();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+// File: data/ultimate_team/hut_user_rosters.json
+
+// This file stores a list of user rosters. In a production environment,
+// this would be a database table, but here it serves as a mock data source.
+[
+    {
+        "user_id": "user_123",
+        "team_name": "Fantasy Fanatics",
+        "active_lineup": ["player_001", "player_002"],
+        "collection": ["player_001", "player_002", "player_003"]
+    },
+    {
+        "user_id": "user_456",
+        "team_name": "Gridiron Gladiators",
+        "active_lineup": [],
+        "collection": []
+    }
+]

@@ -1,0 +1,73 @@
+# File: core/ball.py
+# This file defines the football itself!
+# It keeps track of where the ball is on the field and which player is holding it.
+
+class Ball:
+    """
+    Represents the football in the game, tracking its 3D position and possession.
+    """
+    # When we create a new Ball, it starts at a specific spot and no one is holding it yet.
+    # Coordinates are in a normalized field space (e.g., 0-100 for x-axis length).
+    def __init__(self, x_pos=20, y_pos=26.65, z_pos=0.5): # x=yard line, y=width across field, z=height (0.5m off ground)
+        # x_position, y_position, z_position: The exact spot of the ball on the 3D field.
+        self.x_position = x_pos
+        self.y_position = y_pos
+        self.z_position = z_pos # For height, important for kicks/passes.
+        # current_carrier_id: The unique ID of the player currently holding the ball.
+        self.current_carrier_id = None # No one is holding it at the start.
+        # is_loose: Is the ball rolling around freely?
+        self.is_loose = True # Yes, at the very beginning (like before a snap).
+
+    # This function updates the ball's position.
+    def set_position(self, x, y, z=None):
+        """
+        Sets the 3D position of the ball on the field.
+        If z is None, its current z_position is maintained.
+        """
+        self.x_position = x
+        self.y_position = y
+        if z is not None:
+            self.z_position = z
+
+    # This function changes who is holding the ball.
+    def set_carrier(self, player_id):
+        """
+        Sets the player currently carrying the ball. If None, the ball is loose.
+        """
+        self.current_carrier_id = player_id
+        self.is_loose = (player_id is None) # If no one is holding it, it's loose.
+
+    # This helps us print out ball information.
+    def __str__(self):
+        """
+        Returns a human-readable string representation of the ball's state.
+        """
+        carrier_info = f"Carried by Player ID: {self.current_carrier_id}" if self.current_carrier_id else "Loose"
+        return f"Ball at ({self.x_position:.1f}yds, {self.y_position:.1f}y, {self.z_position:.1f}m) | {carrier_info}"
+
+    # This function converts ball data to a dictionary for database storage.
+    def to_dict(self):
+        """
+        Converts the Ball object to a dictionary for database storage.
+        """
+        return {
+            "x_position": self.x_position,
+            "y_position": self.y_position,
+            "z_position": self.z_position,
+            "current_carrier_id": self.current_carrier_id,
+            "is_loose": self.is_loose
+        }
+
+    # This function helps us create a Ball object from database data.
+    @classmethod
+    def from_dict(cls, data):
+        """
+        Creates a Ball object from a dictionary.
+        """
+        ball = cls(
+            x_pos=data["x_position"],
+            y_pos=data["y_position"],
+            z_pos=data.get("z_position", 0.5) # Default to 0.5 if not present
+        )
+        ball.set_carrier(data["current_carrier_id"]) # Will correctly set is_loose.
+        return ball

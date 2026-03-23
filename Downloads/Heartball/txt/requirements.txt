@@ -1,0 +1,9 @@
+# No external dependencies required for basic functionality
+# All required modules are part of Python standard library:
+# - dataclasses (Python 3.7+)
+# - typing (Python 3.5+)
+
+# Optional dependencies for enhanced functionality:
+# requests>=2.25.0  # For real API calls
+# pillow>=8.0.0     # For image processing
+# matplotlib>=3.3.0 # For color visualization

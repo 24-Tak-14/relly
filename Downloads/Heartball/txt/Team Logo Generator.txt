@@ -1,0 +1,1372 @@
+Team Logo Generator
+import dataclasses
+from typing import Union, Dict
+
+
+# Mocking image_generation module for demonstration purposes in this environment.
+# In a real tool context, this would be provided by the system.
+@dataclasses.dataclass
+class PerQueryResult:
+    index: str | None = None
+    publication_time: str | None = None
+    snippet: str | None = None
+    source_title: str | None = None
+    url: str | None = None
+
+
+@dataclasses.dataclass
+class Image:
+    prompt: str | None = None
+    url: str | None = None
+
+
+@dataclasses.dataclass
+class ImageGenerationResult:
+    content_id: str | None = None
+    generated_images: Union[list["Image"], None] = None
+
+
+@dataclasses.dataclass
+class ImageGenerationResultList:
+    results: Union[list["ImageGenerationResult"], None] = None
+
+
+class ImageGenerationUsecase:
+    ALTERNATIVES = "alternatives" # For generating multiple variations based on a single prompt.
+    CREATION = "creation" # For creating a single image based on a prompt.
+
+
+class ImageGeneration:
+    def generate_images(self, prompts: list[str], image_generation_usecase: str) -> ImageGenerationResultList:
+        """
+        Simulates the image generation API call.
+        In a real scenario, this would make an actual API call to an image generation service.
+        """
+        print(f"DEBUG: Simulating image generation for prompts: {prompts} with usecase: {image_generation_usecase}")
+        # Placeholder for actual image generation. In a real scenario, this would return actual image URLs.
+        # For demonstration, we'll return a mock structure.
+        mock_images = []
+        for i, prompt_text in enumerate(prompts):
+            # For ALTERNATIVES, generate multiple URLs for one prompt.
+            if image_generation_usecase == ImageGenerationUsecase.ALTERNATIVES:
+                # Simulate 4 alternative logos for the first prompt
+                if i == 0:
+                    for j in range(1, 5): # Generate 4 alternatives
+                        mock_images.append(Image(
+                            prompt=f"Alternative {j} for: {prompt_text}",
+                            url=f"https://placehold.co/400x400/808080/FFFFFF?text=Logo{j}"
+                        ))
+                else:
+                    # For other prompts, just a single image for simplicity in this mock
+                    mock_images.append(Image(
+                        prompt=prompt_text,
+                        url=f"https://placehold.co/400x400/808080/FFFFFF?text=Logo"
+                    ))
+            elif image_generation_usecase == ImageGenerationUsecase.CREATION:
+                 mock_images.append(Image(
+                    prompt=prompt_text,
+                    url=f"https://placehold.co/400x400/808080/FFFFFF?text=Concept"
+                ))
+
+
+        # Return a structure similar to what the actual API would return for ALTERNATIVES
+        return ImageGenerationResultList(
+            results=[
+                ImageGenerationResult(
+                    content_id="mock_content_id_1",
+                    generated_images=mock_images
+                )
+            ]
+        )
+
+
+# Instantiate the mock image_generation tool
+image_generation = ImageGeneration()
+
+
+
+
+def get_team_colors(team_name: str) -> str:
+    """
+    Assigns appropriate team colors based on the team name.
+    If no specific colors are matched, defaults to a neutral scheme.
+    """
+    team_name_lower = team_name.lower()
+    # Explicitly added the requested teams to the color mapping
+    if "eclipse" in team_name_lower:
+        return "Black, Powder Purple, Off White"
+    elif "garrison" in team_name_lower:
+        return "Teal, Orange, White"
+    elif "miracles" in team_name_lower:
+        return "White, Lavender, Navy Blue"
+    elif "hawks" in team_name_lower:
+        return "Tan, Eggshell White, Fuschia"
+    elif "clovers" in team_name_lower:
+        return "Forest Green, Lime Green, Gold"
+    elif "storks" in team_name_lower:
+        return "White, Light Blue, Grey"
+    elif "hellcats" in team_name_lower:
+        return "Powder Blue, Crimson Red, Black, Ash Grey"
+    elif "candy rain" in team_name_lower:
+        return "Pastel Pink, Royal Blue, Lemon Yellow"
+    elif "jokers" in team_name_lower:
+        return "Matte Purple, Matte Green, Matte Yellow, White"
+    elif "canary" in team_name_lower:
+        return "Shiny Yellow, Neon Yellow, Matte Yellow/White"
+    elif "sandals" in team_name_lower:
+        return "Mocha, Beige, Crystal Ocean Blue, Cream"
+    elif "flatteners" in team_name_lower:
+        return "Charcoal Grey, Safety Orange, Light Yellow"
+    elif "condors" in team_name_lower:
+        return "Dark Brown, Tan, Cream, White"
+    elif "flames" in team_name_lower:
+        return "Fiery Red, Bright Orange, Sky Blue, Yellow"
+    elif "funnel chug" in team_name_lower:
+        return "Aqua Marine, Gold, Hot Pink"
+    elif "saints" in team_name_lower:
+        return "Gold, Silver, Eggshell White"
+    elif "jackals" in team_name_lower:
+        return "Desert Tan, Dark Brown, Black"
+    elif "megaladons" in team_name_lower:
+        return "Deep Ocean Blue, Shark Grey, Baby Blue"
+    elif "jypsees" in team_name_lower:
+        return "Silver, Ruby Red, Emerald Green, Gold"
+    elif "stars" in team_name_lower:
+        return "Royal Blue, Silver, Teal"
+    elif "soul" in team_name_lower:
+        return "Matte Purple, Gold, Matte Black"
+    elif "tribe" in team_name_lower:
+        return "Earthy Brown, Copper, Forest Green, Light Brown"
+    elif "blackouts" in team_name_lower:
+        return "Pitch Black, Matte Black, Dark Grey, Electric Gold/Blue"
+    elif "foxes" in team_name_lower:
+        return "Burnt Orange, White, Dark Brown"
+    elif "nomads" in team_name_lower:
+        return "Desert Sand, Dusty Rose, Teal"
+    elif "kraken" in team_name_lower:
+        return "Deep Teal, Black, Lime Green"
+    elif "polarbears" in team_name_lower:
+        return "Snow White, Ice Blue, Fishscale White, Grey"
+    elif "demons" in team_name_lower:
+        return "Blood Red, Black, Fiery Orange"
+    elif "jackrabbits" in team_name_lower:
+        return "Desert Tan, Sage Green, Cream"
+    elif "beacons" in team_name_lower:
+        return "Powder Purple, Bright White, Matte Navy"
+    elif "lemurs" in team_name_lower:
+        return "Ring-tailed Black, White, Grey"
+    elif "vikings" in team_name_lower:
+        return "Royal Purple, Black, Steel Grey"
+    elif "dismantlers" in team_name_lower:
+        return "Rust Red, Metallic Grey, Matte Black"
+    elif "snarf dragons" in team_name_lower:
+        return "Dragon Green, Mustard Yellow, Matte Brown"
+    elif "greyhounds" in team_name_lower:
+        return "Slate Grey, White, Silver"
+    elif "tigers" in team_name_lower:
+        return "Tiger Orange, Black, White"
+    else:
+        return "Silver Blue, Gold, Silver, Neon Red, Powder Yellow" # Default colors if no match
+
+
+def generate_team_logos(league_name: str, city_name: str, team_name: str, team_colors: str):
+    """
+    Generates football team logos and a logo concept based on provided team information.
+
+
+    Args:
+        league_name (str): The name of the football league.
+        city_name (str): The city name for the team.
+        team_name (str): The team's name (e.g., "Hawks).
+        team_colors (str): Comma-separated team colors (e.g., "Tan, Eggshell White, Fuschia).
+    """
+    full_team_name = f"{city_name} {team_name}"
+
+
+    # Generate a prompt for the main logo concept and alternatives
+    logo_concept_prompt = (
+        f"A football team logo concept for the {full_team_name} of the {league_name}, "
+        f"featuring a stylized {team_name.lower()} logo design, rendered in a palette of {team_colors}. "
+        f"The logo should embody the spirit of the {team_name.lower()}, showing strength and agility. "
+        f"Include the text \"{full_team_name}\" prominently and \"{league_name}\" subtly. "
+        f"A clean, crisp design in a modern, dynamic style suitable for a sports team."
+    )
+
+
+    print(f"\n--- Generating logos for {full_team_name} (Colors: {team_colors}) ---")
+
+
+    # Generate 4 alternative logos based on the concept prompt
+    # The `ALTERNATIVES` use case typically returns multiple images
+
+
+```python
+import dataclasses
+from typing import Union, Dict
+
+
+# Mocking image_generation module for demonstration purposes in this environment.
+# In a real tool context, this would be provided by the system.
+@dataclasses.dataclass
+class PerQueryResult:
+    index: str | None = None
+    publication_time: str | None = None
+    snippet: str | None = None
+    source_title: str | None = None
+    url: str | None = None
+
+
+@dataclasses.dataclass
+class Image:
+    prompt: str | None = None
+    url: str | None = None
+
+
+@dataclasses.dataclass
+class ImageGenerationResult:
+    content_id: str | None = None
+    generated_images: Union[list["Image"], None] = None
+
+
+@dataclasses.dataclass
+class ImageGenerationResultList:
+    results: Union[list["ImageGenerationResult"], None] = None
+
+
+class ImageGenerationUsecase:
+    ALTERNATIVES = "alternatives" # For generating multiple variations based on a single prompt.
+    CREATION = "creation" # For creating a single image based on a prompt.
+
+
+class ImageGeneration:
+    def generate_images(self, prompts: list[str], image_generation_usecase: str) -> ImageGenerationResultList:
+        """
+        Simulates the image generation API call.
+        In a real scenario, this would make an actual API call to an image generation service.
+        """
+        print(f"DEBUG: Simulating image generation for prompts: {prompts} with usecase: {image_generation_usecase}")
+        # Placeholder for actual image generation. In a real scenario, this would return actual image URLs.
+        # For demonstration, we'll return a mock structure.
+        mock_images = []
+        for i, prompt_text in enumerate(prompts):
+            # For ALTERNATIVES, generate multiple URLs for one prompt.
+            if image_generation_usecase == ImageGenerationUsecase.ALTERNATIVES:
+                # Simulate 4 alternative logos for the first prompt
+                if i == 0:
+                    for j in range(1, 5): # Generate 4 alternatives
+                        mock_images.append(Image(
+                            prompt=f"Alternative {j} for: {prompt_text}",
+                            url=f"[https://placehold.co/400x400/808080/FFFFFF?text=Logo](https://placehold.co/400x400/808080/FFFFFF?text=Logo){j}"
+                        ))
+                else:
+                    # For other prompts, just a single image for simplicity in this mock
+                    mock_images.append(Image(
+                        prompt=prompt_text,
+                        url=f"[https://placehold.co/400x400/808080/FFFFFF?text=Logo](https://placehold.co/400x400/808080/FFFFFF?text=Logo)"
+                    ))
+            elif image_generation_usecase == ImageGenerationUsecase.CREATION:
+                 mock_images.append(Image(
+                    prompt=prompt_text,
+                    url=f"[https://placehold.co/400x400/808080/FFFFFF?text=Concept](https://placehold.co/400x400/808080/FFFFFF?text=Concept)"
+                ))
+
+
+        # Return a structure similar to what the actual API would return for ALTERNATIVES
+        return ImageGenerationResultList(
+            results=[
+                ImageGenerationResult(
+                    content_id="mock_content_id_1",
+                    generated_images=mock_images
+                )
+            ]
+        )
+
+
+# Instantiate the mock image_generation tool
+image_generation = ImageGeneration()
+
+
+
+
+def get_team_colors(team_name: str) -> str:
+    """
+    Assigns appropriate team colors based on the team name.
+    If no specific colors are matched, defaults to a neutral scheme.
+    """
+    team_name_lower = team_name.lower()
+    # Explicitly added the requested teams to the color mapping
+    if "eclipse" in team_name_lower:
+        return "Black, Powder Purple, Off White"
+    elif "garrison" in team_name_lower:
+        return "Teal, Orange, White"
+    elif "miracles" in team_name_lower:
+        return "White, Lavender, Navy Blue"
+    elif "hawks" in team_name_lower:
+        return "Tan, Eggshell White, Fuschia"
+    elif "clovers" in team_name_lower:
+        return "Forest Green, Lime Green, Gold"
+    elif "storks" in team_name_lower:
+        return "White, Light Blue, Grey"
+    elif "hellcats" in team_name_lower:
+        return "Powder Blue, Crimson Red, Black, Ash Grey"
+    elif "candy rain" in team_name_lower:
+        return "Pastel Pink, Royal Blue, Lemon Yellow"
+    elif "jokers" in team_name_lower:
+        return "Matte Purple, Matte Green, Matte Yellow, White"
+    elif "canary" in team_name_lower:
+        return "Shiny Yellow, Neon Yellow, Matte Yellow/White"
+    elif "sandals" in team_name_lower:
+        return "Mocha, Beige, Crystal Ocean Blue, Cream"
+    elif "flatteners" in team_name_lower:
+        return "Charcoal Grey, Safety Orange, Light Yellow"
+    elif "condors" in team_name_lower:
+        return "Dark Brown, Tan, Cream, White"
+    elif "flames" in team_name_lower:
+        return "Fiery Red, Bright Orange, Sky Blue, Yellow"
+    elif "funnel chug" in team_name_lower:
+        return "Aqua Marine, Gold, Hot Pink"
+    elif "saints" in team_name_lower:
+        return "Gold, Silver, Eggshell White"
+    elif "jackals" in team_name_lower:
+        return "Desert Tan, Dark Brown, Black"
+    elif "megaladons" in team_name_lower:
+        return "Deep Ocean Blue, Shark Grey, Baby Blue"
+    elif "jypsees" in team_name_lower:
+        return "Silver, Ruby Red, Emerald Green, Gold"
+    elif "stars" in team_name_lower:
+        return "Royal Blue, Silver, Teal"
+    elif "soul" in team_name_lower:
+        return "Matte Purple, Gold, Matte Black"
+    elif "tribe" in team_name_lower:
+        return "Earthy Brown, Copper, Forest Green, Light Brown"
+    elif "blackouts" in team_name_lower:
+        return "Pitch Black, Matte Black, Dark Grey, Electric Gold/Blue"
+    elif "foxes" in team_name_lower:
+        return "Burnt Orange, White, Dark Brown"
+    elif "nomads" in team_name_lower:
+        return "Desert Sand, Dusty Rose, Teal"
+    elif "kraken" in team_name_lower:
+        return "Deep Teal, Black, Lime Green"
+    elif "polarbears" in team_name_lower:
+        return "Snow White, Ice Blue, Fishscale White, Grey"
+    elif "demons" in team_name_lower:
+        return "Blood Red, Black, Fiery Orange"
+    elif "jackrabbits" in team_name_lower:
+        return "Desert Tan, Sage Green, Cream"
+    elif "beacons" in team_name_lower:
+        return "Powder Purple, Bright White, Matte Navy"
+    elif "lemurs" in team_name_lower:
+        return "Ring-tailed Black, White, Grey"
+    elif "vikings" in team_name_lower:
+        return "Royal Purple, Black, Steel Grey"
+    elif "dismantlers" in team_name_lower:
+        return "Rust Red, Metallic Grey, Matte Black"
+    elif "snarf dragons" in team_name_lower:
+        return "Dragon Green, Mustard Yellow, Matte Brown"
+    elif "greyhounds" in team_name_lower:
+        return "Slate Grey, White, Silver"
+    elif "tigers" in team_name_lower:
+        return "Tiger Orange, Black, White"
+    else:
+        return "Silver Blue, Gold, Silver, Neon Red, Powder Yellow" # Default colors if no match
+
+
+def generate_team_logos(league_name: str, city_name: str, team_name: str, team_colors: str):
+    """
+    Generates football team logos and a logo concept based on provided team information.
+
+
+    Args:
+        league_name (str): The name of the football league.
+        city_name (str): The city name for the team.
+        team_name (str): The team's name (e.g., "Hawks).
+        team_colors (str): Comma-separated team colors (e.g., "Tan, Eggshell White, Fuschia).
+    """
+    full_team_name = f"{city_name} {team_name}"
+
+
+    # Generate a prompt for the main logo concept and alternatives
+    logo_concept_prompt = (
+        f"A football team logo concept for the {full_team_name} of the {league_name}, "
+        f"featuring a stylized {team_name.lower()} logo design, rendered in a palette of {team_colors}. "
+        f"The logo should embody the spirit of the {team_name.lower()}, showing strength and agility. "
+        f"Include the text \"{full_team_name}\" prominently and \"{league_name}\" subtly. "
+        f"A clean, crisp design in a modern, dynamic style suitable for a sports team."
+    )
+
+
+    print(f"\n--- Generating logos for {full_team_name} (Colors: {team_colors}) ---")
+
+
+    # Generate 4 alternative logos based on the concept prompt
+    # The `ALTERNATIVES` use case typically returns multiple images for a single prompt
+    logo_results = image_generation.generate_images(
+        prompts=[logo_concept_prompt],
+        image_generation_usecase=image_generation.ImageGenerationUsecase.ALTERNATIVES
+    )
+
+
+    if logo_results and logo_results.results:
+        # Assuming the first result block contains all the generated images
+        generated_images = logo_results.results[0].generated_images
+        print("\n--- Generated Football Team Logos ---")
+        for i, img in enumerate(generated_images):
+            if i < 4:  # Display up to 4 alternative logos
+                print(f"Logo {i+1}: {img.url}")
+            else:
+                break # Stop after 4 logos if more are returned
+
+
+        # The initial prompt itself serves as the "Football Team Logo Concept"
+        print("\n--- Football Team Logo Concept ---")
+        print(logo_concept_prompt)
+
+
+    else:
+        print("Failed to generate logos. No results returned.")
+
+
+# --- Provided Teams Data ---
+teams_data = {
+    "league_name": "Heart Football League",
+    "teams": [
+        {
+            "city_name": "Kaitlynnville",
+            "team_name": "Eclipse",
+            "team_colors": "Black, Powder Purple, Off White",
+            "offensive_playbook": "Air Raid",
+            "defensive_playbook": "Blitz Heavy",
+            "stadium": {
+                "name": "Needs Work",
+                "capacity": 64397
+            },
+            "fan_base": "Balanced",
+            "owner": "League",
+            "media_market": {
+                "size": "500,000",
+                "type": "Shrinking"
+            },
+            "mega_chalices": 0
+        },
+        {
+            "city_name": "Gu'Bare",
+            "team_name": "Garrison",
+            "team_colors": "Teal, Orange, White",
+            "offensive_playbook": "Balanced Pass",
+            "defensive_playbook": "4-4",
+            "stadium": {
+                "name": "Old",
+                "capacity": 86688
+            },
+            "fan_base": "Average",
+            "owner": "Clothing Designer",
+            "media_market": {
+                "size": "7 mil.",
+                "type": "Medium Huge"
+            },
+            "mega_chalices": 0
+        },
+        {
+            "city_name": "Miki Mountain",
+            "team_name": "Miracles",
+            "team_colors": "White, Lavender, Navy Blue",
+            "offensive_playbook": "Multi-Look",
+            "defensive_playbook": "4-2",
+            "stadium": {
+                "name": "Needs Work",
+                "capacity": 58373
+            },
+            "fan_base": "Just above Weak",
+            "owner": "Appliance Corporation",
+            "media_market": {
+                "size": "700,000",
+                "type": "Growing"
+            },
+            "mega_chalices": 0
+        },
+        {
+            "city_name": "Heirsentia",
+            "team_name": "Hawks",
+            "team_colors": "Tan, Eggshell White, Fuschia",
+            "offensive_playbook": "Power Run",
+            "defensive_playbook": "Balanced",
+            "stadium": {
+                "name": "Cozy",
+                "capacity": 63123
+            },
+            "fan_base": "Rabid",
+            "owner": "Hedgefund Manager",
+            "media_market": {
+                "size": "4 mil.",
+                "type": "Low Huge"
+            },
+            "mega_chalices": 4
+        },
+        {
+            "city_name": "Brightcloud",
+            "team_name": "Clovers",
+            "team_colors": "Forest Green, Lime Green, Gold", # Added team_colors
+            "offensive_playbook": "Pass Heavy",
+            "defensive_playbook": "Blitz Heavy",
+            "stadium": {
+                "name": "Different/Odd",
+                "capacity": 61616
+            },
+            "fan_base": "Grass is Greener",
+            "owner": "Family",
+            "media_market": {
+                "size": "2 mil.",
+                "type": "Medium Average"
+            },
+            "mega_chalices": 3
+        },
+        {
+            "city_name": "Silvermind",
+            "team_name": "Storks",
+            "team_colors": "White, Light Blue, Grey", # Added team_colors
+            "offensive_playbook": "Run Heavy",
+            "defensive_playbook": "Man to Man",
+            "stadium": {
+                "name": "Cozy",
+                "capacity": 59959
+            },
+            "fan_base": "Unrealistic",
+            "owner": "Former Player",
+            "media_market": {
+                "size": "1 mil.",
+                "type": "Low Average"
+            },
+            "mega_chalices": 3
+        },
+        {
+            "city_name": "Reynava",
+            "team_name": "Hellcats",
+            "team_colors": "Powder Blue, Crimson Red, Black, Ash Grey", # Added team_colors
+            "offensive_playbook": "No Huddle",
+            "defensive_playbook": "Awe",
+            "stadium": {
+                "name": "Average",
+                "capacity": 59286
+            },
+            "fan_base": "Weak",
+            "owner": "Family",
+            "media_market": {
+                "size": "1 mil.",
+                "type": "Low Average"
+            },
+            "mega_chalices": 7
+        },
+        {
+            "city_name": "Christiano",
+            "team_name": "Candy Rain",
+            "team_colors": "Pastel Pink, Royal Blue, Lemon Yellow", # Added team_colors
+            "offensive_playbook": "Run n' Gun",
+            "defensive_playbook": "Blitz Heavy",
+            "stadium": {
+                "name": "Needs Work",
+                "capacity": 61043
+            },
+            "fan_base": "Trending Down",
+            "owner": "Entertainment Mogul",
+            "media_market": {
+                "size": "250,000",
+                "type": "Rural"
+            },
+            "mega_chalices": 1
+        },
+        {
+            "city_name": "Jakobian",
+            "team_name": "Jokers",
+            "team_colors": "Matte Purple, Matte Green, Matte Yellow, White", # Added team_colors
+            "offensive_playbook": "West Coast",
+            "defensive_playbook": "3-5",
+            "stadium": {
+                "name": "Cozy",
+                "capacity": 54000
+            },
+            "fan_base": "Strong",
+            "owner": "Automotive Corporation",
+            "media_market": {
+                "size": "700,000",
+                "type": "Growing"
+            },
+            "mega_chalices": 4
+        },
+        {
+            "city_name": "Queens Cove",
+            "team_name": "Canary's",
+            "team_colors": "Shiny Yellow, Neon Yellow, Matte Yellow/White", # Added team_colors
+            "offensive_playbook": "Balanced Pass",
+            "defensive_playbook": "4-4",
+            "stadium": {
+                "name": "Cozy",
+                "capacity": 54111
+            },
+            "fan_base": "Fair Weather",
+            "owner": "Former Coach (HOF)",
+            "media_market": {
+                "size": "3 mil.",
+                "type": "Average"
+            },
+            "mega_chalices": 0
+        },
+        {
+            "city_name": "Zorisova",
+            "team_name": "Sandals",
+            "team_colors": "Mocha, Beige, Crystal Ocean Blue, Cream", # Added team_colors
+            "offensive_playbook": "Balanced Run",
+            "defensive_playbook": "4-6",
+            "stadium": {
+                "name": "10 years",
+                "capacity": 89000
+            },
+            "fan_base": "Trending Up",
+            "owner": "Lifelong Fan",
+            "media_market": {
+                "size": "7 mil.",
+                "type": "Medium Huge"
+            },
+            "mega_chalices": 9
+        },
+        {
+            "city_name": "Farspace",
+            "team_name": "Flatteners",
+            "team_colors": "Charcoal Grey, Safety Orange, Light Yellow", # Added team_colors
+            "offensive_playbook": "Pistol",
+            "defensive_playbook": "3-5",
+            "stadium": {
+                "name": "Disrepair",
+                "capacity": 47474
+            },
+            "fan_base": "Non Existent",
+            "owner": "Fans",
+            "media_market": {
+                "size": "500,000",
+                "type": "Shrinking"
+            },
+            "mega_chalices": 0
+        },
+        {
+            "city_name": "Closesight",
+            "team_name": "Condors",
+            "team_colors": "Dark Brown, Tan, Cream, White", # Added team_colors
+            "offensive_playbook": "Singleback",
+            "defensive_playbook": "Cover 1 Zone",
+            "stadium": {
+                "name": "Old",
+                "capacity": 47883
+            },
+            "fan_base": "Almost Strong",
+            "owner": "Lottery Winner",
+            "media_market": {
+                "size": "2 mil.",
+                "type": "Medium Average"
+            },
+            "mega_chalices": 0
+        },
+        {
+            "city_name": "Sunsprout",
+            "team_name": "Flames",
+            "team_colors": "Fiery Red, Bright Orange, Sky Blue, Yellow", # Added team_colors
+            "offensive_playbook": "Shotgun",
+            "defensive_playbook": "4-3",
+            "stadium": {
+                "name": "Needs Work",
+                "capacity": 51050
+            },
+            "fan_base": "Unrealistic",
+            "owner": "Investment Group",
+            "media_market": {
+                "size": "250,000",
+                "type": "Rural"
+            },
+            "mega_chalices": 0
+        },
+        {
+            "city_name": "Beloved",
+            "team_name": "Funnel Chug",
+            "team_colors": "Aqua Marine, Gold, Hot Pink", # Added team_colors
+            "offensive_playbook": "Power I",
+            "defensive_playbook": "Cover 3 Zone Blitz",
+            "stadium": {
+                "name": "New",
+                "capacity": 103324
+            },
+            "fan_base": "Grass is Greener",
+            "owner": "International Investor",
+            "media_market": {
+                "size": "10 mil.",
+                "type": "Huge"
+            },
+            "mega_chalices": 18
+        },
+        {
+            "city_name": "San Terrell",
+            "team_name": "Saints",
+            "team_colors": "Gold, Silver, Eggshell White", # Added team_colors
+            "offensive_playbook": "Run Heavy",
+            "defensive_playbook": "Man to Man",
+            "stadium": {
+                "name": "Old",
+                "capacity": 70489
+            },
+            "fan_base": "Bandwagon",
+            "owner": "Scumbag",
+            "media_market": {
+                "size": "10 mil.",
+                "type": "Huge"
+            },
+            "mega_chalices": 7
+        },
+        {
+            "city_name": "Justinopolis",
+            "team_name": "Jackals",
+            "team_colors": "Desert Tan, Dark Brown, Black", # Added team_colors
+            "offensive_playbook": "Air Raid",
+            "defensive_playbook": "Zone Heavy",
+            "stadium": {
+                "name": "Average",
+                "capacity": 81581
+            },
+            "fan_base": "Socialit/Eliteist",
+            "owner": "Tech Billionaire",
+            "media_market": {
+                "size": "4 mil.",
+                "type": "Low Huge"
+            },
+            "mega_chalices": 13
+        },
+        {
+            "city_name": "Matteochi",
+            "team_name": "Megaladons",
+            "team_colors": "Deep Ocean Blue, Shark Grey, Baby Blue", # Added team_colors
+            "offensive_playbook": "Pass Heavy",
+            "defensive_playbook": "2-4",
+            "stadium": {
+                "name": "Disrepair",
+                "capacity": 49187
+            },
+            "fan_base": "Non Existent",
+            "owner": "Four Families",
+            "media_market": {
+                "size": "4 mil.",
+                "type": "Low Huge"
+            },
+            "mega_chalices": 6
+        },
+        {
+            "city_name": "Jessadelphia",
+            "team_name": "Jypsees",
+            "team_colors": "Silver, Ruby Red, Emerald Green, Gold", # Added team_colors
+            "offensive_playbook": "Shotgun",
+            "defensive_playbook": "Zone/Man",
+            "stadium": {
+                "name": "Different/Odd",
+                "capacity": 90000
+            },
+            "fan_base": "Just Below Strong",
+            "owner": "7 Families",
+            "media_market": {
+                "size": "3 mil.",
+                "type": "Average"
+            },
+            "mega_chalices": 5
+        },
+        {
+            "city_name": "Libertine",
+            "team_name": "Stars",
+            "team_colors": "Royal Blue, Silver, Teal", # Added team_colors
+            "offensive_playbook": "Spread",
+            "defensive_playbook": "3-4",
+            "stadium": {
+                "name": "New",
+                "capacity": 72727
+            },
+            "fan_base": "Average",
+            "owner": "Oil Tycoon",
+            "media_market": {
+                "size": "2 mil.",
+                "type": "Unknown"
+            },
+            "mega_chalices": 3
+        },
+        {
+            "city_name": "Golden Siren",
+            "team_name": "Soul",
+            "team_colors": "Matte Purple, Gold, Matte Black", # Added team_colors
+            "offensive_playbook": "Splitback/Pro form",
+            "defensive_playbook": "5-2",
+            "stadium": {
+                "name": "State of the Art",
+                "capacity": 100010
+            },
+            "fan_base": "Strong",
+            "owner": "League",
+            "media_market": {
+                "size": "3 mil.",
+                "type": "Average"
+            },
+            "mega_chalices": 3
+        },
+        {
+            "city_name": "Tiapma'atzu",
+            "team_name": "Tribe",
+            "team_colors": "Earthy Brown, Copper, Forest Green, Light Brown", # Added team_colors
+            "offensive_playbook": "Option Run",
+            "defensive_playbook": "3-3-3",
+            "stadium": {
+                "name": "Needs Work",
+                "capacity": 78182
+            },
+            "fan_base": "Above Average",
+            "owner": "Toy Corporation",
+            "media_market": {
+                "size": "250,000",
+                "type": "Rural"
+            },
+            "mega_chalices": 0
+        },
+        {
+            "city_name": "San Terrell",
+            "team_name": "Blackouts",
+            "team_colors": "Pitch Black, Matte Black, Dark Grey, Electric Gold/Blue", # Added team_colors
+            "offensive_playbook": "Shock",
+            "defensive_playbook": "Awe",
+            "stadium": {
+                "name": "State of the Art",
+                "capacity": 124333
+            },
+            "fan_base": "Mythical",
+            "owner": "Former Player",
+            "media_market": {
+                "size": "10 mil.",
+                "type": "Huge"
+            },
+            "mega_chalices": 24
+        },
+        {
+            "city_name": "Firesky",
+            "team_name": "Foxes",
+            "team_colors": "Burnt Orange, White, Dark Brown", # Added team_colors
+            "offensive_playbook": "Shock",
+            "defensive_playbook": "4-6",
+            "stadium": {
+                "name": "Average",
+                "capacity": 74011
+            },
+            "fan_base": "Just Below Strong",
+            "owner": "Oil Tycoon",
+            "media_market": {
+                "size": "700,000",
+                "type": "Growing"
+            },
+            "mega_chalices": 5
+        },
+        {
+            "city_name": "Naveah",
+            "team_name": "Nomads",
+            "team_colors": "Desert Sand, Dusty Rose, Teal", # Added team_colors
+            "offensive_playbook": "Option Pass",
+            "defensive_playbook": "Cover 2",
+            "stadium": {
+                "name": "10 Years",
+                "capacity": 77401
+            },
+            "fan_base": "Balanced",
+            "owner": "Fans",
+            "media_market": {
+                "size": "1 mil.",
+                "type": "Low Average"
+            },
+            "mega_chalices": 0
+        },
+        {
+            "city_name": "Kaylean",
+            "team_name": "Kraken",
+            "team_colors": "Deep Teal, Black, Lime Green", # Added team_colors
+            "offensive_playbook": "Power Run",
+            "defensive_playbook": "4-2",
+            "stadium": {
+                "name": "State of the Art",
+                "capacity": 87187
+            },
+            "fan_base": "Just Above Weak",
+            "owner": "Former Analyst (HOF)",
+            "media_market": {
+                "size": "2 mil.",
+                "type": "Medium Average"
+            },
+            "mega_chalices": 1
+        },
+        {
+            "city_name": "Emahney Park",
+            "team_name": "Polarbears",
+            "team_colors": "Snow White, Ice Blue, Fishscale White, Grey", # Added team_colors
+            "offensive_playbook": "Singleback",
+            "defensive_playbook": "Balanced",
+            "stadium": {
+                "name": "8 years",
+                "capacity": 96696
+            },
+            "fan_base": "Mythical",
+            "owner": "Hospital Group",
+            "media_market": {
+                "size": "7 mil.",
+                "type": "Medium Huge"
+            },
+            "mega_chalices": 7
+        },
+        {
+            "city_name": "Deannaton",
+            "team_name": "Demons",
+            "team_colors": "Blood Red, Black, Fiery Orange", # Added team_colors
+            "offensive_playbook": "Splitback/Pro Form",
+            "defensive_playbook": "Zone/Man",
+            "stadium": {
+                "name": "Disrepair",
+                "capacity": 71000
+            },
+            "fan_base": "Bandwagon",
+            "owner": "Tech Billionaire",
+            "media_market": {
+                "size": "500,000",
+                "type": "Shrinking"
+            },
+            "mega_chalices": 0
+        },
+        {
+            "city_name": "Jasmyne Junction",
+            "team_name": "Jackrabbits",
+            "team_colors": "Desert Tan, Sage Green, Cream", # Added team_colors
+            "offensive_playbook": "Power I",
+            "defensive_playbook": "2-4",
+            "stadium": {
+                "name": "Average",
+                "capacity": 61061
+            },
+            "fan_base": "Trending Up",
+            "owner": "Billionaire (Old Money)",
+            "media_market": {
+                "size": "1 mil.",
+                "type": "Low Average"
+            },
+            "mega_chalices": 5
+        },
+        {
+            "city_name": "Babelonia",
+            "team_name": "Beacons",
+            "team_colors": "Powder Purple, Bright White, Matte Navy", # Added team_colors
+            "offensive_playbook": "Pistol",
+            "defensive_playbook": "3-3-3",
+            "stadium": {
+                "name": "Different/Odd",
+                "capacity": 55000
+            },
+            "fan_base": "Above Average",
+            "owner": "Inventor",
+            "media_market": {
+                "size": "500,000",
+                "type": "Shrinking"
+            },
+            "mega_chalices": 2
+        },
+        {
+            "city_name": "Longsite",
+            "team_name": "Lemurs",
+            "team_colors": "Ring-tailed Black, White, Grey", # Added team_colors
+            "offensive_playbook": "Run n' Gun",
+            "defensive_playbook": "4-3",
+            "stadium": {
+                "name": "Needs Work",
+                "capacity": 54186
+            },
+            "fan_base": "Fair Weather",
+            "owner": "Hedgefund Manager",
+            "media_market": {
+                "size": "3 mil.",
+                "type": "Average"
+            },
+            "mega_chalices": 6
+        },
+        {
+            "city_name": "Visiente'",
+            "team_name": "Vikings",
+            "team_colors": "Royal Purple, Black, Steel Grey", # Added team_colors
+            "offensive_playbook": "No Huddle",
+            "defensive_playbook": "5-2",
+            "stadium": {
+                "name": "New",
+                "capacity": 102120
+            },
+            "fan_base": "Socialite/Eliteist",
+            "owner": "Investment Group",
+            "media_market": {
+                "size": "4 mil.",
+                "type": "Low Huge"
+            },
+            "mega_chalices": 9
+        },
+        {
+            "city_name": "Dennisiargo",
+            "team_name": "Dismantlers",
+            "team_colors": "Rust Red, Metallic Grey, Matte Black", # Added team_colors
+            "offensive_playbook": "Spread",
+            "defensive_playbook": "3-4",
+            "stadium": {
+                "name": "Old",
+                "capacity": 41144
+            },
+            "fan_base": "Weak",
+            "owner": "Lifelong Fan",
+            "media_market": {
+                "size": "250,000",
+                "type": "Rural"
+            },
+            "mega_chalices": 0
+        },
+        {
+            "city_name": "Sarahite",
+            "team_name": "Snarf Dragons",
+            "team_colors": "Dragon Green, Mustard Yellow, Matte Brown", # Added team_colors
+            "offensive_playbook": "Multi-Look",
+            "defensive_playbook": "Zone Heavy",
+            "stadium": {
+                "name": "Disrepair",
+                "capacity": 51000
+            },
+            "fan_base": "Trending Down",
+            "owner": "Media Mogul",
+            "media_market": {
+                "size": "750,000",
+                "type": "Growing"
+            },
+            "mega_chalices": 1
+        },
+        {
+            "city_name": "Golden Sunset",
+            "team_name": "Greyhounds",
+            "team_colors": "Slate Grey, White, Silver", # Added team_colors
+            "offensive_playbook": "West Coast",
+            "defensive_playbook": "Cover 2",
+            "stadium": {
+                "name": "State of the Art",
+                "capacity": 109901
+            },
+            "fan_base": "Rabid",
+            "owner": "Descendant of League Founder",
+            "media_market": {
+                "size": "10 mil.",
+                "type": "Huge"
+            },
+            "mega_chalices": 0
+        },
+        {
+            "city_name": "Takumzuh",
+            "team_name": "Tigers",
+            "team_colors": "Tiger Orange, Black, White", # Added team_colors
+            "offensive_playbook": "Balanced Run",
+            "defensive_playbook": "Cover 1 (Zone Blitz)",
+            "stadium": {
+                "name": "10 years",
+                "capacity": 94000
+            },
+            "fan_base": "Growing",
+            "owner": "Scumbag",
+            "media_market": {
+                "size": "10 mil.",
+                "type": "Huge"
+            },
+            "mega_chalices": 6
+        }
+    ]
+}
+
+
+# This loop ensures that even if team_colors are missing from teams_data initially,
+# they will be populated from get_team_colors before logo generation.
+for team_info in teams_data["teams"]:
+    if "team_colors" not in team_info:
+        team_info["team_colors"] = get_team_colors(team_info["team_name"])
+
+
+# Iterate through each team and generate logos
+league_name = teams_data["league_name"]
+for team_info in teams_data["teams"]:
+    city_name = team_info["city_name"]
+    team_name = team_info["team_name"]
+    # We can directly use team_info["team_colors"] here as it's now guaranteed to exist
+    team_colors = team_info["team_colors"]
+    generate_team_logos(league_name, city_name, team_name, team_colors)
+
+
+
+
+Logo Concept Generator
+import dataclasses
+from typing import Union, Dict
+
+
+# Mocking image_generation module for demonstration purposes in this environment.
+# In a real tool context, this would be provided by the system.
+@dataclasses.dataclass
+class PerQueryResult:
+    index: str | None = None
+    publication_time: str | None = None
+    snippet: str | None = None
+    source_title: str | None = None
+    url: str | None = None
+
+
+@dataclasses.dataclass
+class Image:
+    prompt: str | None = None
+    url: str | None = None
+
+
+@dataclasses.dataclass
+class ImageGenerationResult:
+    content_id: str | None = None
+    generated_images: Union[list["Image"], None] = None
+
+
+@dataclasses.dataclass
+class ImageGenerationResultList:
+    results: Union[list["ImageGenerationResult"], None] = None
+
+
+class ImageGenerationUsecase:
+    ALTERNATIVES = "alternatives" # For generating multiple variations based on a single prompt.
+    CREATION = "creation" # For creating a single image based on a prompt.
+
+
+class ImageGeneration:
+    def generate_images(self, prompts: list[str], image_generation_usecase: str) -> ImageGenerationResultList:
+        """
+        Simulates the image generation API call.
+        In a real scenario, this would make an actual API call to an image generation service.
+        """
+        print(f"DEBUG: Simulating image generation for prompts: {prompts} with usecase: {image_generation_usecase}")
+        # Placeholder for actual image generation. In a real scenario, this would return actual image URLs.
+        # For demonstration, we'll return a mock structure.
+        mock_images = []
+        for i, prompt_text in enumerate(prompts):
+            # For ALTERNATIVES, generate multiple URLs for one prompt.
+            if image_generation_usecase == ImageGenerationUsecase.ALTERNATIVES:
+                # Simulate 4 alternative logos for the first prompt
+                if i == 0:
+                    for j in range(1, 5): # Generate 4 alternatives
+                        mock_images.append(Image(
+                            prompt=f"Alternative {j} for: {prompt_text}",
+                            url=f"https://placehold.co/400x400/808080/FFFFFF?text=Logo{j}"
+                        ))
+                else:
+                    # For other prompts, just a single image for simplicity in this mock
+                    mock_images.append(Image(
+                        prompt=prompt_text,
+                        url=f"https://placehold.co/400x400/808080/FFFFFF?text=Logo"
+                    ))
+            elif image_generation_usecase == ImageGenerationUsecase.CREATION:
+                 mock_images.append(Image(
+                    prompt=prompt_text,
+                    url=f"https://placehold.co/400x400/808080/FFFFFF?text=Concept"
+                ))
+
+
+        # Return a structure similar to what the actual API would return for ALTERNATIVES
+        return ImageGenerationResultList(
+            results=[
+                ImageGenerationResult(
+                    content_id="mock_content_id_1",
+                    generated_images=mock_images
+                )
+            ]
+        )
+
+
+# Instantiate the mock image_generation tool
+image_generation = ImageGeneration()
+
+
+
+
+def generate_team_logos(league_name: str, city_name: str, team_name: str, team_colors: str):
+    """
+    Generates football team logos and a logo concept based on provided team information.
+
+
+    Args:
+        league_name (str): The name of the football league.
+        city_name (str): The city name for the team.
+        team_name (str): The team's name (e.g., "Hawks").
+        team_colors (str): Comma-separated team colors (e.g., "Tan, Eggshell White, Fuschia").
+    """
+    full_team_name = f"{city_name} {team_name}"
+
+
+    # Generate a prompt for the main logo concept and alternatives
+    logo_concept_prompt = (
+        f"A football team logo concept for the {full_team_name} of the {league_name}, "
+        f"featuring a stylized {team_name.lower()} in flight, its wings spread wide, and rendered in a gradient of {team_colors.split(',')[0].strip()} and {team_colors.split(',')[1].strip()}. "
+        f"The {team_name.lower()}'s eyes are a piercing {team_colors.split(',')[-1].strip()}, representing the team's intensity and agility. "
+        f"The logo is set against a solid background, a blend of {team_colors.split(',')[1].strip()} and a hint of {team_colors.split(',')[0].strip()}. "
+        f"Below the {team_name.lower()}, the words \"{full_team_name}\" are written in a bold, {team_colors.split(',')[-1].strip()} font, "
+        f"and the words \"{league_name}\" are subtly inscribed in a smaller, {team_colors.split(',')[0].strip()} font beneath. "
+        f"The logo exudes power and grace, with a distinct edge that captures the spirit of the team. "
+        f"A clean, crisp design in a vintage, collegiate style."
+    )
+
+
+    print(f"Generating logos for {full_team_name}...")
+
+
+    # Generate 4 alternative logos based on the concept prompt
+    # The `ALTERNATIVES` use case typically returns multiple images for a single prompt
+    logo
+
+
+```python
+import dataclasses
+from typing import Union, Dict
+
+
+# Mocking image_generation module for demonstration purposes in this environment.
+# In a real tool context, this would be provided by the system.
+@dataclasses.dataclass
+class PerQueryResult:
+    index: str | None = None
+    publication_time: str | None = None
+    snippet: str | None = None
+    source_title: str | None = None
+    url: str | None = None
+
+
+@dataclasses.dataclass
+class Image:
+    prompt: str | None = None
+    url: str | None = None
+
+
+@dataclasses.dataclass
+class ImageGenerationResult:
+    content_id: str | None = None
+    generated_images: Union[list["Image"], None] = None
+
+
+@dataclasses.dataclass
+class ImageGenerationResultList:
+    results: Union[list["ImageGenerationResult"], None] = None
+
+
+class ImageGenerationUsecase:
+    ALTERNATIVES = "alternatives" # For generating multiple variations based on a single prompt.
+    CREATION = "creation" # For creating a single image based on a prompt.
+
+
+class ImageGeneration:
+    def generate_images(self, prompts: list[str], image_generation_usecase: str) -> ImageGenerationResultList:
+        """
+        Simulates the image generation API call.
+        In a real scenario, this would make an actual API call to an image generation service.
+        """
+        print(f"DEBUG: Simulating image generation for prompts: {prompts} with usecase: {image_generation_usecase}")
+        # Placeholder for actual image generation. In a real scenario, this would return actual image URLs.
+        # For demonstration, we'll return a mock structure.
+        mock_images = []
+        for i, prompt_text in enumerate(prompts):
+            # For ALTERNATIVES, generate multiple URLs for one prompt.
+            if image_generation_usecase == ImageGenerationUsecase.ALTERNATIVES:
+                # Simulate 4 alternative logos for the first prompt
+                if i == 0:
+                    for j in range(1, 5): # Generate 4 alternatives
+                        mock_images.append(Image(
+                            prompt=f"Alternative {j} for: {prompt_text}",
+                            url=f"[https://placehold.co/400x400/808080/FFFFFF?text=Logo](https://placehold.co/400x400/808080/FFFFFF?text=Logo){j}"
+                        ))
+                else:
+                    # For other prompts, just a single image for simplicity in this mock
+                    mock_images.append(Image(
+                        prompt=prompt_text,
+                        url=f"[https://placehold.co/400x400/808080/FFFFFF?text=Logo](https://placehold.co/400x400/808080/FFFFFF?text=Logo)"
+                    ))
+            elif image_generation_usecase == ImageGenerationUsecase.CREATION:
+                 mock_images.append(Image(
+                    prompt=prompt_text,
+                    url=f"[https://placehold.co/400x400/808080/FFFFFF?text=Concept](https://placehold.co/400x400/808080/FFFFFF?text=Concept)"
+                ))
+
+
+        # Return a structure similar to what the actual API would return for ALTERNATIVES
+        return ImageGenerationResultList(
+            results=[
+                ImageGenerationResult(
+                    content_id="mock_content_id_1",
+                    generated_images=mock_images
+                )
+            ]
+        )
+
+
+# Instantiate the mock image_generation tool
+image_generation = ImageGeneration()
+
+
+
+
+def generate_team_logos(league_name: str, city_name: str, team_name: str, team_colors: str):
+    """
+    Generates football team logos and a logo concept based on provided team information.
+
+
+    Args:
+        league_name (str): The name of the football league.
+        city_name (str): The city name for the team.
+        team_name (str): The team's name (e.g., "Hawks").
+        team_colors (str): Comma-separated team colors (e.g., "Tan, Eggshell White, Fuschia").
+    """
+    full_team_name = f"{city_name} {team_name}"
+
+
+    # Generate a prompt for the main logo concept and alternatives
+    logo_concept_prompt = (
+        f"A football team logo concept for the {full_team_name} of the {league_name}, "
+        f"featuring a stylized {team_name.lower()} in flight, its wings spread wide, and rendered in a gradient of {team_colors.split(',')[0].strip()} and {team_colors.split(',')[1].strip()}. "
+        f"The {team_name.lower()}'s eyes are a piercing {team_colors.split(',')[-1].strip()}, representing the team's intensity and agility. "
+        f"The logo is set against a solid background, a blend of {team_colors.split(',')[1].strip()} and a hint of {team_colors.split(',')[0].strip()}. "
+        f"Below the {team_name.lower()}, the words \"{full_team_name}\" are written in a bold, {team_colors.split(',')[-1].strip()} font, "
+        f"and the words \"{league_name}\" are subtly inscribed in a smaller, {team_colors.split(',')[0].strip()} font beneath. "
+        f"The logo exudes power and grace, with a distinct edge that captures the spirit of the team. "
+        f"A clean, crisp design in a vintage, collegiate style."
+    )
+
+
+    print(f"Generating logos for {full_team_name}...")
+
+
+    # Generate 4 alternative logos based on the concept prompt
+    # The `ALTERNATIVES` use case typically returns multiple images for a single prompt
+    logo_results = image_generation.generate_images(
+        prompts=[logo_concept_prompt],
+        image_generation_usecase=image_generation.ImageGenerationUsecase.ALTERNATIVES
+    )
+
+
+    if logo_results and logo_results.results:
+        # Assuming the first result block contains all the generated images
+        generated_images = logo_results.results[0].generated_images
+        print("\n--- Generated Football Team Logos ---")
+        for i, img in enumerate(generated_images):
+            if i < 4:  # Display up to 4 alternative logos
+                print(f"Logo {i+1}: {img.url}")
+            else:
+                break # Stop after 4 logos if more are returned
+
+
+        # The initial prompt itself serves as the "Football Team Logo Concept"
+        print("\n--- Football Team Logo Concept ---")
+        print(logo_concept_prompt)
+
+
+    else:
+        print("Failed to generate logos. No results returned.")
+
+

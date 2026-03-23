@@ -1,0 +1,1315 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Press Conference Simulator</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter for a clean, modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles to ensure Inter font is applied */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Optional: Basic styling for the root div to fill the viewport */
+        #root {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-900">
+    <!-- This is where your React app will be mounted -->
+    <div id="root"></div>
+
+    <!-- React and ReactDOM CDNs -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Babel Standalone for JSX transformation in the browser. Not recommended for production. -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Your React App component code directly embedded -->
+    <script type="text/babel">
+        // Removed: import React, { useState, useEffect, useRef } from 'react';
+        // These are now accessed directly from the global 'React' object provided by the CDN.
+
+        // Tailwind CSS is assumed to be available
+        // For lucide-react icons, we'll use inline SVGs as a fallback if lucide-react isn't directly loaded.
+        // For example, a simple microphone icon for VUI.
+
+        function App() {
+          // Provided team data
+          const teamsData = [
+            {
+              "id": 1,
+              "city": "Kaitlynnville",
+              "name": "Eclipse",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthEastern/Soul",
+              "city_name": "Kaitlynnville",
+              "team_name": "Eclipse",
+              "team_colors": "Black, Powder Purple, Off White",
+              "offensive_playbook": "Air Raid",
+              "defensive_playbook": "Blitz Heavy",
+              "stadium": {
+                "name": "Needs Work",
+                "capacity": 64397
+              },
+              "fan_base": "Balanced",
+              "owner": "Alligiance",
+              "media_market": {
+                "size": "500,000",
+                "type": "Shrinking"
+              },
+              "mega_chalices": 0
+            },
+            {
+              "id": 2,
+              "city": "Gu'Bare",
+              "name": "Garrison",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthEastern/Soul",
+              "city_name": "Gu'Bare",
+              "team_name": "Garrison",
+              "team_colors": "Teal, Orange, White",
+              "offensive_playbook": "Balanced Pass",
+              "defensive_playbook": "4-4",
+              "stadium": {
+                "name": "Old",
+                "capacity": 86688
+              },
+              "fan_base": "Average",
+              "owner": "Clothing Designer",
+              "media_market": {
+                "size": "7 mil.",
+                "type": "Medium Huge"
+              },
+              "mega_chalices": 0
+            },
+            {
+              "id": 3,
+              "city": "Miki Mountain",
+              "name": "Miracles",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthEastern/Soul",
+              "city_name": "Miki Mountain",
+              "team_name": "Miracles",
+              "team_colors": "White, Lavender, Navy Blue",
+              "offensive_playbook": "Multi-Look",
+              "defensive_playbook": "4-2",
+              "stadium": {
+                "name": "Needs Work",
+                "capacity": 58373
+              },
+              "fan_base": "Just above Weak",
+              "owner": "Appliance Corporation",
+              "media_market": {
+                "size": "700,000",
+                "type": "Growing"
+              },
+              "mega_chalices": 0
+            },
+            {
+              "id": 4,
+              "city": "Heirsentia",
+              "name": "Hawks",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthEastern/Soul",
+              "city_name": "Heirsentia",
+              "team_name": "Hawks",
+              "team_colors": "Tan, Eggshell White, Fuschia",
+              "offensive_playbook": "Power Run",
+              "defensive_playbook": "Balanced",
+              "stadium": {
+                "name": "Cozy",
+                "capacity": 63123
+              },
+              "fan_base": "Rabid",
+              "owner": "Hedgefund Manager",
+              "media_market": {
+                "size": "4 mil.",
+                "type": "Low Huge"
+              },
+              "mega_chalices": 4
+            },
+            {
+              "id": 5,
+              "city": "Brightcloud",
+              "name": "Clovers",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthEastern/Soul",
+              "city_name": "Brightcloud",
+              "team_name": "Clovers",
+              "team_colors": "Forest Green, Lime Green, Gold",
+              "offensive_playbook": "Pass Heavy",
+              "defensive_playbook": "Blitz Heavy",
+              "stadium": {
+                "name": "Different/Odd",
+                "capacity": 61616
+              },
+              "fan_base": "Grass is Greener",
+              "owner": "Family",
+              "media_market": {
+                "size": "2 mil.",
+                "type": "Medium Average"
+              },
+              "mega_chalices": 3
+            },
+            {
+              "id": 6,
+              "city": "Silvermind",
+              "name": "Storks",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthEastern/Soul",
+              "city_name": "Silvermind",
+              "team_name": "Storks",
+              "team_colors": "White, Light Blue, Grey",
+              "offensive_playbook": "Run Heavy",
+              "defensive_playbook": "Man to Man",
+              "stadium": {
+                "name": "Cozy",
+                "capacity": 59959
+              },
+              "fan_base": "Unrealistic",
+              "owner": "Former Player",
+              "media_market": {
+                "size": "1 mil.",
+                "type": "Low Average"
+              },
+              "mega_chalices": 3
+            },
+            {
+              "id": 7,
+              "city": "Reynava",
+              "name": "Hellcats",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthCentral/Mind",
+              "city_name": "Reynava",
+              "team_name": "Hellcats",
+              "team_colors": "Powder Blue, Crimson Red, Black, Ash Grey",
+              "offensive_playbook": "No Huddle",
+              "defensive_playbook": "Awe",
+              "stadium": {
+                "name": "Average",
+                "capacity": 59286
+              },
+              "fan_base": "Weak",
+              "owner": "Family",
+              "media_market": {
+                "size": "1 mil.",
+                "type": "Low Average"
+              },
+              "mega_chalices": 7
+            },
+            {
+              "id": 8,
+              "city": "Christiano",
+              "name": "Candy Rain",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthCentral/Mind",
+              "city_name": "Christiano",
+              "team_name": "Candy Rain",
+              "team_colors": "Pastel Pink, Royal Blue, Lemon Yellow",
+              "offensive_playbook": "Run n' Gun",
+              "defensive_playbook": "Blitz Heavy",
+              "stadium": {
+                "name": "Needs Work",
+                "capacity": 61043
+              },
+              "fan_base": "Trending Down",
+              "owner": "Entertainment Mogul",
+              "media_market": {
+                "size": "250,000",
+                "type": "Rural"
+              },
+              "mega_chalices": 1
+            },
+            {
+              "id": 9,
+              "city": "Jakobian",
+              "name": "Jokers",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthCentral/Mind",
+              "city_name": "Jakobian",
+              "team_name": "Jokers",
+              "team_colors": "Matte Purple, Matte Green, Matte Yellow, White",
+              "offensive_playbook": "West Coast",
+              "defensive_playbook": "3-5",
+              "stadium": {
+                "name": "Cozy",
+                "capacity": 54000
+              },
+              "fan_base": "Strong",
+              "owner": "Automotive Corporation",
+              "media_market": {
+                "size": "700,000",
+                "type": "Growing"
+              },
+              "mega_chalices": 4
+            },
+            {
+              "id": 10,
+              "city": "Queens Cove",
+              "name": "Canary's",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthCentral/Mind",
+              "city_name": "Queens Cove",
+              "team_name": "Canary's",
+              "team_colors": "Shiny Yellow, Neon Yellow, Matte Yellow/White",
+              "offensive_playbook": "Balanced Pass",
+              "defensive_playbook": "4-4",
+              "stadium": {
+                "name": "Cozy",
+                "capacity": 54111
+              },
+              "fan_base": "Fair Weather",
+              "owner": "Former Coach (HOF)",
+              "media_market": {
+                "size": "3 mil.",
+                "type": "Average"
+              },
+              "mega_chalices": 0
+            },
+            {
+              "id": 11,
+              "city": "Zorisova",
+              "name": "Sandals",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthCentral/Mind",
+              "city_name": "Zorisova",
+              "team_name": "Sandals",
+              "team_colors": "Mocha, Beige, Crystal Ocean Blue, Cream",
+              "offensive_playbook": "Balanced Run",
+              "defensive_playbook": "4-6",
+              "stadium": {
+                "name": "10 years",
+                "capacity": 89000
+              },
+              "fan_base": "Trending Up",
+              "owner": "Lifelong Fan",
+              "media_market": {
+                "size": "7 mil.",
+                "type": "Medium Huge"
+              },
+              "mega_chalices": 9
+            },
+            {
+              "id": 12,
+              "city": "Salted Sea",
+              "name": "Sailors",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthCentral/Mind",
+              "city_name": "Salted Sea",
+              "team_name": "Sailors",
+              "team_colors": "Navy Blue, White, Crimson",
+              "offensive_playbook": "Option Pass",
+              "defensive_playbook": "Cover 3 Zone Blitz",
+              "stadium": {
+                "name": "Average",
+                "capacity": 79000
+              },
+              "fan_base": "Below Average",
+              "owner": "Celebrity",
+              "media_market": {
+                "size": "2 mil.",
+                "type": "Medium Average"
+              },
+              "mega_chalices": 3
+            },
+            {
+              "id": 13,
+              "city": "Closesight",
+              "name": "Condors",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthWestern/Nucleus",
+              "city_name": "Closesight",
+              "team_name": "Condors",
+              "team_colors": "Dark Brown, Tan, Cream, White",
+              "offensive_playbook": "Singleback",
+              "defensive_playbook": "Cover 1 Zone",
+              "stadium": {
+                "name": "Old",
+                "capacity": 47883
+              },
+              "fan_base": "Almost Strong",
+              "owner": "Lottery Winner",
+              "media_market": {
+                "size": "2 mil.",
+                "type": "Medium Average"
+              },
+              "mega_chalices": 0
+            },
+            {
+              "id": 14,
+              "city": "Sunsprout",
+              "name": "Flames",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthWestern/Nucleus",
+              "city_name": "Sunsprout",
+              "team_name": "Flames",
+              "team_colors": "Fiery Red, Bright Orange, Sky Blue, Yellow",
+              "offensive_playbook": "Shotgun",
+              "defensive_playbook": "4-3",
+              "stadium": {
+                "name": "Needs Work",
+                "capacity": 51050
+              },
+              "fan_base": "Unrealistic",
+              "owner": "Investment Group",
+              "media_market": {
+                "size": "250,000",
+                "type": "Rural"
+              },
+              "mega_chalices": 0
+            },
+            {
+              "id": 15,
+              "city": "Beloved",
+              "name": "Funnel Chug",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthWestern/Nucleus",
+              "city_name": "Beloved",
+              "team_name": "Funnel Chug",
+              "team_colors": "Aqua Marine, Gold, Hot Pink",
+              "offensive_playbook": "Power I",
+              "defensive_playbook": "Cover 3 Zone Blitz",
+              "stadium": {
+                "name": "New",
+                "capacity": 103324
+              },
+              "fan_base": "Grass is Greener",
+              "owner": "International Investor",
+              "media_market": {
+                "size": "10 mil.",
+                "type": "Huge"
+              },
+              "mega_chalices": 18
+            },
+            {
+              "id": 16,
+              "city": "San Terrell",
+              "name": "Saints",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthWestern/Nucleus",
+              "city_name": "San Terrell",
+              "team_name": "Saints",
+              "team_colors": "Gold, Silver, Eggshell White",
+              "offensive_playbook": "Run Heavy",
+              "defensive_playbook": "Man to Man",
+              "stadium": {
+                "name": "Old",
+                "capacity": 70489
+              },
+              "fan_base": "Bandwagon",
+              "owner": "Scumbag",
+              "media_market": {
+                "size": "10 mil.",
+                "type": "Huge"
+              },
+              "mega_chalices": 7
+            },
+            {
+              "id": 17,
+              "city": "Justinopolis",
+              "name": "Jackals",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthWestern/Nucleus",
+              "city_name": "Justinopolis",
+              "team_name": "Jackals",
+              "team_colors": "Desert Tan, Dark Brown, Black",
+              "offensive_playbook": "Air Raid",
+              "defensive_playbook": "Zone Heavy",
+              "stadium": {
+                "name": "Average",
+                "capacity": 81581
+              },
+              "fan_base": "Socialit/Eliteist",
+              "owner": "Tech Billionaire",
+              "media_market": {
+                "size": "4 mil.",
+                "type": "Low Huge"
+              },
+              "mega_chalices": 13
+            },
+            {
+              "id": 18,
+              "city": "Matteochi",
+              "name": "Megaladons",
+              "pha/guilding": "Pha/Wee'lng",
+              "depot/allegiance": "NorthWestern/Nucleus",
+              "city_name": "Matteochi",
+              "team_name": "Megaladons",
+              "team_colors": "Deep Ocean Blue, Shark Grey, Baby Blue",
+              "offensive_playbook": "Pass Heavy",
+              "defensive_playbook": "2-4",
+              "stadium": {
+                "name": "Disrepair",
+                "capacity": 49187
+              },
+              "fan_base": "Non Existent",
+              "owner": "Four Families",
+              "media_market": {
+                "size": "4 mil.",
+                "type": "Low Huge"
+              },
+              "mega_chalices": 6
+            },
+            {
+              "id": 19,
+              "city": "Jessadelphia",
+              "name": "Jypsees",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthWestern/Power",
+              "city_name": "Jessadelphia",
+              "team_name": "Jypsees",
+              "team_colors": "Silver, Ruby Red, Emerald Green, Gold",
+              "offensive_playbook": "Shotgun",
+              "defensive_playbook": "Zone/Man",
+              "stadium": {
+                "name": "Different/Odd",
+                "capacity": 90000
+              },
+              "fan_base": "Just Below Strong",
+              "owner": "7 Families",
+              "media_market": {
+                "size": "3 mil.",
+                "type": "Average"
+              },
+              "mega_chalices": 5
+            },
+            {
+              "id": 20,
+              "city": "Libertine",
+              "name": "Stars",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthWestern/Power",
+              "city_name": "Libertine",
+              "team_name": "Stars",
+              "team_colors": "Royal Blue, Silver, Teal",
+              "offensive_playbook": "Spread",
+              "defensive_playbook": "3-4",
+              "stadium": {
+                "name": "New",
+                "capacity": 72727
+              },
+              "fan_base": "Average",
+              "owner": "Oil Tycoon",
+              "media_market": {
+                "size": "2 mil.",
+                "type": "Unknown"
+              },
+              "mega_chalices": 3
+            },
+            {
+              "id": 21,
+              "city": "Golden Siren",
+              "name": "Soul",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthWestern/Power",
+              "city_name": "Golden Siren",
+              "team_name": "Soul",
+              "team_colors": "Matte Purple, Gold, Matte Black",
+              "offensive_playbook": "Splitback/Pro form",
+              "defensive_playbook": "5-2",
+              "stadium": {
+                "name": "State of the Art",
+                "capacity": 100010
+              },
+              "fan_base": "Strong",
+              "owner": "Alligiance",
+              "media_market": {
+                "size": "3 mil.",
+                "type": "Average"
+              },
+              "mega_chalices": 3
+            },
+            {
+              "id": 22,
+              "city": "Desert",
+              "name": "Garrison",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthWestern/Power",
+              "city_name": "Desert",
+              "team_name": "Garrison",
+              "team_colors": "Desert Camo, Black, Tan",
+              "offensive_playbook": "Multi-Look",
+              "defensive_playbook": "4-2",
+              "stadium": {
+                "name": "Needs Work",
+                "capacity": 66666
+              },
+              "fan_base": "Just Above Weak",
+              "owner": "Military Contractor",
+              "media_market": {
+                "size": "700,000",
+                "type": "Growing"
+              },
+              "mega_chalices": 0
+            },
+            {
+              "id": 23,
+              "city": "San Terrell",
+              "name": "Blackouts",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthWestern/Power",
+              "city_name": "San Terrell",
+              "team_name": "Blackouts",
+              "team_colors": "Pitch Black, Matte Black, Dark Grey, Electric Gold/Blue",
+              "offensive_playbook": "Shock",
+              "defensive_playbook": "Awe",
+              "stadium": {
+                "name": "State of the Art",
+                "capacity": 124333
+              },
+              "fan_base": "Mythical",
+              "owner": "Former Player",
+              "media_market": {
+                "size": "10 mil.",
+                "type": "Huge"
+              },
+              "mega_chalices": 24
+            },
+            {
+              "id": 24,
+              "city": "Firesky",
+              "name": "Foxes",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthWestern/Power",
+              "city_name": "Firesky",
+              "team_name": "Foxes",
+              "team_colors": "Burnt Orange, White, Dark Brown",
+              "offensive_playbook": "Shock",
+              "defensive_playbook": "4-6",
+              "stadium": {
+                "name": "Average",
+                "capacity": 74011
+              },
+              "fan_base": "Just Below Strong",
+              "owner": "Oil Tycoon",
+              "media_market": {
+                "size": "700,000",
+                "type": "Growing"
+              },
+              "mega_chalices": 5
+            },
+            {
+              "id": 25,
+              "city": "Naveah",
+              "name": "Nomads",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthCentral/Vigor",
+              "city_name": "Naveah",
+              "team_name": "Nomads",
+              "team_colors": "Desert Sand, Dusty Rose, Teal",
+              "offensive_playbook": "Option Pass",
+              "defensive_playbook": "Cover 2",
+              "stadium": {
+                "name": "10 Years",
+                "capacity": 77401
+              },
+              "fan_base": "Balanced",
+              "owner": "Fans",
+              "media_market": {
+                "size": "1 mil.",
+                "type": "Low Average"
+              },
+              "mega_chalices": 0
+            },
+            {
+              "id": 26,
+              "city": "Kaylee",
+              "name": "Kraken",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthCentral/Vigor",
+              "city_name": "Kaylean",
+              "team_name": "Kraken",
+              "team_colors": "Deep Teal, Black, Lime Green",
+              "offensive_playbook": "Power Run",
+              "defensive_playbook": "4-2",
+              "stadium": {
+                "name": "State of the Art",
+                "capacity": 87187
+              },
+              "fan_base": "Just Above Weak",
+              "owner": "Former Analyst (HOF)",
+              "media_market": {
+                "size": "2 mil.",
+                "type": "Medium Average"
+              },
+              "mega_chalices": 1
+            },
+            {
+              "id": 27,
+              "city": "Emahney Park",
+              "name": "Polarbears",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthCentral/Vigor",
+              "city_name": "Emahney Park",
+              "team_name": "Polarbears",
+              "team_colors": "Snow White, Ice Blue, Fishscale White, Grey",
+              "offensive_playbook": "Singleback",
+              "defensive_playbook": "Balanced",
+              "stadium": {
+                "name": "8 years",
+                "capacity": 96696
+              },
+              "fan_base": "Mythical",
+              "owner": "Hospital Group",
+              "media_market": {
+                "size": "7 mil.",
+                "type": "Medium Huge"
+              },
+              "mega_chalices": 7
+            },
+            {
+              "id": 28,
+              "city": "Deannaton",
+              "name": "Demons",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthCentral/Vigor",
+              "city_name": "Deannaton",
+              "team_name": "Demons",
+              "team_colors": "Blood Red, Black, Fiery Orange",
+              "offensive_playbook": "Splitback/Pro form",
+              "defensive_playbook": "Zone/Man",
+              "stadium": {
+                "name": "Disrepair",
+                "capacity": 71000
+              },
+              "fan_base": "Bandwagon",
+              "owner": "Tech Billionaire",
+              "media_market": {
+                "size": "500,000",
+                "type": "Shrinking"
+              },
+              "mega_chalices": 0
+            },
+            {
+              "id": 29,
+              "city": "Jasmyne Junction",
+              "name": "Jackrabbits",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthCentral/Vigor",
+              "city_name": "Jasmyne Junction",
+              "team_name": "Jackrabbits",
+              "team_colors": "Desert Tan, Sage Green, Cream",
+              "offensive_playbook": "Power I",
+              "defensive_playbook": "2-4",
+              "stadium": {
+                "name": "Average",
+                "capacity": 61061
+              },
+              "fan_base": "Trending Up",
+              "owner": "Billionaire (Old Money)",
+              "media_market": {
+                "size": "1 mil.",
+                "type": "Low Average"
+              },
+              "mega_chalices": 5
+            },
+            {
+              "id": 30,
+              "city": "Babelonia",
+              "name": "Beacons",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthCentral/Vigor",
+              "city_name": "Babelonia",
+              "team_name": "Beacons",
+              "team_colors": "Powder Purple, Bright White, Matte Navy",
+              "offensive_playbook": "Pistol",
+              "defensive_playbook": "3-3-3",
+              "stadium": {
+                "name": "Different/Odd",
+                "capacity": 55000
+              },
+              "fan_base": "Above Average",
+              "owner": "Inventor",
+              "media_market": {
+                "size": "500,000",
+                "type": "Shrinking"
+              },
+              "mega_chalices": 2
+            },
+            {
+              "id": 31,
+              "city": "Longsite",
+              "name": "Lemurs",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthEastern/Fierce",
+              "city_name": "Longsite",
+              "team_name": "Lemurs",
+              "team_colors": "Ring-tailed Black, White, Grey",
+              "offensive_playbook": "Run n' Gun",
+              "defensive_playbook": "4-3",
+              "stadium": {
+                "name": "Needs Work",
+                "capacity": 54186
+              },
+              "fan_base": "Fair Weather",
+              "owner": "Hedgefund Manager",
+              "media_market": {
+                "size": "3 mil.",
+                "type": "Average"
+              },
+              "mega_chalices": 6
+            },
+            {
+              "id": 32,
+              "city": "Visiente",
+              "name": "Vikings",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthEastern/Fierce",
+              "city_name": "Visiente'",
+              "team_name": "Vikings",
+              "team_colors": "Royal Purple, Black, Steel Grey",
+              "offensive_playbook": "No Huddle",
+              "defensive_playbook": "5-2",
+              "stadium": {
+                "name": "New",
+                "capacity": 102120
+              },
+              "fan_base": "Socialite/Eliteist",
+              "owner": "Investment Group",
+              "media_market": {
+                "size": "4 mil.",
+                "type": "Low Huge"
+              },
+              "mega_chalices": 9
+            },
+            {
+              "id": 33,
+              "city": "County Line",
+              "name": "Crossbows",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthEastern/Fierce",
+              "city_name": "County Line",
+              "team_name": "Crossbows",
+              "team_colors": "Forest Green, Tan, Brown",
+              "offensive_playbook": "Singleback",
+              "defensive_playbook": "Cover 1 Zone",
+              "stadium": {
+                "name": "Average",
+                "capacity": 72000
+              },
+              "fan_base": "Balanced",
+              "owner": "Family",
+              "media_market": {
+                "size": "1 mil.",
+                "type": "Low Average"
+              },
+              "mega_chalices": 4
+            },
+            {
+              "id": 34,
+              "city": "Sarahite",
+              "name": "Snarf Dragons",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthEastern",
+              "city_name": "Sarahite",
+              "team_name": "Snarf Dragons/Fierce",
+              "team_colors": "Dragon Green, Mustard Yellow, Matte Brown",
+              "offensive_playbook": "Multi-Look",
+              "defensive_playbook": "Zone Heavy",
+              "stadium": {
+                "name": "Disrepair",
+                "capacity": 51000
+              },
+              "fan_base": "Trending Down",
+              "owner": "Media Mogul",
+              "media_market": {
+                "size": "750,000",
+                "type": "Growing"
+              },
+              "mega_chalices": 1
+            },
+            {
+              "id": 35,
+              "city": "Golden Sunset",
+              "name": "Greyhounds",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthEastern/Fierce",
+              "city_name": "Golden Sunset",
+              "team_name": "Greyhounds",
+              "team_colors": "Slate Grey, White, Silver",
+              "offensive_playbook": "West Coast",
+              "defensive_playbook": "Cover 2",
+              "stadium": {
+                "name": "State of the Art",
+                "capacity": 109901
+              },
+              "fan_base": "Rabid",
+              "owner": "Descendant of Alligiance Founder",
+              "media_market": {
+                "size": "10 mil.",
+                "type": "Huge"
+              },
+              "mega_chalices": 0
+            },
+            {
+              "id": 36,
+              "city": "Takumzuh",
+              "name": "Tigers",
+              "pha/guilding": "Pha/Quar'tng",
+              "depot/allegiance": "SouthEastern/Fierce",
+              "city_name": "Takumzuh",
+              "team_name": "Tigers",
+              "team_colors": "Tiger Orange, Black, White",
+              "offensive_playbook": "Balanced Run",
+              "defensive_playbook": "Cover 1 (Zone Blitz)",
+              "stadium": {
+                "name": "10 years",
+                "capacity": 94000
+              },
+              "fan_base": "Growing",
+              "owner": "Scumbag",
+              "media_market": {
+                "size": "10 mil.",
+                "type": "Huge"
+              },
+              "mega_chalices": 6
+            }
+          ];
+
+          // State variables for the application
+          const [selectedTeam, setSelectedTeam] = React.useState(null);
+          const [journalists, setJournalists] = React.useState([]);
+          const [currentJournalist, setCurrentJournalist] = React.useState(null);
+          const [currentQuestion, setCurrentQuestion] = React.useState('');
+          const [currentRole, setCurrentRole] = React.useState(''); // Role being questioned: 'Player', 'Coach', 'Front Office', 'Medical Team'
+          const [userResponse, setUserResponse] = React.useState('');
+          const [conferenceStarted, setConferenceStarted] = React.useState(false);
+          const [feedback, setFeedback] = React.useState('');
+          const [isLoadingQuestion, setIsLoadingQuestion] = React.useState(false);
+          const [responseHistory, setResponseHistory] = React.useState([]);
+
+          // Ref for speech synthesis
+          const synthRef = React.useRef(window.speechSynthesis);
+
+          // Helper arrays for generating journalist names and affiliations
+          const firstNames = ["Chris", "Alex", "Jamie", "Pat", "Taylor", "Morgan", "Casey", "Dakota", "Jordan", "Skylar"];
+          const lastNames = ["Smith", "Jones", "Williams", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Anderson"];
+          const affiliations = [
+            "Buzzn_D Magazine", "Buzzn_D Radio", "Buzzn_D TV Sports",
+            "Local Sports Times", "The City Herald", "Sports Insider News",
+            "Fanatic Sports Blog", "The Athletic", "ESPN Local Affiliate"
+          ];
+          const specializations = [
+            "Beat Reporter", "Investigative Journalist", "Columnist", "Insider",
+            "Game Analyst", "Player Relations Specialist", "Team Finance Reporter"
+          ];
+          const roles = ['Player', 'Coach', 'Front Office', 'Medical Team'];
+
+          /**
+           * Generates a random integer within a specified range.
+           * @param {number} min - The minimum value (inclusive).
+           * @param {number} max - The maximum value (inclusive).
+           * @returns {number} A random integer.
+           */
+          const getRandomInt = (min, max) => {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+          };
+
+          /**
+           * Generates 3 unique journalist profiles for a given team.
+           * @param {Object} team - The team object.
+           * @returns {Array<Object>} An array of journalist objects.
+           */
+          const generateJournalists = (team) => {
+            const teamJournalists = [];
+            const usedNames = new Set();
+            const usedAffiliations = new Set();
+
+            for (let i = 0; i < 3; i++) {
+              let name, affiliation;
+
+              // Ensure unique name
+              do {
+                name = `${firstNames[getRandomInt(0, firstNames.length - 1)]} ${lastNames[getRandomInt(0, lastNames.length - 1)]}`;
+              } while (usedNames.has(name));
+              usedNames.add(name);
+
+              // Ensure unique affiliation, prioritize "Buzzn_D" for at least one
+              if (i === 0) { // Make sure at least one is "Buzzn_D"
+                affiliation = affiliations[getRandomInt(0, 2)]; // Buzzn_D options
+              } else {
+                do {
+                  affiliation = affiliations[getRandomInt(0, affiliations.length - 1)];
+                } while (usedAffiliations.has(affiliation));
+              }
+              usedAffiliations.add(affiliation);
+
+              const specialization = specializations[getRandomInt(0, specializations.length - 1)];
+
+              teamJournalists.push({ name, affiliation, specialization });
+            }
+            return teamJournalists;
+          };
+
+          /**
+           * Generates a provocative question based on team attributes and the role being questioned.
+           * @param {Object} team - The selected team object.
+           * @param {string} role - The role being questioned ('Player', 'Coach', 'Front Office', 'Medical Team').
+           * @returns {string} The generated question.
+           */
+          const generateQuestion = (team, role) => {
+            const { team_name, city_name, stadium, fan_base, media_market, mega_chalices, owner, offensive_playbook, defensive_playbook } = team;
+
+            const questionTemplates = [];
+
+            // General questions for all roles
+            questionTemplates.push(
+              `Given the recent performance, can you honestly say the team is on the right track, or is this just another season of false hope, [${role}]?`,
+              `How do you respond to critics who say this team lacks the fundamental discipline to be a true contender, [${role}]?`,
+              `Many believe this team has underperformed given its resources. What's your direct answer to that, [${role}]?`
+            );
+
+            // Questions based on Stadium condition
+            if (stadium.name === "Needs Work" || stadium.name === "Disrepair" || stadium.name === "Old") {
+              questionTemplates.push(
+                `With ${stadium.name === "Old" ? "an aging" : "a dilapidated"} stadium like ${stadium.name}, how do you expect to attract top talent and loyal fans to ${city_name}, [${role}]?`,
+                `Isn't the state of ${stadium.name} a clear indicator of the owner's lack of commitment to this franchise, [${role}]?`
+              );
+            } else if (stadium.name === "Different/Odd") {
+              questionTemplates.push(
+                `The ${stadium.name} stadium is certainly unique. Does its 'odd' nature hinder rather than help the team's home-field advantage, [${role}]?`
+              );
+            }
+
+            // Questions based on Fan Base
+            if (fan_base.includes("Weak") || fan_base === "Non Existent" || fan_base === "Bandwagon" || fan_base === "Trending Down") {
+              questionTemplates.push(
+                `Your fan base is described as '${fan_base}'. Are you concerned about the team's financial viability and long-term future in ${city_name}, [${role}]?`,
+                `What concrete steps are being taken to invigorate a fanbase that seems to be in decline, [${role}]?`
+              );
+            } else if (fan_base === "Unrealistic") {
+              questionTemplates.push(
+                `Your fans are known for being 'unrealistic'. Does that put undue pressure on the team, and how do you manage their expectations, [${role}]?`
+              );
+            } else if (fan_base === "Grass is Greener") {
+                questionTemplates.push(
+                    `The fan base here seems to always think the 'grass is greener'. Does this constant dissatisfaction impact team morale, [${role}]?`
+                );
+            }
+
+            // Questions based on Media Market
+            if (media_market.type === "Shrinking" || media_market.type === "Rural") {
+              questionTemplates.push(
+                `With a '${media_market.type}' media market of ${media_market.size}, is this franchise destined for relocation, or do you have a genuine plan to reverse the exodus of viewers, [${role}]?`,
+                `How can this team truly compete for major sponsorships when your media market is so limited, [${role}]?`
+              );
+            } else if (media_market.type === "Unknown") {
+                questionTemplates.push(
+                    `The type of media market for ${city_name} is listed as 'Unknown'. Does this ambiguity reflect a lack of clear strategy or simply a disinterest in connecting with the community, [${role}]?`
+                );
+            }
+
+            // Questions based on Mega Chalices
+            if (mega_chalices === 0) {
+              questionTemplates.push(
+                `It's been quite some time since ${team_name} has even sniffed a Mega Chalice. Is this organization content with perpetual mediocrity, [${role}]?`,
+                `Do you believe the current leadership has the vision to ever bring a championship to ${city_name}, [${role}]?`
+              );
+            } else if (mega_chalices > 0 && mega_chalices <= 3) {
+              questionTemplates.push(
+                `Given the low number of Mega Chalices (${mega_chalices}), what makes you believe this team is truly poised for sustained greatness, [${role}]?`,
+                `Is this team just resting on past, limited accomplishments, [${role}]?`
+              );
+            } else if (mega_chalices > 10) {
+                questionTemplates.push(
+                    `While you have many Mega Chalices (${mega_chalices}), some say the team's best days are long behind it. How do you plan to recapture that past glory, [${role}]?`
+                );
+            }
+
+            // Questions based on Owner
+            if (owner === "Scumbag") {
+              questionTemplates.push(
+                `The owner is notoriously labeled a 'Scumbag'. How do you justify working for or representing such a figure, [${role}]?`,
+                `Does the owner's reputation directly contribute to the team's issues on and off the field, [${role}]?`
+              );
+            } else if (owner === "Tech Billionaire" || owner === "Hedgefund Manager" || owner === "International Investor") {
+              questionTemplates.push(
+                `Many accuse ${owner} of treating this team as a mere investment rather than a passion project. Is that a fair assessment, [${role}]?`,
+                `Is the focus of the organization truly on winning, or is it more about maximizing profit for the ${owner}, [${role}]?`
+              );
+            } else if (owner === "Family") {
+                questionTemplates.push(
+                    `With the team being owned by a family, critics argue there's too much sentiment and not enough cut-throat decision-making. How do you respond to that, [${role}]?`
+                );
+            }
+
+            // Role-specific questions
+            if (role === 'Player') {
+              questionTemplates.push(
+                `Your individual performance has been inconsistent. What makes you think you're still a valuable asset to this team?`,
+                `Do you believe the coaching staff is putting you in the best position to succeed, or are you being misused?`
+              );
+              if (offensive_playbook === "Run Heavy") {
+                questionTemplates.push(`As a player, do you feel the 'Run Heavy' playbook stifles offensive creativity and makes the team too predictable?`);
+              }
+              if (defensive_playbook === "Blitz Heavy") {
+                questionTemplates.push(`Does the 'Blitz Heavy' defensive scheme leave the secondary too exposed, resulting in easy scores for opponents?`);
+              }
+            } else if (role === 'Coach') {
+              questionTemplates.push(
+                `Your strategic decisions have been heavily criticized. Are you truly confident in your ability to lead this team to victory, or are you simply outmatched?`,
+                `How do you explain the team's repeated failures in crucial moments? Is it a lack of preparation or talent?`
+              );
+              if (offensive_playbook === "Air Raid") {
+                questionTemplates.push(`Does the 'Air Raid' offensive playbook put too much pressure on the quarterback and neglect a balanced attack?`);
+              }
+              if (defensive_playbook === "4-4") {
+                questionTemplates.push(`Is the '4-4' defensive scheme truly adaptable enough for modern offenses, or is it outdated?`);
+              }
+            } else if (role === 'Front Office') {
+              questionTemplates.push(
+                `The team's roster construction has been widely panned. Do you take responsibility for the lack of talent on this team?`,
+                `Given the questionable draft picks and free-agent signings, how can fans trust your vision for the future of this franchise?`,
+                `Are there internal conflicts within the front office that are hindering the team's progress?`
+              );
+            } else if (role === 'Medical Team') {
+              questionTemplates.push(
+                `The number of injuries this season is alarming. Are you confident in the training and rehabilitation protocols, or are corners being cut?`,
+                `There are rumors of players being rushed back too soon. How do you address these serious allegations?`,
+                `Can you assure the fans that player safety is truly the top priority, given the recent string of setbacks?`
+              );
+            }
+
+            // Pick a random question from the generated templates
+            return questionTemplates[getRandomInt(0, questionTemplates.length - 1)];
+          };
+
+          /**
+           * Reads out the given text using the Web Speech API.
+           * @param {string} text - The text to speak.
+           */
+          const speakText = (text) => {
+            if (synthRef.current) {
+              const utterance = new SpeechSynthesisUtterance(text);
+              utterance.voice = synthRef.current.getVoices().find(voice => voice.lang === 'en-US' || voice.lang === 'en-GB'); // Try to find a suitable voice
+              synthRef.current.speak(utterance);
+            }
+          };
+
+          /**
+           * Initializes the press conference: selects a team, generates journalists, and sets up the first question.
+           */
+          const handleStartConference = async () => {
+            setIsLoadingQuestion(true);
+            setFeedback('');
+            setUserResponse('');
+            setResponseHistory([]);
+
+            const randomTeam = teamsData[getRandomInt(0, teamsData.length - 1)];
+            setSelectedTeam(randomTeam);
+
+            const generatedJournalists = generateJournalists(randomTeam);
+            setJournalists(generatedJournalists);
+
+            await new Promise(resolve => setTimeout(resolve, 500)); // Simulate a small delay for setup
+
+            setConferenceStarted(true);
+            await askNextQuestion(randomTeam, generatedJournalists);
+            setIsLoadingQuestion(false);
+          };
+
+          /**
+           * Asks the next question in the press conference.
+           * @param {Object} team - The current team.
+           * @param {Array<Object>} jrnls - The journalists for the team.
+           */
+          const askNextQuestion = async (team, jrnls) => {
+            setIsLoadingQuestion(true);
+            setFeedback('');
+            setUserResponse('');
+
+            if (!team || !jrnls || jrnls.length === 0) {
+              setFeedback("Error: No team or journalists available.");
+              setIsLoadingQuestion(false);
+              return;
+            }
+
+            const randomJournalist = jrnls[getRandomInt(0, jrnls.length - 1)];
+            setCurrentJournalist(randomJournalist);
+
+            const randomRole = roles[getRandomInt(0, roles.length - 1)];
+            setCurrentRole(randomRole);
+
+            const questionText = generateQuestion(team, randomRole);
+            setCurrentQuestion(questionText);
+
+            const fullQuestion = `${randomJournalist.name} from ${randomJournalist.affiliation} asks: "${questionText}"`;
+            setFeedback(fullQuestion);
+            speakText(fullQuestion);
+            setIsLoadingQuestion(false);
+          };
+
+          /**
+           * Handles user input change for the response.
+           * @param {Object} e - The event object.
+           */
+          const handleUserResponseChange = (e) => {
+            setUserResponse(e.target.value);
+          };
+
+          /**
+           * Submits the user's response and moves to the next question.
+           */
+          const handleSubmitResponse = async () => {
+            if (userResponse.trim() === '') {
+              setFeedback("Please provide a response before submitting.");
+              return;
+            }
+
+            setResponseHistory(prevHistory => [
+              ...prevHistory,
+              {
+                journalist: currentJournalist,
+                role: currentRole,
+                question: currentQuestion,
+                response: userResponse
+              }
+            ]);
+
+            await askNextQuestion(selectedTeam, journalists);
+          };
+
+          /**
+           * Resets the simulator to its initial state.
+           */
+          const handleReset = () => {
+            setSelectedTeam(null);
+            setJournalists([]);
+            setCurrentJournalist(null);
+            setCurrentQuestion('');
+            setCurrentRole('');
+            setUserResponse('');
+            setConferenceStarted(false);
+            setFeedback('');
+            setIsLoadingQuestion(false);
+            setResponseHistory([]);
+            if (synthRef.current && synthRef.current.speaking) {
+              synthRef.current.cancel(); // Stop any ongoing speech
+            }
+          };
+
+          return (
+            <div className="min-h-screen bg-gradient-to-br from-purple-800 to-indigo-900 font-inter text-gray-100 flex items-center justify-center p-4 sm:p-6 md:p-8">
+              <div className="bg-gray-800 rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 w-full max-w-5xl border-4 border-indigo-700">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center text-white mb-6 sm:mb-8 tracking-tight">
+                  Sports Press Conference Simulator
+                </h1>
+
+                {!conferenceStarted && (
+                  <div className="text-center">
+                    <p className="text-lg sm:text-xl mb-6 text-gray-300">
+                      Step into the hot seat and face the media!
+                    </p>
+                    <button
+                      onClick={handleStartConference}
+                      className="px-8 py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75"
+                    >
+                      Start Press Conference
+                    </button>
+                  </div>
+                )}
+
+                {conferenceStarted && selectedTeam && (
+                  <div className="space-y-6">
+                    {/* Conference Header */}
+                    <div className="bg-gray-700 p-5 rounded-2xl border border-indigo-600 shadow-inner">
+                      <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
+                        Team: <span className="text-green-400">{selectedTeam.team_name}</span> from <span className="text-blue-400">{selectedTeam.city_name}</span>
+                      </h2>
+                      <p className="text-md sm:text-lg text-gray-300">
+                        You are currently in a press conference as the <span className="font-semibold text-yellow-400">{currentRole}</span>.
+                      </p>
+                    </div>
+
+                    {/* Current Question Display */}
+                    <div className="bg-gray-700 p-5 rounded-2xl border border-indigo-600 shadow-inner min-h-[100px] flex items-center justify-center">
+                      {isLoadingQuestion ? (
+                        <p className="text-lg text-gray-400 animate-pulse">Journalist preparing a question...</p>
+                      ) : (
+                        <>
+                          {currentJournalist && currentQuestion && (
+                            <p className="text-lg sm:text-xl text-white italic text-center">
+                              <span className="font-semibold text-orange-400">{currentJournalist.name}</span> from <span className="font-medium text-purple-400">{currentJournalist.affiliation}</span> asks:
+                              <br />
+                              <span className="block mt-2 text-xl sm:text-2xl font-bold">"{currentQuestion}"</span>
+                            </p>
+                          )}
+                        </>
+                      )}
+                    </div>
+
+                    {/* User Response Input */}
+                    <div className="space-y-4">
+                      <textarea
+                        className="w-full p-4 rounded-xl bg-gray-900 text-white border border-indigo-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out placeholder-gray-500 resize-y min-h-[120px]"
+                        placeholder="Type your response here..."
+                        value={userResponse}
+                        onChange={handleUserResponseChange}
+                        disabled={isLoadingQuestion}
+                      ></textarea>
+                      <div className="flex flex-col sm:flex-row justify-center gap-4">
+                        <button
+                          onClick={handleSubmitResponse}
+                          disabled={isLoadingQuestion}
+                          className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-blue-500 focus:ring-opacity-75 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          Submit Response
+                        </button>
+                        <button
+                          onClick={handleReset}
+                          className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-red-500 to-pink-600 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-75"
+                        >
+                          End Conference
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Response History */}
+                    {responseHistory.length > 0 && (
+                      <div className="bg-gray-700 p-5 rounded-2xl border border-indigo-600 shadow-inner max-h-96 overflow-y-auto">
+                        <h3 className="text-xl font-bold text-white mb-4 border-b border-indigo-500 pb-2">Conference Transcript</h3>
+                        <div className="space-y-4">
+                          {responseHistory.map((entry, index) => (
+                            <div key={index} className="bg-gray-800 p-4 rounded-xl border border-gray-600">
+                              <p className="text-sm text-gray-400">
+                                <span className="font-semibold text-orange-300">{entry.journalist.name}</span> ({entry.journalist.affiliation}):
+                              </p>
+                              <p className="text-white text-md italic mb-2">"{entry.question}"</p>
+                              <p className="text-gray-300 text-sm">
+                                Your response as <span className="font-semibold text-yellow-300">{entry.role}</span>:
+                              </p>
+                              <p className="text-white text-md font-medium">"{entry.response}"</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        }
+
+        // Ensure the App component is rendered into the root div
+        // This script block should come after your App.js script if App.js defines the App component
+        // and exports it as default.
+        ReactDOM.createRoot(document.getElementById('root')).render(
+            <React.StrictMode>
+                <App />
+            </React.StrictMode>
+        );
+    </script>
+</body>
+</html>

@@ -1,0 +1,628 @@
+(PROJECT_ROOT, "data", "league_structure.json"): """{
+  "league_name": "Heart Football League",
+  "team_data": [
+    {
+      "city_name": "Kaitlynnville",
+      "team_name": "Eclipse",
+      "offensive_playbook": "Air Raid",
+      "defensive_playbook": "Blitz Heavy",
+      "stadium": {
+        "name": "Needs Work",
+        "capacity": 64397
+      },
+      "fan_base": "Balanced",
+      "owner": "League",
+      "media_market": {
+        "size": "500,000",
+        "type": "Shrinking"
+      },
+      "mega_chalices": 0
+    },
+    {
+      "city_name": "Gu'Bare",
+      "team_name": "Garrison",
+      "offensive_playbook": "Balanced Pass",
+      "defensive_playbook": "4-4",
+      "stadium": {
+        "name": "Old",
+        "capacity": 86688
+      },
+      "fan_base": "Average",
+      "owner": "Clothing Designer",
+      "media_market": {
+        "size": "7 mil.",
+        "type": "Medium Huge"
+      },
+      "mega_chalices": 0
+    },
+    {
+      "city_name": "Miki Mountain",
+      "team_name": "Miracles",
+      "offensive_playbook": "Multi-Look",
+      "defensive_playbook": "4-2",
+      "stadium": {
+        "name": "Needs Work",
+        "capacity": 58373
+      },
+      "fan_base": "Just above Weak",
+      "owner": "Appliance Corporation",
+      "media_market": {
+        "size": "700,000",
+        "type": "Growing"
+      },
+      "mega_chalices": 0
+    },
+    {
+      "city_name": "Heirsentia",
+      "team_name": "Hawks",
+      "offensive_playbook": "Power Run",
+      "defensive_playbook": "Balanced",
+      "stadium": {
+        "name": "Cozy",
+        "capacity": 63123
+      },
+      "fan_base": "Rabid",
+      "owner": "Hedgefund Manager",
+      "media_market": {
+        "size": "4 mil.",
+        "type": "Low Huge"
+      },
+      "mega_chalices": 4
+    },
+    {
+      "city_name": "Brightcloud",
+      "team_name": "Clovers",
+      "offensive_playbook": "Pass Heavy",
+      "defensive_playbook": "Blitz Heavy",
+      "stadium": {
+        "name": "Different/Odd",
+        "capacity": 61616
+      },
+      "fan_base": "Grass is Greener",
+      "owner": "Family",
+      "media_market": {
+        "size": "2 mil.",
+        "type": "Medium Average"
+      },
+      "mega_chalices": 3
+    },
+    {
+      "city_name": "Silvermind",
+      "team_name": "Storks",
+      "offensive_playbook": "Run Heavy",
+      "defensive_playbook": "Man to Man",
+      "stadium": {
+        "name": "Cozy",
+        "capacity": 59959
+      },
+      "fan_base": "Unrealistic",
+      "owner": "Former Player",
+      "media_market": {
+        "size": "1 mil.",
+        "type": "Low Average"
+      },
+      "mega_chalices": 3
+    },
+    {
+      "city_name": "Reynava",
+      "team_name": "Hellcats",
+      "offensive_playbook": "No Huddle",
+      "defensive_playbook": "Awe",
+      "stadium": {
+        "name": "Average",
+        "capacity": 59286
+      },
+      "fan_base": "Weak",
+      "owner": "Family",
+      "media_market": {
+        "size": "1 mil.",
+        "type": "Low Average"
+      },
+      "mega_chalices": 7
+    },
+    {
+      "city_name": "Christiano",
+      "team_name": "Candy Rain",
+      "offensive_playbook": "Run n' Gun",
+      "defensive_playbook": "Blitz Heavy",
+      "stadium": {
+        "name": "Needs Work",
+        "capacity": 61043
+      },
+      "fan_base": "Trending Down",
+      "owner": "Entertainment Mogul",
+      "media_market": {
+        "size": "250,000",
+        "type": "Rural"
+      },
+      "mega_chalices": 1
+    },
+    {
+      "city_name": "Jakobian",
+      "team_name": "Jokers",
+      "offensive_playbook": "West Coast",
+      "defensive_playbook": "3-5",
+      "stadium": {
+        "name": "Cozy",
+        "capacity": 54000
+      },
+      "fan_base": "Strong",
+      "owner": "Automotive Corporation",
+      "media_market": {
+        "size": "700,000",
+        "type": "Growing"
+      },
+      "mega_chalices": 4
+    },
+    {
+      "city_name": "Queens Cove",
+      "team_name": "Canary's",
+      "offensive_playbook": "Balanced Pass",
+      "defensive_playbook": "4-4",
+      "stadium": {
+        "name": "Cozy",
+        "capacity": 54111
+      },
+      "fan_base": "Fair Weather",
+      "owner": "Former Coach (HOF)",
+      "media_market": {
+        "size": "3 mil.",
+        "type": "Average"
+      },
+      "mega_chalices": 0
+    },
+    {
+      "city_name": "Zorisova",
+      "team_name": "Sandals",
+      "offensive_playbook": "Balanced Run",
+      "defensive_playbook": "4-6",
+      "stadium": {
+        "name": "10 years",
+        "capacity": 89000
+      },
+      "fan_base": "Trending Up",
+      "owner": "Lifelong Fan",
+      "media_market": {
+        "size": "7 mil.",
+        "type": "Medium Huge"
+      },
+      "mega_chalices": 9
+    },
+    {
+      "city_name": "Farspace",
+      "team_name": "Flatteners",
+      "offensive_playbook": "Pistol",
+      "defensive_playbook": "3-5",
+      "stadium": {
+        "name": "Disrepair",
+        "capacity": 47474
+      },
+      "fan_base": "Non Existent",
+      "owner": "Fans",
+      "media_market": {
+        "size": "500,000",
+        "type": "Shrinking"
+      },
+      "mega_chalices": 0
+    },
+    {
+      "city_name": "Closesight",
+      "team_name": "Condors",
+      "offensive_playbook": "Singleback",
+      "defensive_playbook": "Cover 1 Zone",
+      "stadium": {
+        "name": "Old",
+        "capacity": 47883
+      },
+      "fan_base": "Almost Strong",
+      "owner": "Lottery Winner",
+      "media_market": {
+        "size": "2 mil.",
+        "type": "Medium Average"
+      },
+      "mega_chalices": 0
+    },
+    {
+      "city_name": "Sunsprout",
+      "team_name": "Flames",
+      "offensive_playbook": "Shotgun",
+      "defensive_playbook": "4-3",
+      "stadium": {
+        "name": "Needs Work",
+        "capacity": 51050
+      },
+      "fan_base": "Unrealistic",
+      "owner": "Investment Group",
+      "media_market": {
+        "size": "250,000",
+        "type": "Rural"
+      },
+      "mega_chalices": 0
+    },
+    {
+      "city_name": "Beloved",
+      "team_name": "Funnel Chug",
+      "offensive_playbook": "Power I",
+      "defensive_playbook": "Cover 3 Zone Blitz",
+      "stadium": {
+        "name": "New",
+        "capacity": 103324
+      },
+      "fan_base": "Grass is Greener",
+      "owner": "International Investor",
+      "media_market": {
+        "size": "10 mil.",
+        "type": "Huge"
+      },
+      "mega_chalices": 18
+    },
+    {
+      "city_name": "San Terrell",
+      "team_name": "Saints",
+      "offensive_playbook": "Run Heavy",
+      "defensive_playbook": "Man to Man",
+      "stadium": {
+        "name": "Old",
+        "capacity": 70489
+      },
+      "fan_base": "Bandwagon",
+      "owner": "Scumbag",
+      "media_market": {
+        "size": "10 mil.",
+        "type": "Huge"
+      },
+      "mega_chalices": 7
+    },
+    {
+      "city_name": "Justinopolis",
+      "team_name": "Jackals",
+      "offensive_playbook": "Air Raid",
+      "defensive_playbook": "Zone Heavy",
+      "stadium": {
+        "name": "Average",
+        "capacity": 81581
+      },
+      "fan_base": "Socialit/Eliteist",
+      "owner": "Tech Billionaire",
+      "media_market": {
+        "size": "4 mil.",
+        "type": "Low Huge"
+      },
+      "mega_chalices": 13
+    },
+    {
+      "city_name": "Matteochi",
+      "team_name": "Megaladons",
+      "offensive_playbook": "Pass Heavy",
+      "defensive_playbook": "2-4",
+      "stadium": {
+        "name": "Disrepair",
+        "capacity": 49187
+      },
+      "fan_base": "Non Existent",
+      "owner": "Four Families",
+      "media_market": {
+        "size": "4 mil.",
+        "type": "Low Huge"
+      },
+      "mega_chalices": 6
+    },
+    {
+      "city_name": "Jessadelphia",
+      "team_name": "Jypsees",
+      "offensive_playbook": "Shotgun",
+      "defensive_playbook": "Zone/Man",
+      "stadium": {
+        "name": "Different/Odd",
+        "capacity": 90000
+      },
+      "fan_base": "Just Below Strong",
+      "owner": "7 Families",
+      "media_market": {
+        "size": "3 mil.",
+        "type": "Average"
+      },
+      "mega_chalices": 5
+    },
+    {
+      "city_name": "Libertine",
+      "team_name": "Stars",
+      "offensive_playbook": "Spread",
+      "defensive_playbook": "3-4",
+      "stadium": {
+        "name": "New",
+        "capacity": 72727
+      },
+      "fan_base": "Average",
+      "owner": "Oil Tycoon",
+      "media_market": {
+        "size": "2 mil.",
+        "type": "Unknown"
+      },
+      "mega_chalices": 3
+    },
+    {
+      "city_name": "Golden Siren",
+      "team_name": "Soul",
+      "offensive_playbook": "Splitback/Pro form",
+      "defensive_playbook": "5-2",
+      "stadium": {
+        "name": "State of the Art",
+        "capacity": 100010
+      },
+      "fan_base": "Strong",
+      "owner": "League",
+      "media_market": {
+        "size": "3 mil.",
+        "type": "Average"
+      },
+      "mega_chalices": 3
+    },
+    {
+      "city_name": "Tiapma'atzu",
+      "team_name": "Tribe",
+      "offensive_playbook": "Option Run",
+      "defensive_playbook": "3-3-3",
+      "stadium": {
+        "name": "Needs Work",
+        "capacity": 78182
+      },
+      "fan_base": "Above Average",
+      "owner": "Toy Corporation",
+      "media_market": {
+        "size": "250,000",
+        "type": "Rural"
+      },
+      "mega_chalices": 0
+    },
+    {
+      "city_name": "San Terrell",
+      "team_name": "Blackouts",
+      "offensive_playbook": "Shock",
+      "defensive_playbook": "Awe",
+      "stadium": {
+        "name": "State of the Art",
+        "capacity": 124333
+      },
+      "fan_base": "Mythical",
+      "owner": "Former Player",
+      "media_market": {
+        "size": "10 mil.",
+        "type": "Huge"
+      },
+      "mega_chalices": 24
+    },
+    {
+      "city_name": "Firesky",
+      "team_name": "Foxes",
+      "offensive_playbook": "Shock",
+      "defensive_playbook": "4-6",
+      "stadium": {
+        "name": "Average",
+        "capacity": 74011
+      },
+      "fan_base": "Just Below Strong",
+      "owner": "Oil Tycoon",
+      "media_market": {
+        "size": "700,000",
+        "type": "Growing"
+      },
+      "mega_chalices": 5
+    },
+    {
+      "city_name": "Naveah",
+      "team_name": "Nomads",
+      "offensive_playbook": "Option Pass",
+      "defensive_playbook": "Cover 2",
+      "stadium": {
+        "name": "10 Years",
+        "capacity": 77401
+      },
+      "fan_base": "Balanced",
+      "owner": "Fans",
+      "media_market": {
+        "size": "1 mil.",
+        "type": "Low Average"
+      },
+      "mega_chalices": 0
+    },
+    {
+      "city_name": "Kaylean",
+      "team_name": "Kraken",
+      "offensive_playbook": "Power Run",
+      "defensive_playbook": "4-2",
+      "stadium": {
+        "name": "State of the Art",
+        "capacity": 87187
+      },
+      "fan_base": "Just Above Weak",
+      "owner": "Former Analyst (HOF)",
+      "media_market": {
+        "size": "2 mil.",
+        "type": "Medium Average"
+      },
+      "mega_chalices": 1
+    },
+    {
+      "city_name": "Emahney Park",
+      "team_name": "Polarbears",
+      "offensive_playbook": "Singleback",
+      "defensive_playbook": "Balanced",
+      "stadium": {
+        "name": "8 years",
+        "capacity": 96696
+      },
+      "fan_base": "Mythical",
+      "owner": "Hospital Group",
+      "media_market": {
+        "size": "7 mil.",
+        "type": "Medium Huge"
+      },
+      "mega_chalices": 7
+    },
+    {
+      "city_name": "Deannaton",
+      "team_name": "Demons",
+      "offensive_playbook": "Splitback/Pro Form",
+      "defensive_playbook": "Zone/Man",
+      "stadium": {
+        "name": "Disrepair",
+        "capacity": 71000
+      },
+      "fan_base": "Bandwagon",
+      "owner": "Tech Billionaire",
+      "media_market": {
+        "size": "500,000",
+        "type": "Shrinking"
+      },
+      "mega_chalices": 0
+    },
+    {
+      "city_name": "Jasmyne Junction",
+      "team_name": "Jackrabbits",
+      "offensive_playbook": "Power I",
+      "defensive_playbook": "2-4",
+      "stadium": {
+        "name": "Average",
+        "capacity": 61061
+      },
+      "fan_base": "Trending Up",
+      "owner": "Billionaire (Old Money)",
+      "media_market": {
+        "size": "1 mil.",
+        "type": "Low Average"
+      },
+      "mega_chalices": 5
+    },
+    {
+      "city_name": "Babelonia",
+      "team_name": "Beacons",
+      "offensive_playbook": "Pistol",
+      "defensive_playbook": "3-3-3",
+      "stadium": {
+        "name": "Different/Odd",
+        "capacity": 55000
+      },
+      "fan_base": "Above Average",
+      "owner": "Inventor",
+      "media_market": {
+        "size": "500,000",
+        "type": "Shrinking"
+      },
+      "mega_chalices": 2
+    },
+    {
+      "city_name": "Longsite",
+      "team_name": "Lemurs",
+      "offensive_playbook": "Run n' Gun",
+      "defensive_playbook": "4-3",
+      "stadium": {
+        "name": "Needs Work",
+        "capacity": 54186
+      },
+      "fan_base": "Fair Weather",
+      "owner": "Hedgefund Manager",
+      "media_market": {
+        "size": "3 mil.",
+        "type": "Average"
+      },
+      "mega_chalices": 6
+    },
+    {
+      "city_name": "Visiente'",
+      "team_name": "Vikings",
+      "offensive_playbook": "No Huddle",
+      "defensive_playbook": "5-2",
+      "stadium": {
+        "name": "New",
+        "capacity": 102120
+      },
+      "fan_base": "Socialite/Eliteist",
+      "owner": "Investment Group",
+      "media_market": {
+        "size": "4 mil.",
+        "type": "Low Huge"
+      },
+      "mega_chalices": 9
+    },
+    {
+      "city_name": "Dennisiargo",
+      "team_name": "Dismantlers",
+      "offensive_playbook": "Spread",
+      "defensive_playbook": "3-4",
+      "stadium": {
+        "name": "Old",
+        "capacity": 41144
+      },
+      "fan_base": "Weak",
+      "owner": "Lifelong Fan",
+      "media_market": {
+        "size": "250,000",
+        "type": "Rural"
+      },
+      "mega_chalices": 0
+    },
+    {
+      "city_name": "Sarahite",
+      "team_name": "Snarf Dragons",
+      "offensive_playbook": "Multi-Look",
+      "defensive_playbook": "Zone Heavy",
+      "stadium": {
+        "name": "Disrepair",
+        "capacity": 51000
+      },
+      "fan_base": "Trending Down",
+      "owner": "Media Mogul",
+      "media_market": {
+        "size": "750,000",
+        "type": "Growing"
+      },
+      "mega_chalices": 1
+    },
+    {
+      "city_name": "Golden Sunset",
+      "team_name": "Greyhounds",
+      "offensive_playbook": "West Coast",
+      "defensive_playbook": "Cover 2",
+      "stadium": {
+        "name": "State of the Art",
+        "capacity": 109901
+      },
+      "fan_base": "Rabid",
+      "owner": "Descendant of League Founder",
+      "media_market": {
+        "size": "10 mil.",
+        "type": "Huge"
+      },
+      "mega_chalices": 0
+    },
+    {
+      "city_name": "Takumzuh",
+      "team_name": "Tigers",
+      "offensive_playbook": "Balanced Run",
+      "defensive_playbook": "Cover 1 (Zone Blitz)",
+      "stadium": {
+        "name": "10 years",
+        "capacity": 94000
+      },
+      "fan_base": "Growing",
+      "owner": "Scumbag",
+      "media_market": {
+        "size": "10 mil.",
+        "type": "Huge"
+      },
+      "mega_chalices": 6
+    }
+  ]
+}""",
+    os.path.join(PROJECT_ROOT, "data", "player_templates.json"): "[]",
+    os.path.join(PROJECT_ROOT, "data", "ultimate_team", "hut_player_pool.json"): "[]", # Added as per blueprint
+
+
+    os.path.join(PROJECT_ROOT, "tests", "test_gameplay.py"): "# tests/test_gameplay.py\n# Contains tests for core gameplay mechanics.",
+    os.path.join(PROJECT_ROOT, "tests", "test_systems.py"): "# tests/test_systems.py\n# Contains tests for various game systems.",
+
+
+    os.path.join(PROJECT_ROOT, "main.py"): "# main.py\n# This is the main entry point for the Heart Football League game.",
+    os.path.join(PROJECT_ROOT, "README.md"): "# Heart Football League (HfL) System\n\nThis document outlines the architecture of the HfL game."
+}

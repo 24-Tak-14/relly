@@ -1,0 +1,350 @@
+# File: core/game.py
+# This file defines a single "Game" in our Heart Football League.
+# It brings together the two competing teams, the field, and manages the game flow (downs, score, etc.).
+
+from core.team import Team # We need our Team blueprint.
+from core.field import Field # We need our Field blueprint.
+# from systems.game_engine.game_logic import GameLogic # Will be imported later when game_engine is built.
+from config.settings import TOUCHDOWN_POINTS, FIELD_GOAL_POINTS, SAFETY_POINTS # We need scoring rules.
+
+# Placeholder for GameLogic before the systems folder is fully built.
+# This avoids a circular import error for now.
+# In a real setup, GameLogic would be imported directly.
+class GameLogic:
+    def simulate_play(self, offensive_player_id, defensive_player_id, current_possession_team, field):
+        print("Placeholder GameLogic: Simulating a generic play.")
+        import random
+        offense_rolls = [random.randint(1, 6) for _ in range(3)]
+        defense_rolls = [random.randint(1, 6) for _ in range(2)]
+        
+        offense_sum = sum(offense_rolls)
+        defense_sum = sum(defense_rolls)
+
+        outcome = ""
+        if offense_sum > defense_sum:
+            outcome = "Offense wins the play!"
+        elif defense_sum > offense_sum:
+            outcome = "Defense wins the play!"
+        else:
+            outcome = "The play is a tie."
+
+        return {
+            "offense_rolls": offense_rolls,
+            "defense_rolls": defense_rolls,
+            "outcome": outcome
+        }
+
+    def calculate_yards_gained(self, offense_rolls, speed_skill):
+        # Simplified: higher rolls and speed lead to more yards.
+        return max(1, sum(offense_rolls) - 5 + (speed_skill // 10))
+    
+    def calculate_yards_lost(self, defense_rolls, strength_skill):
+        # Simplified: higher rolls and strength lead to more yards lost for offense.
+        return max(1, sum(defense_rolls) - 3 + (strength_skill // 10))
+
+class Game:
+    """
+    Manages a single instance of a football game between two teams.
+    """
+    # When we start a new Game, we need the two teams that are playing.
+    def __init__(self, game_id, team_home: Team, team_away: Team):
+        # game_id: A unique number for this game.
+        self.game_id = game_id
+        # team_home: The team playing at home.
+        self.team_home = team_home
+        # team_away: The team playing away.
+        self.team_away = team_away
+        # field: Our football field where the game is played.
+        self.field = Field() # The Field now holds the Ball object inside it!
+        # game_logic: The brain that runs our plays (like rolling dice).
+        self.game_logic = GameLogic() # We'll create an instance of our game logic here.
+        # current_down: Which down it is (1st, 2nd, 3rd, 4th).
+        self.current_down = 1
+        # yards_to_go: How many yards the offense needs for a first down.
+        self.yards_to_go = 10
+        # current_possession_team: Which team has the ball right now.
+        self.current_possession_team = team_home # Home team starts with the ball.
+        # quarter: Which quarter of the game we are in.
+        self.quarter = 1
+        # game_over: Is the game finished? Starts as no.
+        self.game_over = False
+        # game_log: A list to record everything that happens in the game, like a diary.
+        self.game_log = []
+
+    # This function simulates (plays out) one full football play.
+    def simulate_play(self, offensive_player_id, defensive_player_id):
+        """
+        Simulates a single football play using the game logic.
+        Updates ball position, downs, and checks for first downs/touchdowns.
+        """
+        if self.game_over:
+            self.game_log.append("Game is over. Cannot simulate more plays.")
+            return {"status": "game_over"}
+
+        # Determine offensive and defensive players from their respective teams.
+        off_player = self.current_possession_team.get_player_by_id(offensive_player_id)
+        
+        def_team = self.team_away if self.current_possession_team == self.team_home else self.team_home
+        def_player = def_team.get_player_by_id(defensive_player_id)
+
+        if not off_player:
+            self.game_log.append(f"Error: Offensive player with ID {offensive_player_id} not found on {self.current_possession_team.name}.")
+            return {"status": "error", "message": "Offensive player not found."}
+        if not def_player:
+            self.game_log.append(f"Error: Defensive player with ID {defensive_player_id} not found on {def_team.name}.")
+            return {"status": "error", "message": "Defensive player not found."}
+
+        # DrillAI is in control now, Ta'K. We run the play with our dice system.
+        play_result = self.game_logic.simulate_play(
+            offensive_player_id, defensive_player_id, self.current_possession_team, self.field,
+            off_player=off_player, def_player=def_player
+        )
+        self.game_log.append(f"Play Result: {play_result['outcome']} - Offense rolled: {play_result['offense_rolls']}, Defense rolled: {play_result['defense_rolls']}")
+
+        # Determine how many yards were gained or lost based on the dice outcome.
+        yards_gained = 0
+        if play_result["outcome"] == "Offense wins the play!":
+            yards_gained = self.game_logic.calculate_yards_gained(play_result["offense_rolls"], off_player.skills.get("speed", 0))
+            self.game_log.append(f"{off_player.name} gained {yards_gained:.1f} yards!")
+        elif play_result["outcome"] == "Defense wins the play!":
+            yards_gained = -self.game_logic.calculate_yards_lost(play_result["defense_rolls"], def_player.skills.get("strength", 0))
+            self.game_log.append(f"Defense pushed back {abs(yards_gained):.1f} yards!")
+        else: # Tie
+            yards_gained = 0
+            self.game_log.append("No yards gained or lost on the play.")
+
+        # Update the ball's position using the Field's method.
+        new_ball_x = self.field.ball.x_position + yards_gained
+        # Ensure ball stays within reasonable field bounds.
+        # This is simplified; real game would handle out of bounds, etc.
+        if new_ball_x < -self.field.end_zone_depth: # Beyond own end zone
+            new_ball_x = -self.field.end_zone_depth
+        elif new_ball_x > self.field.length_yards + self.field.end_zone_depth: # Beyond opponent's end zone
+            new_ball_x = self.field.length_yards + self.field.end_zone_depth
+
+
+        self.field.update_ball_position_and_carrier(new_ball_x, self.field.ball.y_position, self.field.ball.z_position, off_player.player_id if yards_gained > 0 else None)
+        
+        # Check for safety (ball down in own end zone).
+        if self.field.check_for_safety() and self.current_possession_team == self.team_home: # Assuming home team is always advancing left to right on field 0-100
+             self.team_away.add_score(SAFETY_POINTS) # Opponent scores safety
+             self.game_log.append(f"SAFETY for {self.team_away.name}! Score: {self.team_home.score}-{self.team_away.score}")
+             self.reset_down_and_field_after_score(ball_placement=20) # Ball kicked off from 20 after safety.
+             self.switch_possession()
+             return {"status": "safety", "score_home": self.team_home.score, "score_away": self.team_away.score}
+        elif self.field.check_for_safety() and self.current_possession_team == self.team_away:
+             self.team_home.add_score(SAFETY_POINTS)
+             self.game_log.append(f"SAFETY for {self.team_home.name}! Score: {self.team_home.score}-{self.team_away.score}")
+             self.reset_down_and_field_after_score(ball_placement=20)
+             self.switch_possession()
+             return {"status": "safety", "score_home": self.team_home.score, "score_away": self.team_away.score}
+
+
+        # Check for touchdown.
+        if self.field.check_for_touchdown():
+            self.current_possession_team.add_score(TOUCHDOWN_POINTS)
+            self.game_log.append(f"TOUCHDOWN for {self.current_possession_team.name}! Score: {self.team_home.score}-{self.team_away.score}")
+            self.reset_down_and_field_after_score() # Reset for extra point/kickoff
+            # After touchdown, there's usually an extra point or 2-point attempt, then kickoff.
+            # For simplicity, we'll immediately switch possession as if kickoff occurred.
+            self.switch_possession()
+            return {"status": "touchdown", "score_home": self.team_home.score, "score_away": self.team_away.score}
+
+        # Check for first down.
+        if self.field.check_for_first_down():
+            self.game_log.append("First Down!")
+            self.current_down = 1
+            self.yards_to_go = 10
+            self.field.first_down_marker = self.field.ball.x_position + self.yards_to_go
+        else:
+            self.current_down += 1
+            self.yards_to_go = self.field.first_down_marker - self.field.ball.x_position
+            if self.yards_to_go < 0: self.yards_to_go = 0 # Can happen if ball went past marker by a lot.
+
+        # Check for turnover on downs (4th down failed).
+        if self.current_down > 4:
+            self.game_log.append(f"Turnover on Downs! {self.current_possession_team.name} failed to convert.")
+            self.switch_possession()
+            self.current_down = 1 # New team gets 1st down.
+            self.yards_to_go = 10
+            self.field.first_down_marker = self.field.ball.x_position + self.yards_to_go # Marker for new possession.
+
+        # Advance quarter if certain conditions met (e.g., time runs out, or after X plays, for simplicity)
+        if (len(self.game_log) - (self.quarter-1)*5) % 5 == 0 and self.quarter < 4: # Every 5 plays in a quarter, advance.
+            self.quarter += 1
+            self.game_log.append(f"End of Quarter {self.quarter - 1}. Starting Quarter {self.quarter}.")
+            if self.quarter > 4: # Game ends after 4 quarters.
+                self.end_game()
+                return {"status": "game_over", "score_home": self.team_home.score, "score_away": self.team_away.score, "winner": self.get_winner().name if self.get_winner() else "Tie"}
+
+        # Update player fantasy points (example: 0.1 points per yard gained)
+        if yards_gained > 0:
+            if off_player:
+                off_player.fantasy_points_scored += yards_gained * 0.1
+                self.game_log.append(f"{off_player.name} earned {yards_gained * 0.1:.1f} fantasy points.")
+
+
+        return {
+            "status": "play_completed",
+            "current_down": self.current_down,
+            "yards_to_go": self.yards_to_go,
+            "ball_position": self.field.ball.x_position,
+            "possession": self.current_possession_team.name,
+            "quarter": self.quarter,
+            "play_outcome": play_result["outcome"],
+            "offense_rolls": play_result["offense_rolls"],
+            "defense_rolls": play_result["defense_rolls"],
+            "game_log_entry": self.game_log[-1], # Only return the last log entry for brevity
+            "score_home": self.team_home.score,
+            "score_away": self.team_away.score
+        }
+    
+    # This function is used to switch which team has the ball.
+    def switch_possession(self):
+        """
+        Switches possession of the ball to the other team.
+        """
+        self.current_possession_team = self.team_away if self.current_possession_team == self.team_home else self.team_home
+        self.game_log.append(f"Possession switches to {self.current_possession_team.name}.")
+        # After a possession change, it's always 1st down.
+        self.current_down = 1
+        self.yards_to_go = 10
+        # The first down marker resets based on the ball's current position.
+        self.field.first_down_marker = self.field.ball.x_position + self.yards_to_go
+
+    # This function resets the game state after a score or turnover.
+    def reset_down_and_field_after_score(self, ball_placement=20):
+        """
+        Resets the down, yards to go, and field position after a scoring play (TD, Safety).
+        Default ball_placement is 20-yard line for kickoff/after safety.
+        """
+        self.current_down = 1
+        self.yards_to_go = 10
+        self.field.update_ball_position_and_carrier(ball_placement, self.field.ball.y_position)
+        self.field.first_down_marker = self.field.ball.x_position + self.yards_to_go
+        # Note: Fantasy points are reset per player, not per team. Team scores reset in game logic as needed.
+
+
+    # This function marks the game as finished.
+    def end_game(self):
+        """
+        Marks the game as over and determines the winner.
+        Updates team records (wins, losses, ties).
+        """
+        self.game_over = True
+        winner = self.get_winner()
+        if winner:
+            winner.wins += 1
+            # Update loser's record
+            loser = self.team_home if self.team_home != winner else self.team_away
+            if loser: # Ensure loser exists (if not a tie)
+                loser.losses += 1
+            self.game_log.append(f"Game Over! {winner.name} wins!")
+        elif self.team_home.score == self.team_away.score:
+            self.team_home.ties += 1
+            self.team_away.ties += 1
+            self.game_log.append("Game Over! It's a tie!")
+        
+        print(f"Final Score: {self.team_home.name} {self.team_home.score} - {self.team_away.name} {self.team_away.score}")
+        print(f"{self.team_home.name} Record: {self.team_home.wins}-{self.team_home.losses}-{self.team_home.ties}")
+        print(f"{self.team_away.name} Record: {self.team_away.wins}-{self.team_away.losses}-{self.team_away.ties}")
+
+
+    # This function figures out which team won the game.
+    def get_winner(self):
+        """
+        Returns the winning team, or None if it's a tie.
+        """
+        if self.team_home.score > self.team_away.score:
+            return self.team_home
+        elif self.team_away.score > self.team_home.score:
+            return self.team_away
+        else:
+            return None # It's a tie!
+
+    # This helps us print out game information.
+    def __str__(self):
+        """
+        Returns a human-readable string representation of the current game state.
+        """
+        return (f"Game {self.game_id}: {self.team_home.name} ({self.team_home.score}) vs "
+                f"{self.team_away.name} ({self.team_away.score}) | Q{self.quarter} | "
+                f"Down: {self.current_down} & {self.yards_to_go} | "
+                f"Possession: {self.current_possession_team.name} | Ball @ {self.field.ball.x_position:.1f} yds")
+
+    # This function converts game data into a dictionary for database storage.
+    def to_dict(self):
+        """
+        Converts the Game object to a dictionary for database storage.
+        """
+        return {
+            "game_id": self.game_id,
+            "team_home": self.team_home.to_dict(),
+            "team_away": self.team_away.to_dict(),
+            "field": self.field.to_dict(),
+            "current_down": self.current_down,
+            "yards_to_go": self.yards_to_go,
+            "current_possession_team_id": self.current_possession_team.team_id,
+            "quarter": self.quarter,
+            "game_over": self.game_over,
+            "game_log": self.game_log
+        }
+
+    # This function helps us create a Game object from data we got from our database.
+    @classmethod
+    def from_dict(cls, data, all_players_pool_dicts):
+        """
+        Creates a Game object from a dictionary, typically loaded from a database.
+        Needs access to the full player pool (as dictionaries) to correctly re-link player objects within teams and field.
+        """
+        # Create a temporary pool of Player objects from the dictionaries to pass to from_dict methods.
+        from core.player import create_player_from_dict
+        temp_player_objects_pool = [create_player_from_dict(p_dict) for p_dict in all_players_pool_dicts]
+
+        # Create Team objects from the dictionary data.
+        team_home = Team.from_dict(data["team_home"])
+        team_away = Team.from_dict(data["team_away"])
+
+        # Re-link roster players to the generated player objects (important for shared player instances).
+        # This is a critical step for loading state where players might be referenced by multiple objects.
+        def relink_team_roster(team, player_objects_pool):
+            new_roster = []
+            for player_data_in_roster in team.roster: # team.roster here contains dicts from its own from_dict.
+                found_player_obj = next((p for p in player_objects_pool if p.player_id == player_data_in_roster.player_id), None)
+                if found_player_obj:
+                    new_roster.append(found_player_obj)
+                else:
+                    # Fallback: recreate player if not found in shared pool.
+                    new_roster.append(create_player_from_dict(player_data_in_roster.to_dict()))
+            team.roster = new_roster
+
+        relink_team_roster(team_home, temp_player_objects_pool)
+        relink_team_roster(team_away, temp_player_objects_pool)
+
+        # Create a new game.
+        game = cls(
+            game_id=data["game_id"],
+            team_home=team_home,
+            team_away=team_away
+        )
+        
+        # Reconstruct the field with correct player objects.
+        # Field.from_dict needs player IDs, not full objects, so it doesn't need temp_player_objects_pool directly.
+        game.field = Field.from_dict(data["field"])
+
+        # Set other game state variables.
+        game.current_down = data["current_down"]
+        game.yards_to_go = data["yards_to_go"]
+        # Find the correct possession team object based on its ID.
+        if data["current_possession_team_id"] == team_home.team_id:
+            game.current_possession_team = team_home
+        else:
+            game.current_possession_team = team_away
+        game.quarter = data["quarter"]
+        game.game_over = data["game_over"]
+        game.game_log = data["game_log"]
+
+        # If GameLogic was mocked, ensure it's a proper instance here if needed for further calls.
+        # (This assumes GameLogic will be available and correctly initialized globally or passed in)
+        # For now, it keeps the placeholder or whatever was set during initialization.
+        return game

@@ -1,0 +1,434 @@
+import React, { useState, useEffect } from 'react';
+
+// Main App component
+const App = () => {
+    // State to manage which project is currently displayed: 'grand_illusion' or 'primal_playground'
+    const [activeProject, setActiveProject] = useState('grand_illusion');
+    
+    // State to manage modals (e.g., for file content, alerts)
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalContent, setModalContent] = useState('');
+    const [modalTitle, setModalTitle] = useState('');
+
+    // State for the interactive CI/CD log in the Grand Illusion project
+    const [ciCdLog, setCiCdLog] = useState(['Awaiting trigger...']);
+    // State to track the currently active step in the CI/CD simulation
+    const [activeCiCdStep, setActiveCiCdStep] = useState(-1);
+
+    // State for the Primal Playground app's terminal simulation
+    const [terminalOutput, setTerminalOutput] = useState([
+        'Google Cloud Shell Terminal Simulator',
+        'Type `help` for a list of available commands.'
+    ]);
+    const [terminalInput, setTerminalInput] = useState('');
+
+    // Define the file system content from setup_project.py and other docs
+    const fileSystem = {
+        './.gitignore': `*.db
+__pycache__/
+venv/
+node_modules/`,
+        './requirements.txt': `SQLAlchemy==2.0.30`,
+        './README.md': `# Grand Illusion Interface
+
+A project for managing psychographic consent, financial token systems, and interactive smart contract blueprints.
+
+## Setup Instructions (Termux)
+
+1.  **Verify Dependencies**:
+    -   Python: \`python --version\` (3.12.11 or higher).
+    -   Install SQLAlchemy: \`pip install sqlalchemy\`.
+2.  **Run Setup Script**:
+    -   Run: \`python setup_project.py\`. This script will create the entire file and directory structure for you.
+3.  **Serve Frontend**:
+    -   Run: \`cd frontend && python -m http.server ...`,
+        './core/main.py': `# Core logic for the Grand Illusion Interface.`,
+        './core/config.py': `# Configuration settings for the core application.`,
+        './core/systems/jypsee_manager_system/__init__.py': `# Initializes the jypsee_manager_system package.`,
+        './core/systems/jypsee_manager_system/jypsee_manager.py': `# Jypsee Manager System logic, likely for AI or specific data handling.`,
+        './backend/Dockerfile': `# Dockerfile to containerize the backend application.`,
+        './backend/requirements.txt': `# Backend Python dependencies.`,
+        './backend/app.py': `# Main backend application entry point.`,
+        './backend/db/schema.py': `# Database schema definition for SQLAlchemy.`,
+        './frontend/package.json': `{
+  "name": "frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}`,
+        './frontend/public/index.html': `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Illusion Interface</title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>`,
+        './frontend/src/App.js': `// This is the main React component for the frontend.`,
+        './frontend/src/index.js': `import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+// This is the main entry point for the React application.`,
+        './docker-compose.yml': `# Docker-compose file to define and run multi-container applications.`,
+        './Makefile': `# Makefile for common build and deployment commands.`,
+        './setup_project.py': `# Python script to set up the project structure.
+# (The full content is too long, but you get the idea)
+# ...`,
+        // The HTML for the interactive go-live guide is also a "file" in our virtual system
+        './go-live-guide.html': `<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Guide: Grand Illusion Int. Go-Live</title>
+    <!-- ... (rest of the HTML from the previous response) ... -->
+</head>
+<body>
+    <!-- The content of the interactive guide from the previous response goes here -->
+</body>
+</html>`
+    };
+
+    // Define the directory structure for visual representation
+    const projectStructure = {
+        name: 'grand-illusion-project',
+        isDir: true,
+        children: [
+            { name: '.gitignore', isDir: false },
+            { name: 'requirements.txt', isDir: false },
+            { name: 'README.md', isDir: false },
+            {
+                name: 'core',
+                isDir: true,
+                children: [
+                    { name: 'main.py', isDir: false },
+                    { name: 'config.py', isDir: false },
+                    {
+                        name: 'systems',
+                        isDir: true,
+                        children: [
+                            {
+                                name: 'jypsee_manager_system',
+                                isDir: true,
+                                children: [
+                                    { name: '__init__.py', isDir: false },
+                                    { name: 'jypsee_manager.py', isDir: false }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                name: 'backend',
+                isDir: true,
+                children: [
+                    { name: 'Dockerfile', isDir: false },
+                    { name: 'requirements.txt', isDir: false },
+                    { name: 'app.py', isDir: false },
+                    {
+                        name: 'db',
+                        isDir: true,
+                        children: [{ name: 'schema.py', isDir: false }]
+                    }
+                ]
+            },
+            {
+                name: 'frontend',
+                isDir: true,
+                children: [
+                    { name: 'package.json', isDir: false },
+                    {
+                        name: 'public',
+                        isDir: true,
+                        children: [{ name: 'index.html', isDir: false }]
+                    },
+                    {
+                        name: 'src',
+                        isDir: true,
+                        children: [
+                            { name: 'App.js', isDir: false },
+                            { name: 'index.js', isDir: false }
+                        ]
+                    }
+                ]
+            },
+            { name: 'docker-compose.yml', isDir: false },
+            { name: 'Makefile', isDir: false },
+            { name: 'go-live-guide.html', isDir: false }
+        ]
+    };
+
+    // Data for the interactive Go-Live Guide
+    const goLiveSteps = [
+        'Phase 1: Prep', 'Phase 2: Terraform', 'Phase 3: DB Mig.', 'Phase 4: Docker', 'Phase 5: Backend/Al',
+        'Phase 6: Frontend', 'Phase 7: DNS', 'Phase 8: CI/CD', 'Phase 9: Security', 'Phase 10: Launch'
+    ];
+
+    // Function to handle terminal commands for the Primal Playground App
+    const handleTerminalCommand = (command) => {
+        let newOutput = [...terminalOutput, `> ${command}`];
+        const trimmedCommand = command.trim();
+        const firebaseConfig = `
+const firebaseConfig = {
+    apiKey: "AIzaSyAoIqurdF62s7MXW5Ci5VTzHi9ZKmGOqTc",
+    authDomain: "primal-playground.firebaseapp.com",
+    projectId: "primal-playground",
+    storageBucket: "primal-playground.firebasestorage.app",
+    messagingSenderId: "478695230286",
+    appId: "1:478695230286:web:8325977e733d8fb9f0ec1f",
+    measurementId: "G-P3YSNGEWNY"
+};`;
+
+        if (trimmedCommand === 'ls') {
+            newOutput = [...newOutput, 'README.md', 'primal-playground/', 'firebase-config.js'];
+        } else if (trimmedCommand === 'cat firebase-config.js') {
+            newOutput = [...newOutput, firebaseConfig];
+        } else if (trimmedCommand.startsWith('npm install')) {
+            newOutput = [...newOutput, 'Installing dependencies... Done.'];
+        } else if (trimmedCommand === 'help') {
+            newOutput = [...newOutput, 'Available commands:', 'ls', 'cat firebase-config.js', 'npm install'];
+        } else {
+            newOutput = [...newOutput, `command not found: ${trimmedCommand}`];
+        }
+
+        setTerminalOutput(newOutput);
+        setTerminalInput('');
+    };
+
+    // A recursive component to render the file structure tree
+    const FileTree = ({ structure, path = '' }) => {
+        const [isExpanded, setIsExpanded] = useState(true);
+        const currentPath = path ? `${path}/${structure.name}` : structure.name;
+
+        if (!structure.isDir) {
+            return (
+                <div 
+                    className="flex items-center space-x-2 py-1 px-2 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors"
+                    onClick={() => {
+                        setModalTitle(`File: ${currentPath}`);
+                        setModalContent(fileSystem[currentPath] || 'File content not available in this demo.');
+                        setIsModalOpen(true);
+                    }}
+                >
+                    <span className="text-gray-500">📄</span>
+                    <span className="font-mono text-sm">{structure.name}</span>
+                </div>
+            );
+        }
+
+        return (
+            <div className="ml-4">
+                <div 
+                    className="flex items-center space-x-2 py-1 cursor-pointer hover:bg-gray-100 rounded-lg px-2"
+                    onClick={() => setIsExpanded(!isExpanded)}
+                >
+                    <span className="text-gray-500">{isExpanded ? '📂' : '📁'}</span>
+                    <span className="font-bold text-sm text-gray-800">{structure.name}/</span>
+                </div>
+                {isExpanded && structure.children && (
+                    <div className="pl-4 border-l border-gray-300">
+                        {structure.children.map((child, index) => (
+                            <FileTree key={index} structure={child} path={currentPath} />
+                        ))}
+                    </div>
+                )}
+            </div>
+        );
+    };
+
+    // General-purpose Modal for displaying file content or messages
+    const Modal = ({ title, content, isOpen, onClose }) => {
+        if (!isOpen) return null;
+        return (
+            <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center p-4 z-50">
+                <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-4xl">
+                    <div className="flex justify-between items-center mb-4 border-b pb-4">
+                        <h3 className="text-2xl font-bold text-gray-800">{title}</h3>
+                        <button onClick={onClose} className="text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
+                    </div>
+                    <pre className="whitespace-pre-wrap font-mono text-sm bg-gray-100 p-4 rounded-lg overflow-auto max-h-[70vh]">{content}</pre>
+                </div>
+            </div>
+        );
+    };
+
+    // A button component to create a consistent look
+    const ProjectButton = ({ children, onClick, active }) => (
+        <button
+            onClick={onClick}
+            className={`px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg
+                ${active ? 'bg-[#4E8D7C] text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}
+            `}
+        >
+            {children}
+        </button>
+    );
+
+    return (
+        <div className="bg-[#F8F6F1] min-h-screen p-4 sm:p-8 font-sans antialiased text-gray-800">
+            {/* Main Title and Project Switcher */}
+            <header className="text-center mb-10">
+                <h1 className="text-4xl sm:text-5xl font-bold font-serif text-[#3a3a3a] mb-4">Project File Manager & Builder</h1>
+                <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-6">
+                    This interactive dashboard lets you explore and build files for your projects.
+                </p>
+                <div className="flex justify-center space-x-4">
+                    <ProjectButton
+                        onClick={() => setActiveProject('grand_illusion')}
+                        active={activeProject === 'grand_illusion'}
+                    >
+                        Grand Illusion Interface
+                    </ProjectButton>
+                    <ProjectButton
+                        onClick={() => setActiveProject('primal_playground')}
+                        active={activeProject === 'primal_playground'}
+                    >
+                        Primal Playground App
+                    </ProjectButton>
+                </div>
+            </header>
+
+            {/* Grand Illusion Interface Section */}
+            {activeProject === 'grand_illusion' && (
+                <div className="container mx-auto max-w-7xl">
+                    <section className="mb-12 bg-white rounded-2xl shadow-xl p-6 sm:p-10 border border-gray-200">
+                        <h2 className="text-3xl font-bold text-[#3a3a3a] mb-6 border-b pb-4">Grand Illusion File Builder & Go-Live Guide</h2>
+                        <div className="grid md:grid-cols-2 gap-8">
+                            {/* File Tree and Builder */}
+                            <div>
+                                <h3 className="text-2xl font-semibold mb-4">Project Directory</h3>
+                                <div className="bg-gray-50 p-4 rounded-lg shadow-inner border max-h-[60vh] overflow-auto">
+                                    <FileTree structure={projectStructure} />
+                                </div>
+                                <div className="mt-6 p-4 bg-[#4E8D7C] text-white rounded-lg shadow">
+                                    <h4 className="font-bold text-xl mb-2">How to Use This Builder</h4>
+                                    <p className="text-sm">Click on any file in the directory tree to see its code content. You can then copy this code to create the file in your own project.</p>
+                                </div>
+                            </div>
+
+                            {/* Go-Live Guide Simulation */}
+                            <div>
+                                <h3 className="text-2xl font-semibold mb-4">Interactive Go-Live Simulation</h3>
+                                <div className="bg-gray-50 p-6 rounded-lg shadow-inner border max-h-[60vh] overflow-auto">
+                                    <p className="mb-4 text-gray-600">Simulate the CI/CD pipeline from the "Grand Illusion Int. Go-Live" document.</p>
+                                    <div className="flex flex-col md:flex-row items-center justify-around space-y-4 md:space-y-0 md:space-x-4 mb-6">
+                                        {goLiveSteps.map((step, index) => (
+                                            <div 
+                                                key={index} 
+                                                className={`flex-1 text-center px-4 py-2 rounded-full font-semibold transition-colors duration-500
+                                                    ${index <= activeCiCdStep ? 'bg-[#4E8D7C] text-white shadow-lg' : 'bg-gray-200 text-gray-700'}
+                                                `}
+                                            >
+                                                <p>{step}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <button 
+                                        onClick={() => {
+                                            setCiCdLog(['CI/CD pipeline triggered...']);
+                                            setActiveCiCdStep(-1);
+                                            // Simulate the CI/CD process
+                                            let currentStep = 0;
+                                            const interval = setInterval(() => {
+                                                if (currentStep < goLiveSteps.length) {
+                                                    setCiCdLog(prev => [...prev, `[${new Date().toLocaleTimeString()}] Step "${goLiveSteps[currentStep]}" complete.`]);
+                                                    setActiveCiCdStep(currentStep);
+                                                    currentStep++;
+                                                } else {
+                                                    clearInterval(interval);
+                                                    setCiCdLog(prev => [...prev, `[${new Date().toLocaleTimeString()}] CI/CD Pipeline complete!`]);
+                                                    setActiveCiCdStep(goLiveSteps.length);
+                                                }
+                                            }, 1000);
+                                        }}
+                                        className="w-full bg-[#C06C59] hover:bg-[#a35e4d] text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 shadow-md">
+                                        Trigger CI/CD
+                                    </button>
+                                    <div id="ciCdLog" className="mt-6 bg-gray-800 text-green-400 p-4 rounded-lg font-mono text-sm overflow-auto max-h-[25vh]">
+                                        {ciCdLog.map((line, index) => (
+                                            <p key={index}>{line}</p>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            )}
+
+            {/* Primal Playground App Section */}
+            {activeProject === 'primal_playground' && (
+                <div className="container mx-auto max-w-7xl">
+                    <section className="mb-12 bg-white rounded-2xl shadow-xl p-6 sm:p-10 border border-gray-200">
+                        <h2 className="text-3xl font-bold text-[#3a3a3a] mb-6 border-b pb-4">Primal Playground App Setup Guide</h2>
+                        <div className="grid md:grid-cols-2 gap-8">
+                            {/* Setup Guide Text */}
+                            <div>
+                                <h3 className="text-2xl font-semibold mb-4">Google Cloud Shell Guide</h3>
+                                <div className="bg-gray-50 p-6 rounded-lg shadow-inner border max-h-[60vh] overflow-auto text-gray-700">
+                                    <p className="mb-4">The Primal Playground app uses <strong>Google Cloud Shell</strong>. This guide walks you through setting it up from your phone.</p>
+                                    <h4 className="font-bold text-lg mt-4">Prerequisites</h4>
+                                    <ul className="list-disc list-inside ml-4 mt-2">
+                                        <li>Google Cloud Account & Firebase Project</li>
+                                        <li>Phone Browser (e.g., Chrome, Safari)</li>
+                                        <li>Project Files: You can upload them or start fresh.</li>
+                                    </ul>
+                                    <h4 className="font-bold text-lg mt-4">Firebase Configuration</h4>
+                                    <p className="mt-2">The Firebase config for the `primal-playground` project is shown in the terminal simulator below. You will need this for your app's database and authentication.
+                                    The `serviceAccountKey.json` mentioned in the original file is for backend admin access and needs to be securely stored.</p>
+                                </div>
+                            </div>
+
+                            {/* Terminal Simulator */}
+                            <div>
+                                <h3 className="text-2xl font-semibold mb-4">Terminal Simulator</h3>
+                                <div className="bg-gray-800 text-green-400 p-4 rounded-lg font-mono text-sm shadow-inner max-h-[60vh] flex flex-col">
+                                    <div className="flex-grow overflow-auto">
+                                        {terminalOutput.map((line, index) => (
+                                            <p key={index}>{line}</p>
+                                        ))}
+                                    </div>
+                                    <div className="flex items-center mt-2 border-t border-gray-600 pt-2">
+                                        <span className="text-green-400 mr-2">$</span>
+                                        <input
+                                            type="text"
+                                            value={terminalInput}
+                                            onChange={(e) => setTerminalInput(e.target.value)}
+                                            onKeyPress={(e) => {
+                                                if (e.key === 'Enter') handleTerminalCommand(terminalInput);
+                                            }}
+                                            className="bg-transparent border-none outline-none text-green-400 flex-grow"
+                                            autoFocus
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            )}
+
+            {/* General Modal for displaying file content */}
+            <Modal
+                title={modalTitle}
+                content={modalContent}
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+            />
+
+        </div>
+    );
+};
+
+export default App;

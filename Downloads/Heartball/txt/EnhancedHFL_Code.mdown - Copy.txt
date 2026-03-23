@@ -1,0 +1,146 @@
+﻿# Rebuild EnhancedHFL_Code directory with actual file contents extracted earlier
+
+
+enhanced_code_content = {
+    "PlayerPreferencesService.js": """import { AsyncStorage } from 'react-native';
+
+
+export const setupPlayerPreferences = async (preferences) => {
+  await AsyncStorage.setItem('@playerPreferences', JSON.stringify(preferences));
+  analytics.logEvent('preferences_set', preferences);
+};
+
+
+export const getPlayerPreferences = async () => {
+  const preferences = await AsyncStorage.getItem('@playerPreferences');
+  return preferences ? JSON.parse(preferences) : {};
+};
+
+
+export const personalizeContent = async (contentType) => {
+  const preferences = await getPlayerPreferences();
+  switch (contentType) {
+    case 'tutorial':
+      return preferences.playStyle === 'casual'
+        ? 'simplifiedTutorial'
+        : 'advancedTutorial';
+    case 'rewards':
+      return preferences.favoriteTeam
+        ? { cosmetic: `${preferences.favoriteTeam}-jersey` }
+        : { cosmetic: 'default-jersey' };
+    default:
+      return null;
+  }
+};""",
+    "deploy-free.sh": """#!/bin/bash
+
+
+# Heart Football League - Enhanced Free Deployment Script
+echo "🚀 Starting HFL Free Deployment..."
+
+
+set -e
+trap 'echo "❌ Deployment failed: $?"; exit 1' ERR
+
+
+echo "🔧 Setting up environment..."
+export APP_NAME="hfl-mobile"
+export BACKEND_SERVICE="hfl-backend"
+export MONGODB_ATLAS_URI=${MONGODB_ATLAS_URI:-"your-free-mongodb-uri"}
+
+
+if [ -z "$MONGODB_ATLAS_URI" ]; then
+  echo "❌ MONGODB_ATLAS_URI not set. Please configure it."
+  exit 1
+fi
+
+
+echo "☁ Deploying backend to AWS Lambda..."
+cd server
+npm install --production
+serverless deploy --stage prod --force
+
+
+echo "📱 Building mobile application..."
+cd ../app
+npm install --production
+echo "🧪 Running tests..."
+npm test || { echo "❌ Tests failed"; exit 1; }
+expo build:android -t apk --no-wait --release-channel prod-v1
+
+
+echo "🔄 Configuring OTA updates..."
+expo publish --release-channel prod-v1
+
+
+echo "📊 Setting up free analytics..."
+firebase login --no-localhost
+firebase init analytics --project hfl-prod
+
+
+echo "🔍 Verifying deployment..."
+curl -f https://api.hfl.game/health || { echo "❌ Backend health check failed"; exit 1; }
+
+
+echo "✅ Deployment complete! Next steps:"
+echo "1. Download APK from: https://expo.io/accounts/${EXPO_USERNAME}/builds"
+echo "2. Test on low-end device"
+echo "3. Monitor analytics in Firebase console"
+echo "4. Configure AdMob in Google AdMob dashboard"
+""",
+    "MONETIZATION.md": """# Updated HFL Monetization Framework
+
+
+## Core Strategies
+1. **Rewarded Ads (Player-Controlled)**
+   - Boost Menu with capped daily ads
+   - Transparent rewards (e.g., "100 coins + 1 common card")
+   - Analytics-driven reward optimization
+
+
+2. **Battle Pass (Ethical)**
+   - Enhanced free tier with frequent rewards
+   - One-time purchase option alongside subscriptions
+   - Cosmetic-focused rewards to avoid pay-to-win
+
+
+3. **Cosmetic Marketplace**
+   - Player-driven trading with in-game coin fees
+   - No real-money requirements for participation
+   - Community-voted featured items
+
+
+## Retention Enhancements
+1. **Personalized Content**
+   - Adaptive onboarding based on player preferences
+   - Dynamic challenges tailored to skill level
+   - NFL-synced live events
+
+
+2. **Community Systems**
+   - Cooperative guild goals with shared rewards
+   - Player-created plays with voting system
+   - Lightweight guild chat via Firebase
+
+
+3. **Progression Transparency**
+   - Dashboard showing all progress paths
+   - Clear time-to-reward estimates
+   - Anti-grind mechanics with daily caps
+"""
+}
+
+
+# Create directory and write files
+fixed_hfl_dir = Path("/mnt/data/HFL_Code_Fixed")
+fixed_hfl_dir.mkdir(parents=True, exist_ok=True)
+
+
+fixed_paths = []
+for filename, content in enhanced_code_content.items():
+    path = fixed_hfl_dir / filename
+    path.write_text(content)
+    fixed_paths.append(str(path))
+
+
+fixed_paths

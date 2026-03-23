@@ -1,0 +1,20 @@
+// File: data/ultimate_team/foundry_parts.json
+
+// This file defines the various "parts" or consumable items used in the Foundry system
+// to forge or upgrade players. Each part has a unique ID and properties.
+[
+    {
+        "part_id": "part_speed_booster_1",
+        "name": "Speed Booster",
+        "description": "Permanently increases a player's speed.",
+        "attribute": "speed",
+        "boost_amount": 5
+    },
+    {
+        "part_id": "part_strength_booster_1",
+        "name": "Strength Booster",
+        "description": "Permanently increases a player's strength.",
+        "attribute": "strength",
+        "boost_amount": 5
+    }
+]

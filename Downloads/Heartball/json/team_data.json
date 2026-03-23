@@ -1,0 +1,290 @@
+[
+  {
+    "id": 1,
+    "team_name": "Kaitlynnville Eclipse",
+    "stadium": {
+      "name": "Celestial Arena"
+    },
+    "fanbase": "Lunatic Fringe"
+  },
+  {
+    "id": 2,
+    "team_name": "Gu'Bare Garrison",
+    "stadium": {
+      "name": "Shieldwall Fortress"
+    },
+    "fanbase": "Steel Legion"
+  },
+  {
+    "id": 3,
+    "team_name": "Miki Mountain Miracles",
+    "stadium": {
+      "name": "Summit Sanctuary"
+    },
+    "fanbase": "Alpine Echoes"
+  },
+  {
+    "id": 4,
+    "team_name": "Heirsentia Hawks",
+    "stadium": {
+      "name": "Talon Heights"
+    },
+    "fanbase": "Horizon Hunters"
+  },
+  {
+    "id": 5,
+    "team_name": "Brightcloud Clovers",
+    "stadium": {
+      "name": "Shamrock Park"
+    },
+    "fanbase": "Emerald Enclave"
+  },
+  {
+    "id": 6,
+    "team_name": "Silvermind Storks",
+    "stadium": {
+      "name": "Aviary Vista"
+    },
+    "fanbase": "Feathered Watch"
+  },
+  {
+    "id": 7,
+    "team_name": "Reynava Hellcats",
+    "stadium": {
+      "name": "Inferno Dome"
+    },
+    "fanbase": "Hellfire Horde"
+  },
+  {
+    "id": 8,
+    "team_name": "Christiano Candy Rain",
+    "stadium": {
+      "name": "Sugar Rush Stadium"
+    },
+    "fanbase": "Sweet Tooth Brigade"
+  },
+  {
+    "id": 9,
+    "team_name": "Jakobian Jokers",
+    "stadium": {
+      "name": "Prankster's Paradise"
+    },
+    "fanbase": "Joker's Wild"
+  },
+  {
+    "id": 10,
+    "team_name": "Queens Cove Canary's",
+    "stadium": {
+      "name": "Royal Roost"
+    },
+    "fanbase": "Courtly Chorus"
+  },
+  {
+    "id": 11,
+    "team_name": "Zorisova Sandals",
+    "stadium": {
+      "name": "Sand Dune Arena"
+    },
+    "fanbase": "Oasis Outlaws"
+  },
+  {
+    "id": 12,
+    "team_name": "Salted Sea Sailors",
+    "stadium": {
+      "name": "Seafarer's Haven"
+    },
+    "fanbase": "Salty Crew"
+  },
+  {
+    "id": 13,
+    "team_name": "Closesight Condors",
+    "stadium": {
+      "name": "Eagle's Eyrie"
+    },
+    "fanbase": "Soaring Sentinels"
+  },
+  {
+    "id": 14,
+    "team_name": "Sunsprout Flames",
+    "stadium": {
+      "name": "Solar Blaze Arena"
+    },
+    "fanbase": "Phoenix Rising"
+  },
+  {
+    "id": 15,
+    "team_name": "Beloved Funnel Chug",
+    "stadium": {
+      "name": "Frothy Frenzy Field"
+    },
+    "fanbase": "Brewmaster's Battalion"
+  },
+  {
+    "id": 16,
+    "team_name": "San Terrell Saints",
+    "stadium": {
+      "name": "Heavenly Grounds"
+    },
+    "fanbase": "Celestial Choir"
+  },
+  {
+    "id": 17,
+    "team_name": "Justinopolis Jackals",
+    "stadium": {
+      "name": "Jackal's Den"
+    },
+    "fanbase": "Shadow Stalkers"
+  },
+  {
+    "id": 18,
+    "team_name": "Matteochi Megaladons",
+    "stadium": {
+      "name": "Abyssal Abyss"
+    },
+    "fanbase": "Shark Tank"
+  },
+  {
+    "id": 19,
+    "team_name": "Jessadelphia Jypsees",
+    "stadium": {
+      "name": "Crystal Ball Colosseum"
+    },
+    "fanbase": "Mystic Maze"
+  },
+  {
+    "id": 20,
+    "team_name": "Libertine Stars",
+    "stadium": {
+      "name": "Starlight Sanctuary"
+    },
+    "fanbase": "Cosmic Constellations"
+  },
+  {
+    "id": 21,
+    "team_name": "Golden Siren Soul",
+    "stadium": {
+      "name": "Gilded Grotto"
+    },
+    "fanbase": "Golden Symphony"
+  },
+  {
+    "id": 22,
+    "team_name": "Tiapma'atzu Tribe",
+    "stadium": {
+      "name": "Brighton Tribunal"
+    },
+    "fanbase": "Brightons"
+  },
+  {
+    "id": 23,
+    "team_name": "San Terrell Blackouts",
+    "stadium": {
+      "name": "Open Outage Dome"
+    },
+    "fanbase": "Nightfall Legion"
+  },
+  {
+    "id": 24,
+    "team_name": "Firesky Foxes",
+    "stadium": {
+      "name": "Emberglow Stadium"
+    },
+    "fanbase": "Flameborn Tribe"
+  },
+  {
+    "id": 25,
+    "team_name": "Naveah Nomad",
+    "stadium": {
+      "name": "Wanderlust Arena"
+    },
+    "fanbase": "Nomadic Wanderers"
+  },
+  {
+    "id": 26,
+    "team_name": "Kaylee Kraken",
+    "stadium": {
+      "name": "Leviathan Lair"
+    },
+    "fanbase": "Tentacle Tide"
+  },
+  {
+    "id": 27,
+    "team_name": "Emahney Park Polarbears",
+    "stadium": {
+      "name": "Frostbite Field"
+    },
+    "fanbase": "Blizzard Battalion"
+  },
+  {
+    "id": 28,
+    "team_name": "Deannaton Dragons",
+    "stadium": {
+      "name": "Dragon's Roost"
+    },
+    "fanbase": "Firestorm Clan"
+  },
+  {
+    "id": 29,
+    "team_name": "Jasmyne Junction Jackrabbits",
+    "stadium": {
+      "name": "Crossroads Coliseum"
+    },
+    "fanbase": "Whirlwind Warband"
+  },
+  {
+    "id": 30,
+    "team_name": "Babelonia Beacons",
+    "stadium": {
+      "name": "Beacon Heights"
+    },
+    "fanbase": "Towering Titans"
+  },
+  {
+    "id": 31,
+    "team_name": "Longsite Lemurs",
+    "stadium": {
+      "name": "Jungle Jamboree"
+    },
+    "fanbase": "Primal Pack"
+  },
+  {
+    "id": 32,
+    "team_name": "Visiente' Vikings",
+    "stadium": {
+      "name": "Valhalla Arena"
+    },
+    "fanbase": "Berserker Brigade"
+  },
+  {
+    "id": 33,
+    "team_name": "Dennisiargo Dismantlers",
+    "stadium": {
+      "name": "Distressed Dome"
+    },
+    "fanbase": "Jankers"
+  },
+  {
+    "id": 34,
+    "team_name": "Sarahite Snarf Dragons",
+    "stadium": {
+      "name": "Dragon's Breath Coliseum"
+    },
+    "fanbase": "Scalebound Syndicate"
+  },
+  {
+    "id": 35,
+    "team_name": "Golden Sunset Greyhounds",
+    "stadium": {
+      "name": "Twilight Track"
+    },
+    "fanbase": "Duskrunners"
+  },
+  {
+    "id": 36,
+    "team_name": "Takumzuh Tigers",
+    "stadium": {
+      "name": "Tiger's Eye Stadium"
+    },
+    "fanbase": "Jungle Fury"
+  }
+]

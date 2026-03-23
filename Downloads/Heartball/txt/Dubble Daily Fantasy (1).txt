@@ -1,0 +1,310 @@
+﻿1. High-Stakes QB Duel
+* Objective: Focuses on quarterbacks' performance.
+* Entry Fee: $5
+* Prize Pool: $1000
+* Scoring: Points for passing yards, touchdowns, and bonuses for long completions.
+2. Running Back Rush
+* Objective: Emphasizes running backs' ground game.
+* Entry Fee: $2
+* Prize Pool: $500
+* Scoring: Points for rushing yards, touchdowns, and receiving yards.
+3. Wide Receiver Showcase
+* Objective: Showcases wide receivers' catching ability.
+* Entry Fee: $3
+* Prize Pool: $750
+* Scoring: Points for receptions, receiving yards, and touchdowns.
+4. Tight End Takedown
+* Objective: Highlights tight ends' versatility.
+* Entry Fee: $4
+* Prize Pool: $600
+* Scoring: Points for receptions, receiving yards, touchdowns, and blocking metrics.
+5. Defensive Dominance
+* Objective: Focuses on defensive positions (DE, DT, OLB, MLB, CB, SS, FS).
+* Entry Fee: $3
+* Prize Pool: $700
+* Scoring: Points for tackles, sacks, interceptions, and defensive touchdowns.
+6. Special Teams Spotlight
+* Objective: Highlights special teams roles (K, P, KR, PR, LS).
+* Entry Fee: $2
+* Prize Pool: $400
+* Scoring: Points for field goals, punting yards, kick returns, and punt returns.
+7. Offensive Power Play
+* Objective: Emphasizes high-scoring offensive positions (QB, RB, WR, TE).
+* Entry Fee: $5
+* Prize Pool: $1500
+* Scoring: Points for passing yards, rushing yards, receptions, touchdowns across QB, RB, WR, TE.
+8. Defensive Standout
+* Objective: Highlights defensive prowess (DE, DT, OLB, MLB, CB, SS, FS).
+* Entry Fee: $4
+* Prize Pool: $1000
+* Scoring: Points for tackles, sacks, interceptions, defensive touchdowns.
+9. Special Teams Showdown
+* Objective: Focuses on special teams impact (K, P, KR, PR, LS).
+* Entry Fee: $3
+* Prize Pool: $800
+* Scoring: Points for field goals, punting yards, kick returns, punt returns.
+10. Quarterback vs. Defense
+* Objective: A head-to-head contest between quarterbacks and defensive players.
+* Entry Fee: $6
+* Prize Pool: $2000
+* Scoring: Points for passing yards, touchdowns (QB) and tackles, sacks, interceptions (Defense).
+11. Rushing and Receiving Rivalry
+* Objective: Highlights running backs and wide receivers' dual impact.
+* Entry Fee: $4
+* Prize Pool: $1200
+* Scoring: Points for rushing yards, receptions, touchdowns across RB and WR.
+12. All-Around Athlete
+* Objective: Balances scoring across all positions.
+* Entry Fee: $3
+* Prize Pool: $900
+* Scoring: Points for all player actions including touchdowns, yards gained, and defensive stops.
+13. Defensive Dominance
+* Objective: Focuses exclusively on defensive players' impact.
+* Entry Fee: $5
+* Prize Pool: $1500
+* Scoring: Points for tackles, sacks, interceptions, defensive touchdowns across DE, DT, OLB, MLB, CB, SS, FS.
+14. Sack Attack
+* Objective:: Highlights defensive pass rushers.
+* Entry Fee: $4
+* Prize Pool: $1200
+* Scoring: Points for sacks, tackles for loss, forced fumbles, and fumble recoveries by DE, DT, OLB.
+15. Cornerback Clash
+* Objective:: A showcase of shutdown cornerbacks.
+* Entry Fee: $3
+* Prize Pool: $900
+* Scoring: Points for interceptions, pass deflections, tackles by CB and SS.
+16. Safety Squad
+* Objective:: Emphasizes the impact of safeties in the secondary.
+* Entry Fee: $4
+* Prize Pool: $1000
+* Scoring: Points for interceptions, tackles, sacks, and pass breakups by FS and SS.
+17. Linebacker Legends
+* Objective: Celebrates the impact of linebackers in both run-stopping and pass coverage.
+* Entry Fee: $5
+* Prize Pool: $1500
+* Scoring: Points for tackles, sacks, interceptions, forced fumbles, and defensive touchdowns by MLB and OLB.
+18. Defensive End Domination
+* Objective: Highlights the dominant play of defensive ends in rushing the passer and disrupting plays.
+* Entry Fee: $4
+* Prize Pool: $1200
+* Scoring: Points for sacks, tackles for loss, forced fumbles, and quarterback pressures by DE.
+19. Tackle Titans
+* Objective: Focuses on the tackling ability and field presence of defensive tackles.
+* Entry Fee: $3
+* Prize Pool: $900
+* Scoring: Points for tackles, tackles for loss, sacks, and quarterback hurries by DT.
+20. Ball Hawk Cornerbacks
+* Objective: Spotlights the playmaking ability of cornerbacks in pass coverage and turnover creation.
+* Entry Fee: $4
+* Prize Pool: $1000
+* Scoring: Points for interceptions, pass deflections, tackles, and defensive touchdowns by CB.
+21. Quarterback Kingpin
+* Objective: Celebrates the leadership and passing prowess of quarterbacks.
+* Entry Fee: $5
+* Prize Pool: $2000
+* Scoring: Points for passing yards, passing touchdowns, rushing yards, and rushing touchdowns by QB.
+22. Running Back Rush
+* Objective: Highlights the ground game and versatility of running backs.
+* Entry Fee: $4
+* Prize Pool: $1500
+* Scoring: Points for rushing yards, rushing touchdowns, receiving yards, and receiving touchdowns by RB.
+23. Wide Receiver Wizardry
+* Objective: Showcases the catching ability and route-running skills of wide receivers.
+* Entry Fee: $3
+* Prize Pool: $1200
+* Scoring: Points for receiving yards, receiving touchdowns, receptions, and yards after catch by WR.
+24. Tight End Takedown
+* Objective: Highlights the dual-threat capability of tight ends in blocking and receiving.
+* Entry Fee: $4
+* Prize Pool: $1400
+* Scoring: Points for receiving yards, receiving touchdowns, rushing yards, and rushing touchdowns by TE.
+All-Around Fantasy Games
+25. Versatile Player Vanguard
+* Objective: Celebrates players who excel in multiple positions across offense and defense.
+* Entry Fee: $5
+* Prize Pool: $2500
+* Scoring: Points for all-around contributions including tackles, sacks, rushing yards, receiving yards, and touchdowns.
+26. Special Teams Spectacle
+* Objective: Highlights the often-overlooked role of special teams players.
+* Entry Fee: $3
+* Prize Pool: $1000
+* Scoring: Points for punt return yards, kickoff return yards, field goals made, extra points made, and special teams tackles.
+Offensive Line Games
+27. Guarding the Gridiron
+* Objective: Focuses on the key role of offensive guards in protecting the quarterback and opening running lanes.
+* Entry Fee: $4
+* Prize Pool: $1200
+* Scoring: Points for pass protection (sacks allowed), run blocking (rush yards), and penalties avoided.
+28. Trench Warfare
+* Objective: Celebrates the battle in the trenches with offensive and defensive linemen.
+* Entry Fee: $4
+* Prize Pool: $1500
+* Scoring: Points for tackles, sacks, quarterback pressures, and run stuffs.
+Defensive Line Games
+29. Sack Attack
+* Objective: Highlights the impact of defensive ends and tackles in pressuring the quarterback.
+* Entry Fee: $4
+* Prize Pool: $1300
+* Scoring: Points for sacks, tackles for loss, quarterback pressures, and forced fumbles.
+30. Run Stuffing Royals
+* Objective: Showcases the ability of defensive tackles and ends in stopping the run and disrupting offensive plays.
+* Entry Fee: $3
+* Prize Pool: $1000
+* Scoring: Points for tackles, tackles for loss, run stuffs, and quarterback hurries.
+Offensive Skill Position Games
+31. Dual-Threat Quarterbacks
+* Objective: Celebrates quarterbacks who excel in both passing and rushing.
+* Entry Fee: $6
+* Prize Pool: $2000
+* Scoring: Points for passing yards, passing touchdowns, rushing yards, and rushing touchdowns by QB.
+32. Red Zone Renegades (RB/TE)
+* Objective: Focuses on running backs and tight ends who are primary scoring threats inside the 20-yard line.
+* Entry Fee: $4
+* Prize Pool: $1300
+* Scoring: Increased points for rushing touchdowns, receiving touchdowns, and receptions inside the 20-yard line by RB and TE.
+33. Big Play Receivers
+* Objective: Highlights wide receivers known for explosive plays and long touchdowns.
+* Entry Fee: $5
+* Prize Pool: $1700
+* Scoring: Bonus points for receptions over 20 yards, touchdowns over 40 yards, and high yards per reception by WR.
+Defensive Games
+34. Turnover Tycoons
+* Objective: Rewards defensive players who consistently create turnovers.
+* Entry Fee: $5
+* Prize Pool: $1800
+* Scoring: High points for interceptions, forced fumbles, fumble recoveries, and defensive touchdowns by all defensive positions.
+35. Coverage Kings (CB/S)
+* Objective: Focuses on defensive backs who excel in pass coverage and limiting opponent's receiving yards.
+* Entry Fee: $4
+* Prize Pool: $1400
+* Scoring: Points for pass deflections, interceptions, and bonus points for low opponent completion percentage against their coverage by CB and S.
+36. Blitz Brigade (OLB/MLB/S)
+* Objective: Celebrates linebackers and safeties who are effective in blitzing and pressuring the quarterback.
+* Entry Fee: $3
+* Prize Pool: $1100
+* Scoring: Points for sacks, quarterback pressures, and tackles for loss on blitz plays by OLB, MLB, and S.
+Offensive & Defensive Line Games
+37. Offensive Line Dominance
+* Objective: Honors the best offensive line units based on collective performance.
+* Entry Fee: $5
+* Prize Pool: $1600
+* Scoring: Team points for fewest sacks allowed, highest team rushing yards, and highest team average yards per carry, calculated across all active O-linemen from a chosen team.
+38. Defensive Front Fortresses
+* Objective: Rewards defensive linemen and edge rushers for disrupting the run and pass game.
+* Entry Fee: $5
+* Prize Pool: $1700
+* Scoring: Points for combined tackles, sacks, tackles for loss, and run stuffs by DE, DT.
+Special Teams & Kicking Games
+39. Kicking Commanders
+* Objective: Focuses purely on the performance of kickers.
+* Entry Fee: $2
+* Prize Pool: $700
+* Scoring: Points for field goals made (with bonus for distance), extra points made, and touchbacks on kickoffs by K.
+40. Punting Prowess
+* Objective: Highlights the strategic impact of punters.
+* Entry Fee: $2
+* Prize Pool: $600
+* Scoring: Points for net punting average, punts inside the 20-yard line, and fewest touchbacks by P.
+Combination & Unique Games
+41. Game Flow Gurus
+* Objective: Rewards players who perform best in specific game situations (e.g., 3rd downs, 4th quarter).
+* Entry Fee: $4
+* Prize Pool: $1500
+* Scoring: Bonus points for all actions (yards, touchdowns, tackles, sacks, turnovers) that occur on 3rd/4th downs or in the 4th quarter.
+42. Rookie Impact
+* Objective: Focuses exclusively on the performance of rookie players across all positions.
+* Entry Fee: $3
+* Prize Pool: $1000
+* Scoring: Standard fantasy points for all actions, but only scored by designated rookie players.
+43. Veteran Vanguard
+* Objective: Celebrates the enduring performance of veteran players (e.g., 5+ years experience).
+* Entry Fee: $3
+* Prize Pool: $1000
+* Scoring: Standard fantasy points for all actions, but only scored by players meeting veteran criteria.
+44. Return Game Royalty
+* Objective: Highlights the explosive plays generated by kick and punt returners.
+* Entry Fee: $3
+* Prize Pool: $900
+* Scoring: Points for kick return yards, punt return yards, and return touchdowns by KR, PR.
+45. Defensive Snap Specialists
+* Objective: Focuses on defensive players who make the most impact on a per-snap basis.
+* Entry Fee: $4
+* Prize Pool: $1300
+* Scoring: Points for tackles, sacks, turnovers, and pass deflections per defensive snap played (requires advanced metric tracking).
+More Daily Fantasy Football Games
+46. Underdog Uprising
+* Objective: Rewards players from teams with losing records or against strong opponents.
+* Entry Fee: $3
+* Prize Pool: $1100
+* Scoring: Standard fantasy points with significant bonuses for players on underdog teams who achieve key stats (e.g., QB passing 300+ yards, RB rushing 100+ yards, WR/TE receiving 100+ yards, defensive turnovers).
+47. Comeback Kids
+* Objective: Focuses on players who excel in high-pressure, late-game situations.
+* Entry Fee: $4
+* Prize Pool: $1400
+* Scoring: Points for stats (yards, touchdowns, tackles, turnovers) accumulated in the 4th quarter or overtime, with bonuses for game-winning scores or defensive stops.
+48. Special Teams Blitz
+* Objective: Highlights defensive and special teams players who create blocked kicks or force muffs.
+* Entry Fee: $3
+* Prize Pool: $950
+* Scoring: High points for blocked punts, blocked field goals, forced fumbles on returns, and recovered fumbles/muffs on special teams.
+49. Efficiency Experts
+* Objective: Rewards offensive players for maximizing production on fewer opportunities.
+* Entry Fee: $5
+* Prize Pool: $1600
+* Scoring: Points based on efficiency metrics like Yards Per Target (WR/TE), Yards Per Carry (RB), Passer Rating (QB), and Red Zone Conversion Rate.
+50. Defensive Scheme Dominators
+* Objective: Celebrates defensive players excelling in specific strategic roles (e.g., pass rushers in specific blitz packages, coverage safeties).
+* Entry Fee: $4
+* Prize Pool: $1300
+* Scoring: Points for stats like sacks from specific blitz types, interceptions while in man-to-man coverage, or tackles for loss when containing read-option plays.
+51. Sustained Drive Stars
+* Objective: Focuses on offensive players who contribute significantly to long, scoring drives.
+* Entry Fee: $3
+* Prize Pool: $1050
+* Scoring: Points for yards gained and first downs converted on drives that consist of 8+ plays and result in a score (TD or FG).
+52. Goal Line Gladiators
+* Objective: Rewards players who are most effective in short-yardage and goal-line situations.
+* Entry Fee: $4
+* Prize Pool: $1250
+* Scoring: Increased points for rushing touchdowns from inside the 5-yard line, receiving touchdowns from inside the 5-yard line, and successful 2-point conversions.
+53. Punt Block Party
+* Objective: Highlights players specializing in blocking punts and creating short fields.
+* Entry Fee: $2
+* Prize Pool: $700
+* Scoring: High points for blocked punts, tackles on punt coverage, and recovered blocked punts for touchdowns.
+54. Two-Point Conversion Kings
+* Objective: Celebrates offensive players who successfully convert two-point attempts.
+* Entry Fee: $2
+* Prize Pool: $600
+* Scoring: Significant bonus points for successful rushing or receiving two-point conversions.
+55. Fantasy Rookie Rumble
+* Objective: A variation focusing on offensive and defensive impact plays from rookie players.
+* Entry Fee: $3
+* Prize Pool: $1100
+* Scoring: Points for highlight plays by rookies: long touchdowns, critical interceptions, game-changing sacks, and significant special teams returns.
+New Daily Fantasy Football Games
+56. Fourth Down Fury
+* Objective: Rewards players who make crucial plays on 4th down.
+* Entry Fee: $4
+* Prize Pool: $1300
+* Scoring: Points for touchdowns, first downs, tackles, sacks, or turnovers achieved on 4th down.
+57. No-Fly Zone Defenders
+* Objective: Focuses on defensive backs and linebackers who shut down opposing passing games.
+* Entry Fee: $5
+* Prize Pool: $1600
+* Scoring: Points for pass deflections, interceptions, fewest targets allowed, and lowest completion percentage allowed when in coverage.
+58. Gridiron Generals (Coaches/QBs)
+* Objective: Integrates team-level offensive efficiency metrics, led by QBs and potentially head coaches.
+* Entry Fee: $6
+* Prize Pool: $2200
+* Scoring: Points for team offensive efficiency (e.g., yards per play, red zone touchdown percentage), turnover margin, and individual QB stats.
+59. Fantasy Team DST Blitz
+* Objective: Focuses on the overall performance of team defenses and special teams units.
+* Entry Fee: $4
+* Prize Pool: $1400
+* Scoring: Points for total yards allowed, points allowed, sacks, interceptions, safeties, blocked kicks, and special teams touchdowns.
+60. Clutch Kicker Challenge
+* Objective: Highlights kickers who perform best in high-pressure, game-deciding moments.
+* Entry Fee: $3
+* Prize Pool: $900
+* Scoring: Increased points for field goals made in the 4th quarter or overtime, especially game-winning kicks, and field goals from 50+ yards.

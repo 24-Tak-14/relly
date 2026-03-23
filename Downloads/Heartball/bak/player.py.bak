@@ -1,0 +1,178 @@
+# File: core/player.py
+# This file defines what a "Player" is in our Heart Football League game.
+# Think of it as creating a blueprint or a template for every player card.
+
+# Import settings for skill ranges
+from config.settings import MIN_PLAYER_SKILL, MAX_PLAYER_SKILL, MIN_OVERALL_RATING, MAX_OVERALL_RATING
+
+class Player:
+    """
+    Represents a single football player with various attributes and skills.
+    Each player will be like a unique, collectible holographic card, Ta'K!
+    """
+    # When we create a new Player, these are the basic things we need to know about them.
+    def __init__(self, player_id, name, position, overall_rating, skills=None, card_rarity="common", team_id=None):
+        # player_id: A unique number for this player, like their social security number.
+        self.player_id = player_id
+        # name: The player's name, like "Mega Man" or "Shadow".
+        self.name = name
+        # position: What job they do on the field (QB, RB, CB, etc.).
+        self.position = position
+        # overall_rating: How good they are in general, a number from MIN_OVERALL_RATING to MAX_OVERALL_RATING.
+        self.overall_rating = self._clamp_rating(overall_rating)
+        # skills: A dictionary of special abilities, like {"arm_strength": 90, "speed": 85}.
+        # If no skills are given, we start with an empty dictionary.
+        self.skills = self._initialize_skills(skills)
+        # card_rarity: How rare and cool their holographic card is (e.g., common, rare, epic, legendary).
+        self.card_rarity = card_rarity
+        # current_health: How healthy the player is, starts at 100%.
+        self.current_health = 100
+        # is_on_field: Is the player currently playing? Starts as no.
+        self.is_on_field = False
+        # fantasy_points_scored: How many fantasy points this player earned in a game.
+        self.fantasy_points_scored = 0
+        # team_id: The ID of the team this player belongs to (None if free agent/draft prospect).
+        self.team_id = team_id
+
+    def _clamp_rating(self, rating):
+        """Ensures overall_rating stays within defined min/max bounds."""
+        return max(MIN_OVERALL_RATING, min(MAX_OVERALL_RATING, rating))
+
+    def _clamp_skill(self, skill_value):
+        """Ensures individual skill values stay within defined min/max bounds."""
+        return max(MIN_PLAYER_SKILL, min(MAX_PLAYER_SKILL, skill_value))
+
+    def _initialize_skills(self, skills_data):
+        """Initializes skills and clamps their values."""
+        if skills_data is None:
+            return {}
+        return {skill: self._clamp_skill(value) for skill, value in skills_data.items()}
+
+    # This function allows us to update a player's skills after training or a game.
+    def update_skill(self, skill_name, value):
+        """
+        Updates a specific skill for the player, ensuring it stays within bounds.
+        """
+        # We find the skill by its name and set its new value, clamped to min/max.
+        self.skills[skill_name] = self._clamp_skill(value)
+
+    # This function helps us make the player "play" or "sit out".
+    def set_on_field_status(self, status):
+        """
+        Sets whether the player is currently on the field.
+        """
+        # We tell the player if they are playing or resting.
+        self.is_on_field = status
+
+    # This function calculates a player's total skill score for a specific action.
+    def get_skill_score(self, skill_type):
+        """
+        Calculates a player's effective skill score for a given action type,
+        combining relevant individual skills. This is a generic implementation.
+        Specific player types will override this for more tailored calculations.
+        """
+        score = 0
+        # A very basic example; specific player classes will have more detailed logic.
+        if skill_type == "offense":
+            score += self.skills.get("speed", 0) * 0.4
+            score += self.skills.get("agility", 0) * 0.3
+            score += self.skills.get("strength", 0) * 0.2
+            score += self.skills.get("awareness", 0) * 0.1
+        elif skill_type == "defense":
+            score += self.skills.get("tackling", 0) * 0.4
+            score += self.skills.get("strength", 0) * 0.3
+            score += self.skills.get("play_recognition", 0) * 0.2
+            score += self.skills.get("speed", 0) * 0.1
+        elif skill_type == "special_teams":
+            score += self.skills.get("kick_power", 0) * 0.5
+            score += self.skills.get("kick_accuracy", 0) * 0.5
+        else: # Default for general skill checks
+            score += self.skills.get(skill_type, 0)
+
+        # We make sure the score is never less than zero.
+        return max(0, score)
+
+    # This helps us print out player information in a nice way.
+    def __str__(self):
+        """
+        Returns a human-readable string representation of the player.
+        """
+        # This makes it easy to see the player's name, position, and overall rating.
+        return f"{self.name} ({self.position}) - OVR: {self.overall_rating} (Rarity: {self.card_rarity})"
+
+    # This function converts player data into a dictionary (like a structured list of facts).
+    # This is useful for saving player data to our database (Firestore).
+    def to_dict(self):
+        """
+        Converts the Player object to a dictionary for database storage.
+        """
+        # We put all the player's info into a dictionary.
+        return {
+            "player_id": self.player_id,
+            "name": self.name,
+            "position": self.position,
+            "overall_rating": self.overall_rating,
+            "skills": self.skills,
+            "card_rarity": self.card_rarity,
+            "current_health": self.current_health,
+            "is_on_field": self.is_on_field,
+            "fantasy_points_scored": self.fantasy_points_scored,
+            "team_id": self.team_id
+        }
+
+    # This function helps us create a Player object from data we got from our database.
+    @classmethod
+    def from_dict(cls, data):
+        """
+        Creates a Player object from a dictionary, typically loaded from a database.
+        This generic from_dict is for the base Player. Specialized `from_dict` methods
+        in subclasses will call this via `super().from_dict(data)` and add their specific fields.
+        """
+        return cls(
+            player_id=data["player_id"],
+            name=data["name"],
+            position=data["position"],
+            overall_rating=data["overall_rating"],
+            skills=data.get("skills", {}), # Use .get() to safely get skills, providing an empty dict if not found
+            card_rarity=data.get("card_rarity", "common"),
+            current_health=data.get("current_health", 100),
+            is_on_field=data.get("is_on_field", False),
+            fantasy_points_scored=data.get("fantasy_points_scored", 0),
+            team_id=data.get("team_id")
+        )
+
+# A factory function to create player objects based on their position.
+# This will be useful when loading players from data and creating the correct type.
+def create_player_from_dict(data):
+    """
+    Factory function to create the correct Player subclass instance based on 'position'.
+    """
+    position_class_map = {
+        "QB": Quarterback,
+        "RB": RunningBack,
+        "WR": WideReceiver,
+        "LB": Linebacker,
+        "OL": OffensiveLineman,
+        "DL": DefensiveLineman,
+        "CB": Cornerback,
+        "SS": StrongSafety,
+        "FS": FreeSafety,
+        "K": Kicker,
+        "P": Punter,
+        "KR": KickReturner,
+        "PR": PuntReturner,
+        "LS": LongSnapper,
+        # Add other specific player types here as they are defined
+    }
+    # Get the specific class for the position, or default to the base Player class.
+    player_class = position_class_map.get(data.get("position"), Player)
+    
+    # We call the from_dict method of the chosen class.
+    return player_class.from_dict(data)
+
+# NOTE: The specialized player classes (Quarterback, RunningBack, etc.) will be defined
+# in their respective files (e.g., core/quarterback.py).
+# We're adding the import statements within their respective files to avoid circular dependencies for now.
+# However, this factory function `create_player_from_dict` will eventually need to import them all.
+# For simplicity, we'll assume these classes are available when this factory is called.
+# Or, a simpler approach is to use this factory from a higher-level module that has imported all needed classes.

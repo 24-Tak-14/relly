@@ -1,0 +1,26 @@
+// File: data/ultimate_team/hut_player_pool.json
+
+// This file contains a master list of all available players in the game.
+// Each object represents a player with their unique ID, name, position, and core stats.
+[
+    {
+        "id": "player_001",
+        "name": "Terrell Turner",
+        "position": "QB",
+        "overall": 95,
+        "speed": 90,
+        "strength": 80,
+        "team": "Blackouts",
+        "play_style": "Shock"
+    },
+    {
+        "id": "player_002",
+        "name": "Dixon Butts",
+        "position": "RB",
+        "overall": 92,
+        "speed": 85,
+        "strength": 95,
+        "team": "Jokers",
+        "play_style": "Power-Back"
+    }
+]

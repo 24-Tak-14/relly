@@ -1,0 +1,176 @@
+# File: core/field.py
+# This file defines the "Field" where our football game takes place.
+# Think of it as the map for our game, showing where players are and where the important lines are.
+
+from core.ball import Ball # We now need our Ball blueprint.
+
+class Field:
+    """
+    Represents the football field, managing player positions and game state elements.
+    """
+    # When we create a new Field, these are its basic dimensions.
+    def __init__(self, length_yards=100, width_yards=53.3):
+        # length_yards: How long the field is (usually 100 yards of playing field, excluding end zones).
+        self.length_yards = length_yards
+        # width_yards: How wide the field is.
+        self.width_yards = width_yards
+        # ball: Our football object, which tracks its own 3D position and carrier.
+        self.ball = Ball(x_pos=20, y_pos=width_yards/2) # Ball starts at the 20-yard line (for initial possession)
+        # first_down_marker: Where the offense needs to get to for a first down.
+        self.first_down_marker = self.ball.x_position + 10 # Default to 10 yards from current ball position.
+        # players_on_field: A list to keep track of all players currently on the field and their exact spot.
+        # Each entry will be like {"player_id": int, "x": float, "y": float, "z": float}
+        # We store player_id here to avoid circular dependencies with Player objects directly.
+        self.players_on_field = []
+        # end_zone_start: The yard line where the offensive end zone begins (usually 100).
+        self.end_zone_start = self.length_yards
+        # end_zone_depth: How deep the end zone is (usually 10 yards).
+        self.end_zone_depth = 10
+
+    # This function places a player on the field at a specific spot.
+    def place_player(self, player_id, x_position, y_position, z_position=0):
+        """
+        Places a player (by ID) at a specific (x, y, z) coordinate on the field.
+        Note: This only records the position; the actual Player object's `is_on_field`
+        status should be set by the calling game logic.
+        """
+        # Remove existing position for this player if they are already on the field.
+        self.players_on_field = [p for p in self.players_on_field if p["player_id"] != player_id]
+        
+        self.players_on_field.append({"player_id": player_id, "x": x_position, "y": y_position, "z": z_position})
+        print(f"Player {player_id} placed at ({x_position:.1f}, {y_position:.1f}, {z_position:.1f})")
+
+    # This function moves a player to a new spot on the field.
+    def move_player(self, player_id, new_x_position, new_y_position, new_z_position=None):
+        """
+        Moves a player with the given ID to new (x, y, z) coordinates.
+        """
+        for p_info in self.players_on_field:
+            if p_info["player_id"] == player_id:
+                p_info["x"] = new_x_position
+                p_info["y"] = new_y_position
+                if new_z_position is not None:
+                    p_info["z"] = new_z_position
+                print(f"Player {player_id} moved to ({new_x_position:.1f}, {new_y_position:.1f}, {new_z_position if new_z_position is not None else p_info['z']:.1f})")
+                return True # Player moved successfully!
+        print(f"Player with ID {player_id} not found on the field to move.")
+        return False # Player not found on the field.
+
+    # This function removes a player from the field (e.g., substituting them).
+    def remove_player_from_field(self, player_id):
+        """
+        Removes a player from the active players on the field.
+        """
+        original_count = len(self.players_on_field)
+        self.players_on_field = [p for p in self.players_on_field if p["player_id"] != player_id]
+        if len(self.players_on_field) < original_count:
+            print(f"Player {player_id} removed from the field.")
+            return True
+        print(f"Player {player_id} not found on the field to remove.")
+        return False
+
+    # This function gets a player's current position on the field.
+    def get_player_position(self, player_id):
+        """
+        Retrieves the (x, y, z) position of a player on the field.
+        """
+        for p_info in self.players_on_field:
+            if p_info["player_id"] == player_id:
+                return {"x": p_info["x"], "y": p_info["y"], "z": p_info["z"]}
+        return None # Player not found on the field.
+
+    # This function updates where the football is on the field.
+    # It now uses the Ball object directly.
+    def update_ball_position_and_carrier(self, x_position, y_position, z_position=None, carrier_id=None):
+        """
+        Updates the ball's 3D position and optionally sets its carrier.
+        This also updates the first down marker based on the new ball x_position.
+        """
+        self.ball.set_position(x_position, y_position, z_position)
+        self.ball.set_carrier(carrier_id)
+
+        # The first down marker should always be updated when the ball moves significantly,
+        # especially after a play or a first down.
+        # For simplicity, let's keep it 10 yards ahead of the current ball's x_position (towards the goal line).
+        self.first_down_marker = self.ball.x_position + 10
+        # Ensure first down marker doesn't go past the end zone (100 yards).
+        if self.first_down_marker > self.length_yards:
+            self.first_down_marker = self.length_yards
+
+    # This function checks if the ball has crossed the goal line for a touchdown.
+    def check_for_touchdown(self):
+        """
+        Checks if the ball position indicates a touchdown.
+        """
+        # If the ball is at or past the 100-yard line (which is the start of the end zone), it's a touchdown!
+        return self.ball.x_position >= self.end_zone_start
+
+    # This function checks if the current ball position is in the end zone for a safety.
+    def check_for_safety(self):
+        """
+        Checks if the ball is in the offensive team's own end zone and a defensive player
+        has tackled the ball carrier or the ball is down in the end zone for the offensive team.
+        This logic will be more complex in actual game implementation.
+        For now, a basic check if ball is behind 0-yard line (which implies going into own end zone from field of play).
+        """
+        # Simplified: If the ball carrier is tackled or the ball becomes dead *behind* the 0-yard line
+        # of the current offensive possession, it's a safety.
+        return self.ball.x_position <= 0 and not self.ball.is_loose # And needs to be possessed.
+
+    # This function checks if the offense got a first down.
+    def check_for_first_down(self):
+        """
+        Checks if the current ball's x_position has passed the first down marker.
+        """
+        # If the ball moved past the first down marker, yay, first down!
+        return self.ball.x_position >= self.first_down_marker
+
+    # This helps us print out field information.
+    def __str__(self):
+        """
+        Returns a human-readable string representation of the field state.
+        """
+        # This shows where the ball is and where the first down marker is.
+        return (f"Field: Length={self.length_yards}yds, Width={self.width_yards}yds\n"
+                f"Ball: {self.ball}\n"
+                f"First Down Marker at: {self.first_down_marker:.1f} yds\n"
+                f"Players on field: {len(self.players_on_field)}")
+
+    # This function converts field data to a dictionary for database storage.
+    def to_dict(self):
+        """
+        Converts the Field object to a dictionary for database storage.
+        """
+        # We put all the field's info into a dictionary.
+        # We also convert the ball object and each player's info on the field into a dictionary.
+        return {
+            "length_yards": self.length_yards,
+            "width_yards": self.width_yards,
+            "ball": self.ball.to_dict(), # The ball is now a dictionary itself.
+            "first_down_marker": self.first_down_marker,
+            "end_zone_start": self.end_zone_start,
+            "end_zone_depth": self.end_zone_depth,
+            "players_on_field": self.players_on_field # List of dicts with player_id and position
+        }
+
+    # This function helps us create a Field object from data we got from our database.
+    @classmethod
+    def from_dict(cls, data):
+        """
+        Creates a Field object from a dictionary, typically loaded from a database.
+        Note: This factory currently only reconstructs the field state and player IDs.
+        Actual Player objects need to be looked up from a global player pool by the game logic.
+        """
+        field = cls(
+            length_yards=data["length_yards"],
+            width_yards=data["width_yards"]
+        )
+        field.ball = Ball.from_dict(data["ball"]) # Recreate the Ball object.
+        field.first_down_marker = data["first_down_marker"]
+        field.end_zone_start = data.get("end_zone_start", field.length_yards)
+        field.end_zone_depth = data.get("end_zone_depth", 10)
+        
+        # Players on field are stored as dictionaries with just their IDs and positions.
+        field.players_on_field = data.get("players_on_field", [])
+        
+        return field

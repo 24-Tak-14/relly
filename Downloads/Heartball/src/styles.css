@@ -1,0 +1,25 @@
+/* File: frontend/src/styles.css */
+
+/* This file imports the Tailwind CSS directives.
+   It provides a foundational set of utility classes for styling our application.
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles can be added below for components
+   that require more specific, non-utility-based CSS. */
+
+/* Define a custom keyframe animation for a subtle glow effect on cards */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.1), 0 0 10px rgba(255, 255, 255, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2), 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+}
+
+.glow-animation {
+  animation: pulse-glow 3s infinite ease-in-out;
+}

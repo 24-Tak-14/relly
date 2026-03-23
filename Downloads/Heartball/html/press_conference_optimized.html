@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HFL Press Conference Simulator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-gray-900">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        function App() {
+          const teams = [
+            { id: 1, city: "Kaitlynnville", name: "Eclipse", stadium: "Needs Work", fan_base: "Balanced", owner: "League", mega_chalices: 0 },
+            { id: 2, city: "San Terrell", name: "Blackouts", stadium: "State of the Art", fan_base: "Mythical", owner: "Former Player", mega_chalices: 24 },
+            { id: 3, city: "Beloved", name: "Funnel Chug", stadium: "New", fan_base: "Grass is Greener", owner: "International Investor", mega_chalices: 18 }
+          ];
+
+          const [team, setTeam] = React.useState(null);
+          const [question, setQuestion] = React.useState('');
+          const [role, setRole] = React.useState('');
+          const [response, setResponse] = React.useState('');
+          const [started, setStarted] = React.useState(false);
+          const [history, setHistory] = React.useState([]);
+
+          const journalists = ["Chris Smith (Buzzn_D)", "Alex Jones (Sports Times)", "Pat Wilson (The Herald)"];
+          const roles = ['Player', 'Coach', 'Front Office', 'Medical Team'];
+
+          const questions = {
+            Player: [
+              "Your performance has been inconsistent. What makes you think you're still valuable?",
+              "Do you believe the coaching staff is putting you in position to succeed?"
+            ],
+            Coach: [
+              "Your strategic decisions have been criticized. Are you confident in your ability?",
+              "How do you explain the team's failures in crucial moments?"
+            ],
+            'Front Office': [
+              "The roster construction has been panned. Do you take responsibility?",
+              "How can fans trust your vision given questionable signings?"
+            ],
+            'Medical Team': [
+              "The injury count is alarming. Are protocols being followed?",
+              "Are players being rushed back too soon?"
+            ]
+          };
+
+          const generateQuestion = (team, role) => {
+            const baseQuestions = questions[role] || [];
+            const teamQuestions = [];
+
+            if (team.mega_chalices === 0) {
+              teamQuestions.push(`It's been ages since ${team.name} won a championship. Is this organization content with mediocrity?`);
+            }
+            if (team.fan_base.includes("Weak") || team.fan_base === "Trending Down") {
+              teamQuestions.push(`Your fanbase is '${team.fan_base}'. Are you concerned about the team's future?`);
+            }
+            if (team.owner === "Scumbag") {
+              teamQuestions.push("How do you justify working for an owner labeled a 'Scumbag'?");
+            }
+
+            const allQuestions = [...baseQuestions, ...teamQuestions];
+            return allQuestions[Math.floor(Math.random() * allQuestions.length)];
+          };
+
+          const startConference = () => {
+            const randomTeam = teams[Math.floor(Math.random() * teams.length)];
+            const randomRole = roles[Math.floor(Math.random() * roles.length)];
+            const newQuestion = generateQuestion(randomTeam, randomRole);
+            
+            setTeam(randomTeam);
+            setRole(randomRole);
+            setQuestion(newQuestion);
+            setStarted(true);
+            setResponse('');
+          };
+
+          const submitResponse = () => {
+            if (!response.trim()) return;
+            
+            setHistory(prev => [...prev, { question, response, role }]);
+            
+            const newRole = roles[Math.floor(Math.random() * roles.length)];
+            const newQuestion = generateQuestion(team, newRole);
+            
+            setRole(newRole);
+            setQuestion(newQuestion);
+            setResponse('');
+          };
+
+          const reset = () => {
+            setTeam(null);
+            setStarted(false);
+            setHistory([]);
+            setResponse('');
+          };
+
+          return (
+            <div className="min-h-screen bg-gray-900 text-white p-6 flex items-center justify-center">
+              <div className="bg-gray-800 rounded-2xl p-8 w-full max-w-4xl">
+                <h1 className="text-4xl font-bold text-center mb-8">HFL Press Conference</h1>
+
+                {!started ? (
+                  <div className="text-center">
+                    <p className="text-xl mb-6">Face the media!</p>
+                    <button
+                      onClick={startConference}
+                      className="px-8 py-3 bg-blue-600 rounded-full font-bold hover:bg-blue-700 transition"
+                    >
+                      Start Conference
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    <div className="bg-gray-700 p-5 rounded-xl">
+                      <h2 className="text-2xl font-bold mb-2">
+                        Team: <span className="text-green-400">{team.name}</span> from <span className="text-blue-400">{team.city}</span>
+                      </h2>
+                      <p className="text-lg">Role: <span className="text-yellow-400">{role}</span></p>
+                    </div>
+
+                    <div className="bg-gray-700 p-5 rounded-xl">
+                      <p className="text-xl italic">
+                        <span className="text-orange-400">{journalists[Math.floor(Math.random() * journalists.length)]}</span> asks:
+                      </p>
+                      <p className="text-2xl font-bold mt-2">"{question}"</p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <textarea
+                        className="w-full p-4 rounded-xl bg-gray-900 border border-gray-600 focus:border-blue-500 resize-none h-32"
+                        placeholder="Your response..."
+                        value={response}
+                        onChange={(e) => setResponse(e.target.value)}
+                      />
+                      <div className="flex gap-4 justify-center">
+                        <button
+                          onClick={submitResponse}
+                          className="px-6 py-3 bg-blue-600 rounded-full font-bold hover:bg-blue-700 transition"
+                        >
+                          Submit Response
+                        </button>
+                        <button
+                          onClick={reset}
+                          className="px-6 py-3 bg-red-600 rounded-full font-bold hover:bg-red-700 transition"
+                        >
+                          End Conference
+                        </button>
+                      </div>
+                    </div>
+
+                    {history.length > 0 && (
+                      <div className="bg-gray-700 p-5 rounded-xl max-h-80 overflow-y-auto">
+                        <h3 className="text-xl font-bold mb-4">Transcript</h3>
+                        {history.map((entry, i) => (
+                          <div key={i} className="mb-4 p-3 bg-gray-800 rounded">
+                            <p className="text-sm text-gray-400">Q ({entry.role}):</p>
+                            <p className="italic mb-2">"{entry.question}"</p>
+                            <p className="text-sm text-gray-400">A:</p>
+                            <p>"{entry.response}"</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>

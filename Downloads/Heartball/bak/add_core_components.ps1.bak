@@ -1,0 +1,30 @@
+# File: add_core_components.ps1
+# This script adds the remaining core component files to the existing 'core' directory.
+
+Write-Host "Adding remaining core component files to 'core' directory..." -ForegroundColor Green
+
+# Define the main project folder.
+$projectRoot = "C:\HFL-hut-build"
+New-Item -ItemType Directory -Force -Path $projectRoot | Out-Null
+Set-Location -Path $projectRoot
+
+# Define the specific files to add
+$filesToAdd = @(
+   "core/practice_squad.py",
+   "core/draft_class.py",
+   "core/free_agent.py",
+   "core/ball.py",
+   "core/field.py",
+   "core/team.py",
+   "core/game.py"
+)
+
+# Loop to create files (directory 'core' should already exist)
+foreach ($path in $filesToAdd) {
+   if (-not (Test-Path -Path $path)) {
+       New-Item -ItemType File -Force -Path $path | Out-Null
+   }
+}
+
+Write-Host "All remaining core component files added successfully to: $projectRoot\core" -ForegroundColor Green
+Write-Host "Now, let's populate these new files with their Python code, Ta'K!" -ForegroundColor Yellow

@@ -1,0 +1,149 @@
+# File: Hrt-Hrt/systems/team.py
+# Role: T24CODAI
+# Description: Defines the Team class and functions to load league data.
+
+import random
+import uuid
+
+class Player:
+    """A placeholder for the Player class."""
+    def __init__(self, x, y, team, name, attributes, color, position=None):
+        self.id = str(uuid.uuid4())
+        self.x = x
+        self.y = y
+        self.team = team
+        self.name = name
+        self.attributes = attributes
+        self.color = color
+        self.position = position
+
+class Team:
+    """
+    Represents a football team in the game.
+
+    This class provides the functionality to manage a team's roster,
+    financials (salary cap), and player assignments.
+    """
+    def __init__(self, name: str, max_salary_cap: int, data: dict):
+        """
+        Initializes a new Team instance.
+
+        Args:
+            name (str): The name of the team.
+            max_salary_cap (int): The maximum allowed salary for the team.
+            data (dict): The original JSON data for this team.
+        """
+        self.name = name
+        self.roster = []  # A list to hold Player objects.
+        self.max_salary_cap = max_salary_cap
+        self.current_salary_spend = 0
+        self.data = data # Store the original data for easy access.
+
+    def add_player(self, player) -> bool:
+        """
+        Adds a player to the team's roster, checking against the salary cap.
+
+        Args:
+            player (Player): The Player object to add.
+
+        Returns:
+            bool: True if the player was added successfully, False otherwise.
+        """
+        # A simple placeholder for player salary.
+        player_salary = random.randint(500, 2000)
+
+        if self.current_salary_spend + player_salary <= self.max_salary_cap:
+            self.roster.append(player)
+            self.current_salary_spend += player_salary
+            print(f"Added {player.name} to {self.name}. Roster size: {len(self.roster)}")
+            return True
+        else:
+            print(f"Cannot add {player.name}. The team is over the salary cap.")
+            return False
+
+    def remove_player(self, player_id: str):
+        """
+        Removes a player from the team's roster by their unique ID.
+
+        Args:
+            player_id (str): The unique ID of the player to remove.
+        """
+        player_to_remove = next((p for p in self.roster if p.id == player_id), None)
+        if player_to_remove:
+            # Re-calculate salary after removal.
+            self.current_salary_spend -= random.randint(500, 2000)
+            self.roster.remove(player_to_remove)
+            print(f"Player with ID {player_id} was removed from {self.name}.")
+        else:
+            print(f"Error: Player with ID {player_id} not found on the {self.name} roster.")
+
+    def get_roster_size(self) -> int:
+        """
+        Returns the current number of players on the roster.
+        """
+        return len(self.roster)
+
+def create_teams_from_data(teams_data: list) -> list[Team]:
+    """
+    Creates a list of Team objects from a list of team data dictionaries.
+
+    Args:
+        teams_data (list): A list of dictionaries, where each dictionary
+                           represents a team.
+
+    Returns:
+        list[Team]: A list of initialized Team objects.
+    """
+    teams = []
+    for team_dict in teams_data:
+        # A simple placeholder salary cap for demonstration.
+        # This can be made more dynamic later.
+        team_name = team_dict.get('team_name', 'Unnamed Team')
+        stadium_capacity = team_dict.get('stadium', {}).get('capacity', 50000)
+        max_salary_cap = stadium_capacity * 100 # A simple formula for now.
+        
+        team = Team(name=team_name, max_salary_cap=max_salary_cap, data=team_dict)
+        teams.append(team)
+    return teams
+
+# --- Example Usage for testing ---
+if __name__ == "__main__":
+    
+    # Placeholder for the JSON data you provided.
+    # In a full system, this would be loaded from a file.
+    json_data = [
+        {
+        "id": 1, "city": "Kaitlynnville", "name": "Eclipse",
+        "pha/guilding": "Pha/Wee'lng", "depot/allegiance": "NorthEastern/Soul",
+        "city_name": "Kaitlynnville", "team_name": "Eclipse",
+        "team_colors": "Black, Powder Purple, Off White",
+        "offensive_playbook": "Air Raid", "defensive_playbook": "Blitz Heavy",
+        "stadium": {"name": "Needs Work", "capacity": 64397},
+        "fan_base": "Balanced", "owner": "Alligiance",
+        "media_market": {"size": "500,000", "type": "Shrinking"},
+        "mega_chalices": 0
+        },
+        {
+        "id": 2, "city": "Gu'Bare", "name": "Garrison",
+        "pha/guilding": "Pha/Wee'lng", "depot/allegiance": "NorthEastern/Soul",
+        "city_name": "Gu'Bare", "team_name": "Garrison",
+        "team_colors": "Teal, Orange, White",
+        "offensive_playbook": "Balanced Pass", "defensive_playbook": "4-4",
+        "stadium": {"name": "Old", "capacity": 86688},
+        "fan_base": "Average", "owner": "Clothing Designer",
+        "media_market": {"size": "7 mil.", "type": "Medium Huge"},
+        "mega_chalices": 0
+        }
+        # ... Add the rest of your JSON data here for full testing.
+    ]
+    
+    league_teams = create_teams_from_data(json_data)
+    
+    if league_teams:
+        print(f"Successfully created {len(league_teams)} teams from the data.")
+        first_team = league_teams[0]
+        print(f"First team created: {first_team.name}")
+        print(f"Owner: {first_team.data['owner']}")
+        print(f"Stadium Capacity: {first_team.data['stadium']['capacity']}")
+        print(f"Team Salary Cap: ${first_team.max_salary_cap}")
+
