@@ -4,9 +4,9 @@
 - [x] Task: Implement dice-based outcome logic in Python. f3f3ddf
     - [x] Write unit tests for dice-based outcomes.
     - [x] Implement simulation logic for on-field plays.
-- [ ] Task: Create initial AI coaching decision-making foundations.
-    - [ ] Define basic strategic transitions.
-    - [ ] Implement AI choice logic for simple play-calling.
+- [x] Task: Create initial AI coaching decision-making foundations. 94b6af7
+    - [x] Define basic strategic transitions.
+    - [x] Implement AI choice logic for simple play-calling.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Core Simulation Engine' (Protocol in workflow.md)
 
 ## Phase 2: Initial Branding Suite
