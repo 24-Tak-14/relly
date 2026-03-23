@@ -1,9 +1,9 @@
 # Implementation Plan: Core Simulation Engine & Initial Branding Suite
 
 ## Phase 1: Core Simulation Engine
-- [ ] Task: Implement dice-based outcome logic in Python.
-    - [ ] Write unit tests for dice-based outcomes.
-    - [ ] Implement simulation logic for on-field plays.
+- [x] Task: Implement dice-based outcome logic in Python. f3f3ddf
+    - [x] Write unit tests for dice-based outcomes.
+    - [x] Implement simulation logic for on-field plays.
 - [ ] Task: Create initial AI coaching decision-making foundations.
     - [ ] Define basic strategic transitions.
     - [ ] Implement AI choice logic for simple play-calling.
