@@ -1,0 +1,185 @@
+{
+  "league_name": "Heart Football League",
+  "teams": [
+    {
+      "city_name": "Kaitlynnville",
+      "team_name": "Eclipse",
+      "colors": "Black, Powder Purple, Off White"
+    },
+    {
+      "city_name": "Gu'Bare",
+      "team_name": "Garrison",
+      "colors": "Teal, Orange, White"
+    },
+    {
+      "city_name": "Miki Mountain",
+      "team_name": "Miracles",
+      "colors": "White, Lavender, Navy Blue"
+    },
+    {
+      "city_name": "Heirsentia",
+      "team_name": "Hawks",
+      "colors": "Tan, Eggshell White, Fuschia"
+    },
+    {
+      "city_name": "Brightcloud",
+      "team_name": "Clovers",
+      "colors": "Forest Green, Lime Green, Gold"
+    },
+    {
+      "city_name": "Silvermind",
+      "team_name": "Storks",
+      "colors": "White, Light Blue, Grey"
+    },
+    {
+      "city_name": "Reynava",
+      "team_name": "Hellcats",
+      "colors": "Powder Blue, Crimson Red, Black, Ash Grey"
+    },
+    {
+      "city_name": "Christiano",
+      "team_name": "Candy Rain",
+      "colors": "Pastel Pink, Royal Blue, Lemon Yellow"
+    },
+    {
+      "city_name": "Jakobian",
+      "team_name": "Jokers",
+      "colors": "Matte Purple, Matte Green, Matte Yellow, White"
+    },
+    {
+      "city_name": "Queens Cove",
+      "team_name": "Canary's",
+      "colors": "Shiny Yellow, Neon Yellow, Matte Yellow/White"
+    },
+    {
+      "city_name": "Zorisova",
+      "team_name": "Sandals",
+      "colors": "Mocha, Beige, Crystal Ocean Blue, Cream"
+    },
+    {
+      "city_name": "Farspace",
+      "team_name": "Flatteners",
+      "colors": "Charcoal Grey, Safety Orange, Light Yellow"
+    },
+    {
+      "city_name": "Closesight",
+      "team_name": "Condors",
+      "colors": "Dark Brown, Tan, Cream, White"
+    },
+    {
+      "city_name": "Sunsprout",
+      "team_name": "Flames",
+      "colors": "Fiery Red, Bright Orange, Sky Blue, Yellow"
+    },
+    {
+      "city_name": "Beloved",
+      "team_name": "Funnel Chug",
+      "colors": "Aqua Marine, Gold, Hot Pink"
+    },
+    {
+      "city_name": "San Terrell",
+      "team_name": "Saints",
+      "colors": "Gold, Silver, Eggshell White"
+    },
+    {
+      "city_name": "Justinopolis",
+      "team_name": "Jackals",
+      "colors": "Desert Tan, Dark Brown, Black"
+    },
+    {
+      "city_name": "Matteochi",
+      "team_name": "Megaladons",
+      "colors": "Deep Ocean Blue, Shark Grey, Baby Blue"
+    },
+    {
+      "city_name": "Jessadelphia",
+      "team_name": "Jypsees",
+      "colors": "Silver, Ruby Red, Emerald Green, Gold"
+    },
+    {
+      "city_name": "Libertine",
+      "team_name": "Stars",
+      "colors": "Royal Blue, Silver, Teal"
+    },
+    {
+      "city_name": "Golden Siren",
+      "team_name": "Soul",
+      "colors": "Matte Purple, Gold, Matte Black"
+    },
+    {
+      "city_name": "Tiapma'atzu",
+      "team_name": "Tribe",
+      "colors": "Earthy Brown, Copper, Forest Green, Light Brown"
+    },
+    {
+      "city_name": "San Terrell",
+      "team_name": "Blackouts",
+      "colors": "Pitch Black, Matte Black, Dark Grey, Electric Gold/Blue"
+    },
+    {
+      "city_name": "Firesky",
+      "team_name": "Foxes",
+      "colors": "Burnt Orange, White, Dark Brown"
+    },
+    {
+      "city_name": "Naveah",
+      "team_name": "Nomads",
+      "colors": "Desert Sand, Dusty Rose, Teal"
+    },
+    {
+      "city_name": "Kaylean",
+      "team_name": "Kraken",
+      "colors": "Deep Teal, Black, Lime Green"
+    },
+    {
+      "city_name": "Emahney Park",
+      "team_name": "Polarbears",
+      "colors": "Snow White, Ice Blue, Fishscale White, Grey"
+    },
+    {
+      "city_name": "Deannaton",
+      "team_name": "Demons",
+      "colors": "Blood Red, Black, Fiery Orange"
+    },
+    {
+      "city_name": "Jasmyne Junction",
+      "team_name": "Jackrabbits",
+      "colors": "Desert Tan, Sage Green, Cream"
+    },
+    {
+      "city_name": "Babelonia",
+      "team_name": "Beacons",
+      "colors": "Powder Purple, Bright White, Matte Navy"
+    },
+    {
+      "city_name": "Longsite",
+      "team_name": "Lemurs",
+      "colors": "Ring-tailed Black, White, Grey"
+    },
+    {
+      "city_name": "Visiente'",
+      "team_name": "Vikings",
+      "colors": "Royal Purple, Black, Steel Grey"
+    },
+    {
+      "city_name": "Dennisiargo",
+      "team_name": "Dismantlers",
+      "colors": "Rust Red, Metallic Grey, Matte Black"
+    },
+    {
+      "city_name": "Sarahite",
+      "team_name": "Snarf Dragons",
+      "colors": "Dragon Green, Mustard Yellow, Matte Brown"
+    },
+    {
+      "city_name": "Golden Sunset",
+      "team_name": "Greyhounds",
+      "colors": "Slate Grey, White, Silver"
+    },
+    {
+      "city_name": "Takumzuh",
+      "team_name": "Tigers",
+      "colors": "Tiger Orange, Black, White"
+    }
+  ]
+}

@@ -9,7 +9,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithCustomToken, signInAnonymously } from 'firebase/auth';
 import { getFirestore, onSnapshot, collection, doc, setDoc, query, where } from 'firebase/firestore';
-import { Home, Gamepad2, Settings, Users, Trophy, Sparkles } from 'lucide-react';
+import { Home, Gamepad2, Settings, Users, Trophy, Sparkles, Paintbrush } from 'lucide-react';
+import teamData from './data/teams.json';
 import { hutPlayerPool } from './components/GameCanvas';
 
 // IMPORTANT: Global variables provided by the Canvas environment
@@ -26,6 +27,63 @@ const GameCanvas = () => {
     <div className="relative w-full h-full flex items-center justify-center bg-gray-900 rounded-lg overflow-hidden p-8 text-center text-gray-400 text-2xl">
       <p>Game Canvas will go here.</p>
       <p>Please implement the game logic in a separate file if needed.</p>
+    </div>
+  );
+};
+
+// This component allows users to view team logos and concepts.
+const LogoGenerator = () => {
+  const [selectedTeam, setSelectedTeam] = useState(teamData.teams[0]);
+
+  return (
+    <div className="flex flex-col items-center p-8 bg-gray-900 min-h-screen text-white">
+      <h1 className="text-4xl font-bold mb-8">HFL Logo Concept Generator</h1>
+      
+      <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
+          <h2 className="text-2xl font-semibold mb-4 text-purple-400">Select a Team</h2>
+          <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+            {teamData.teams.map((team) => (
+              <button
+                key={`${team.city_name}-${team.team_name}`}
+                onClick={() => setSelectedTeam(team)}
+                className={`w-full text-left px-4 py-3 rounded-lg transition-colors ${
+                  selectedTeam.team_name === team.team_name 
+                    ? 'bg-purple-600 text-white' 
+                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                }`}
+              >
+                <span className="font-bold">{team.city_name}</span> {team.team_name}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 flex flex-col">
+          <h2 className="text-2xl font-semibold mb-2 text-purple-400">
+            {selectedTeam.city_name} {selectedTeam.team_name}
+          </h2>
+          <p className="text-sm text-gray-400 mb-6 italic">Colors: {selectedTeam.colors}</p>
+          
+          <div className="flex-1 bg-gray-900 rounded-lg p-6 border border-gray-700 flex items-center justify-center text-center">
+            <div className="space-y-4">
+              <div className="w-32 h-32 mx-auto bg-gray-800 rounded-full flex items-center justify-center border-4 border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.4)]">
+                 <Paintbrush size={48} className="text-purple-400" />
+              </div>
+              <p className="text-gray-300 text-sm leading-relaxed">
+                {`A football team logo concept for the ${selectedTeam.city_name} ${selectedTeam.team_name} of the ${teamData.league_name}, featuring a stylized ${selectedTeam.team_name.toLowerCase()} logo design, rendered in a palette of ${selectedTeam.colors}.`}
+              </p>
+            </div>
+          </div>
+          
+          <button 
+            className="mt-6 w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-lg transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+            onClick={() => alert("Logo generation integration coming soon!")}
+          >
+            Generate Final Logo
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
@@ -327,6 +385,8 @@ const App = () => {
     switch (currentPage) {
       case 'game':
         return <GameCanvas />;
+      case 'logos':
+        return <LogoGenerator />;
       case 'players':
         if (loadingPlayers) {
           return (
@@ -394,6 +454,13 @@ const App = () => {
             aria-label="Game"
           >
             <Gamepad2 size={24} />
+          </button>
+          <button
+            onClick={() => setCurrentPage('logos')}
+            className={`p-2 rounded-full transition-colors ${currentPage === 'logos' ? 'bg-purple-600 text-white' : 'text-gray-400 hover:bg-gray-700'}`}
+            aria-label="Logo Generator"
+          >
+            <Paintbrush size={24} />
           </button>
           <button
             onClick={() => setCurrentPage('players')}
