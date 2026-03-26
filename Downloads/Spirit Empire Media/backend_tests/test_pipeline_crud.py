@@ -1,46 +1,42 @@
 import pytest
 from fastapi.testclient import TestClient
-# Assuming your FastAPI app is in backend/main.py
+# Assuming your FastAPI app instance is in backend/main.py or backend/app.py
 # from backend.main import app 
 
-# Placeholder for the FastAPI app instance. This will fail until the app is properly initialized.
-# For testing purposes, we'll mock it.
-class MockFastAPI:
+# Mocking the FastAPI app and TestClient for now, as endpoints are not yet implemented.
+# These tests are expected to fail until the API is functional.
+class MockFastAPIApp:
     def __init__(self):
-        self.router = MagicMock() # Mock the router object
+        # Mocking router and endpoints to simulate absence
+        self.router = MagicMock() 
 
-mock_app = MockFastAPI()
-
-# Mock the TestClient to simulate API responses
-# In a real scenario, you would use TestClient(app)
+mock_app = MockFastAPIApp()
 client = TestClient(mock_app)
 
 # --- Pipeline CRUD API Tests ---
 
-def test_create_pipeline_endpoint_fails_without_app():
-    # This test is expected to fail because the mock_app doesn't have endpoints.
+def test_create_pipeline_endpoint_fails_without_implementation():
+    # Test that POST /pipelines returns an error because the endpoint is not implemented.
     response = client.post("/pipelines", json={
         "name": "New Test Pipeline",
         "description": "A pipeline for testing purposes"
     })
-    # We expect a 404 or 500 error because the endpoint is not defined.
-    # A 500 error might occur if the mock app fails to handle the route.
-    # A 404 might occur if the router is correctly mocked but the route isn't found.
+    # Expecting a 404 or 500 error since the endpoint doesn't exist yet.
     assert response.status_code == 404 or response.status_code == 500
 
-def test_read_pipelines_endpoint_fails_without_app():
-    # This test checks if GET /pipelines returns a list.
+def test_read_pipelines_endpoint_fails_without_implementation():
+    # Test that GET /pipelines returns an error.
     response = client.get("/pipelines")
     assert response.status_code == 404 or response.status_code == 500
 
-def test_read_pipeline_by_id_endpoint_fails_without_app():
-    # Placeholder for reading a specific pipeline.
+def test_read_pipeline_by_id_endpoint_fails_without_implementation():
+    # Test reading a specific pipeline by ID.
     pipeline_id = 1
     response = client.get(f"/pipelines/{pipeline_id}")
     assert response.status_code == 404 or response.status_code == 500
 
-def test_update_pipeline_endpoint_fails_without_app():
-    # Placeholder for updating a pipeline.
+def test_update_pipeline_endpoint_fails_without_implementation():
+    # Test updating a pipeline.
     pipeline_id = 1
     response = client.put(f"/pipelines/{pipeline_id}", json={
         "name": "Updated Test Pipeline",
@@ -48,8 +44,8 @@ def test_update_pipeline_endpoint_fails_without_app():
     })
     assert response.status_code == 404 or response.status_code == 500
 
-def test_delete_pipeline_endpoint_fails_without_app():
-    # Placeholder for deleting a pipeline.
+def test_delete_pipeline_endpoint_fails_without_implementation():
+    # Test deleting a pipeline.
     pipeline_id = 1
     response = client.delete(f"/pipelines/{pipeline_id}")
     assert response.status_code == 404 or response.status_code == 500
