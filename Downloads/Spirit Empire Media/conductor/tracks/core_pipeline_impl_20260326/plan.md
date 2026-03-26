@@ -25,11 +25,11 @@ This phase focuses on building the core API for pipeline management.
     - [ ] Implement role-based access control for API endpoints.
 - [x] **Task:** Integrate with AI/ML Libraries (Stubs)
     - [x] Create stub functions/classes for `moviepy` operations and AI model calls. **[commit: 7e91b6b]**
-    - [~] Define interfaces for integrating actual AI services later.
-- [x] **Task:** Backend Unit Tests
-    - [x] Write unit tests for API endpoints and core logic. **[commit: 797024a]**
-    - [~] Ensure >80% test coverage.
-- [~] **Task:** Conductor - User Manual Verification 'Phase 1: Backend API Setup' (Protocol in workflow.md)
+    - [x] Define interfaces for integrating actual AI services later. **[commit: 7e91b6b]**
+- [~] **Task:** Backend Unit Tests
+    - [~] Write unit tests for API endpoints and core logic.
+    - [ ] Ensure >80% test coverage.
+- [ ] **Task:** Conductor - User Manual Verification 'Phase 1: Backend API Setup' (Protocol in workflow.md)
 
 ## Phase 2: Frontend Development
 
