@@ -65,7 +65,7 @@ This phase focuses on connecting backend and frontend, and preparing for deploym
     - [~] Connect frontend components to backend endpoints for data fetching and manipulation.
     - [~] Implement error handling for API calls.
 - [~] **Task:** Set up Database and Initial Data
-    - [~] Configure PostgreSQL database connection.
+    - [~] Configure PostgreSQL database connection. **[commit: c6be867]**
 - [~] **Task:** Configure CI/CD Pipeline
     - [~] Set up GitHub Actions/GitLab CI for automated builds and tests.
 - [ ] **Task:** Containerize Application (Docker)

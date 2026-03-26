@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # python-version: [3.9, 3.10, 3.11] # Example for Python
+
+    steps:
+    - uses: actions/checkout@v3
+
+    # Frontend Setup (Node.js)
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm' # Cache npm dependencies
+
+    - name: Install Frontend Dependencies
+      run: npm ci --prefix frontend
+
+    - name: Run Frontend Lint
+      run: npm run lint --prefix frontend
+
+    - name: Run Frontend Tests
+      run: CI=true npm test --prefix frontend
+
+    # Backend Setup (Python) - Example, adapt as needed
+    # - name: Use Python ${{ matrix.python-version }}
+    #   uses: actions/setup-python@v4
+    #   with:
+    #     python-version: ${{ matrix.python-version }}
+    #     cache: 'pip' # Cache pip dependencies
+
+    # - name: Install Backend Dependencies
+    #   run: pip install -r requirements.txt
+
+    # - name: Run Backend Tests
+    #   run: pytest
+
+    # - name: Run Backend Linting (e.g., ruff)
+    #   run: ruff check .
+
+    # Add steps for other languages/frameworks as needed
+
+    # Build and Deploy Steps (Placeholder)
+    # - name: Build Frontend
+    #   run: npm run build --prefix frontend
+    # - name: Build Backend Docker Image
+    #   run: docker build -t my-app .
+
