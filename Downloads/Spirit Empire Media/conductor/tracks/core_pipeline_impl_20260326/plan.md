@@ -38,11 +38,11 @@ This phase focuses on building the user interface for pipeline management.
 - [x] **Task:** Set up React/TypeScript Frontend
     - [x] Initialize React project with Vite and TypeScript. **[commit: 848262d]**
     - [x] Configure Material-UI/Chakra UI. **[commit: 848262d]**
-- [~] **Task:** Implement Authentication UI
-    - [~] Create login and registration forms. **[commit: 1d2ca65]**
-    - [ ] Integrate with backend authentication API.
-- [ ] **Task:** Develop Pipeline Management UI
-    - [ ] Create components for viewing, creating, and editing pipelines.
+- [x] **Task:** Implement Authentication UI
+    - [x] Create login and registration forms. **[commit: 1d2ca65]**
+    - [ ] Integrate with backend authentication API. (Pending backend implementation)
+- [~] **Task:** Develop Pipeline Management UI
+    - [~] Create components for viewing, creating, and editing pipelines.
     - [ ] Implement forms for configuring pipeline stages and parameters.
 - [ ] **Task:** Build Task Monitoring Dashboard
     - [ ] Display real-time status of generation tasks.
