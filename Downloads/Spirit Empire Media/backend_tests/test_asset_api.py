@@ -1,7 +1,6 @@
 import pytest
+from fastapi.testclient import TestClient
 from unittest.mock import MagicMock
-# Assuming your FastAPI app instance is in backend/main.py or backend/app.py
-# from backend.main import app 
 
 # Mocking the FastAPI app and TestClient for now, as endpoints are not yet implemented.
 # These tests are expected to fail until the API is functional.
@@ -18,6 +17,7 @@ def test_upload_asset_endpoint_fails_without_implementation():
     """Test that POST /assets fails as the endpoint is not implemented."""
     # This would typically involve sending a file, but we'll mock the request.
     response = client.post("/assets", files={"file": (b"fake_file_content", "fake_file.txt")})
+    # Expecting a 404 or 500 error because the endpoint doesn't exist yet.
     assert response.status_code == 404 or response.status_code == 500
 
 def test_get_asset_endpoint_fails_without_implementation():
