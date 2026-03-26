@@ -47,8 +47,8 @@ This phase focuses on building the user interface for pipeline management.
 - [x] **Task:** Build Task Monitoring Dashboard
     - [x] Display real-time status of generation tasks. **[commit: e6b723b]**
     - [ ] Implement visualization for task progress.
-- [~] **Task:** Develop Asset Browsing and Management Interface
-    - [~] Interface to view and manage generated videos and assets.
+- [x] **Task:** Develop Asset Browsing and Management Interface
+    - [x] Interface to view and manage generated videos and assets. **[commit: 1d2ca65]**
 - [x] **Task:** Implement Role-Based UI Logic
     - [x] Show/hide UI elements based on user roles. **[commit: 0d5ed17]** (Placeholder UI created, pending backend integration)
 - [~] **Task:** Frontend Unit and Integration Tests
@@ -61,8 +61,8 @@ This phase focuses on building the user interface for pipeline management.
 
 This phase focuses on connecting backend and frontend, and preparing for deployment.
 
-- [ ] **Task:** Integrate Frontend with Backend API
-    - [ ] Connect frontend components to backend endpoints for data fetching and manipulation.
+- [~] **Task:** Integrate Frontend with Backend API
+    - [~] Connect frontend components to backend endpoints for data fetching and manipulation.
     - [ ] Implement error handling for API calls.
 - [ ] **Task:** Set up Database and Initial Data
     - [ ] Configure PostgreSQL database connection.
