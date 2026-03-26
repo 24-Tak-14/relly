@@ -20,8 +20,8 @@ This phase focuses on building the core API for pipeline management.
 - [x] **Task:** Implement Asset Management API
     - [x] Define endpoints for uploading/linking generated assets. **[commit: ecde8f9]**
     - [~] Implement metadata storage for assets.
-- [x] **Task:** Implement User Authentication and Access Control API
-    - [x] Set up JWT-based authentication. **[commit: e5c0818]**
+- [~] **Task:** Implement User Authentication and Access Control API
+    - [~] Set up JWT-based authentication.
     - [ ] Implement role-based access control for API endpoints.
 - [ ] **Task:** Integrate with AI/ML Libraries (Stubs)
     - [ ] Create stub functions/classes for `moviepy` operations and AI model calls.

@@ -1,5 +1,6 @@
 import pytest
-from unittest.mock import MagicMock
+from fastapi.testclient import TestClient
+from jose import JWTError
 # Assuming your FastAPI app instance is in backend/main.py or backend/app.py
 # from backend.main import app 
 
@@ -12,11 +13,12 @@ class MockFastAPIApp:
 mock_app = MockFastAPIApp()
 client = TestClient(mock_app)
 
-# --- User Authentication and Access Control API Tests ---
+# --- JWT Authentication Tests ---
 
-def test_jwt_authentication_setup_fails_without_implementation():
-    """Test that JWT authentication setup fails as it's not implemented."""
+def test_jwt_creation_and_validation_fails_without_implementation():
+    """Test that JWT creation and validation fail as the endpoints are not implemented."""
     # This test is a placeholder and expects failure because JWT setup is pending.
+    # In a real scenario, you'd test token generation and validation logic.
     assert True == False # Force failure
 
 def test_login_returns_jwt_fails_without_implementation():
@@ -28,5 +30,6 @@ def test_login_returns_jwt_fails_without_implementation():
 
 def test_protected_endpoint_requires_jwt_fails_without_implementation():
     """Test that a protected endpoint requires a valid JWT."""
-    response = client.get("/protected") # Assuming a protected endpoint exists
+    # This test assumes a protected endpoint exists and requires auth.
+    response = client.get("/protected") 
     assert response.status_code == 401 # Expecting Unauthorized
