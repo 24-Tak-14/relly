@@ -39,7 +39,8 @@ def test_create_pipeline_missing_name_fails():
         "description": "A pipeline missing a name"
     }
     response = client.post("/pipelines", json=invalid_pipeline_data)
-    assert response.status_code == 422 # Expecting Unprocessable Entity
+    # Expecting a 422 Unprocessable Entity due to validation error
+    assert response.status_code == 422
 
 def test_create_pipeline_empty_name_fails():
     """Test that creating a pipeline fails if 'name' is an empty string."""
