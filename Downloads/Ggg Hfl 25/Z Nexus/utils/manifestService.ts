@@ -1,4 +1,6 @@
 import { TEAM_IDENTITIES, TeamIdentity } from '../teamIdentityData';
+import { HFL_TEAMS } from '../constants/teams';
+import { TeamData } from '../types';
 
 export interface HFLAssetMetadata {
   id: string;
@@ -8,53 +10,50 @@ export interface HFLAssetMetadata {
   helmetUrl: string;
   colors: string[];
   theme: string;
+  doctrine: string;
+  identity: {
+    offense: string;
+    defense: string;
+    chalices: number;
+  };
   stats: {
     megaChalices: number;
     stadiumCapacity: number;
+    valuation: number;
+    market: string;
   };
 }
 
 /**
  * Resolves the logo path based on the team ID and city/name.
- * Assets are located in the root 'Logos.0' or '4 uniforms' directories.
- * Note: In a production Vite environment, these would be in /public or handled via imports.
  */
-const resolveLogoUrl = (team: TeamIdentity): string => {
-  // Pattern: Logos.0/<city-slug>-<team-slug>-logo.png
-  const citySlug = team.city.toLowerCase().replace(/'/g, '').replace(/\s+/g, '-');
-  const nameSlug = team.name.toLowerCase().replace(/'/g, '').replace(/\s+/g, '-');
-  
-  // Special mapping for some files that might not follow the exact pattern or are in subfolders
-  const specialCases: Record<string, string> = {
-    'kaitlynnville-eclipse': '/kaitlynnville-eclipse-logo.png', // Example
-  };
-
-  if (specialCases[team.id]) return specialCases[team.id];
-
+const resolveLogoUrl = (city: string, name: string): string => {
+  const citySlug = city.toLowerCase().replace(/'/g, '').replace(/\s+/g, '-');
+  const nameSlug = name.toLowerCase().replace(/'/g, '').replace(/\s+/g, '-');
   return `/Logos.0/${citySlug}-${nameSlug}-logo.png`;
 };
 
 export const getHFLManifest = (): HFLAssetMetadata[] => {
-  return Object.values(TEAM_IDENTITIES).map(team => {
-    // Extract mega chalices from description if not explicitly available
-    const chaliceMatch = team.description.match(/(\d+) Mega Chalices/);
-    const megaChalices = chaliceMatch ? parseInt(chaliceMatch[1]) : 0;
-
-    // Extract capacity
-    const capacityMatch = team.stadiumDescription.match(/capacity of ([\d,]+)/);
-    const capacity = capacityMatch ? parseInt(capacityMatch[1].replace(/,/g, '')) : 0;
+  return HFL_TEAMS.map(team => {
+    // Attempt to find legacy identity for mascot or specific theme details if needed
+    const legacyId = `${team.location.toLowerCase().replace(/'/g, '').replace(/\s+/g, '-')}-${team.name.toLowerCase()}`;
+    const legacy = TEAM_IDENTITIES[legacyId];
 
     return {
       id: team.id,
       name: team.name,
-      city: team.city,
-      logoUrl: resolveLogoUrl(team),
-      helmetUrl: '/4 uniforms/logos/helmet1.jpg', // Default placeholder for now
+      city: team.location,
+      logoUrl: resolveLogoUrl(team.location, team.name),
+      helmetUrl: '/4 uniforms/logos/helmet1.jpg',
       colors: team.colors,
-      theme: team.theme,
+      theme: legacy?.theme || team.doctrine,
+      doctrine: team.doctrine,
+      identity: team.identity,
       stats: {
-        megaChalices,
-        stadiumCapacity: capacity
+        megaChalices: team.identity.chalices,
+        stadiumCapacity: team.financial?.capacity || 0,
+        valuation: team.financial?.valuation || 0,
+        market: team.financial?.market || "Unknown"
       }
     };
   });

@@ -2,11 +2,15 @@ import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Environment, ContactShadows } from '@react-three/drei';
 
+import DoctrineVisualizer from './DoctrineVisualizer';
+
 interface Core3DViewportProps {
   children?: React.ReactNode;
+  doctrine?: string;
+  color?: string;
 }
 
-const Core3DViewport: React.FC<Core3DViewportProps> = ({ children }) => {
+const Core3DViewport: React.FC<Core3DViewportProps> = ({ children, doctrine, color = '#06b6d4' }) => {
   return (
     <div className="w-full h-[600px] bg-black/20 rounded-[2rem] border border-cyan-500/10 overflow-hidden relative shadow-inner">
       <Canvas shadows dpr={[1, 2]}>
@@ -16,6 +20,9 @@ const Core3DViewport: React.FC<Core3DViewportProps> = ({ children }) => {
         <ambientLight intensity={0.5} />
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} castShadow />
         <pointLight position={[-10, -10, -10]} intensity={0.5} />
+        
+        {/* Doctrine Effects */}
+        {doctrine && <DoctrineVisualizer doctrine={doctrine} color={color} />}
         
         {/* Environment & Effects */}
         <Suspense fallback={null}>
