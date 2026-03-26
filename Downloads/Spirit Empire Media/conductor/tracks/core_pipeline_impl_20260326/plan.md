@@ -12,7 +12,7 @@ This phase focuses on building the core API for pipeline management.
     - [~] Implement database migrations for schema changes.
 - [x] **Task:** Implement Pipeline CRUD API Endpoints
     - [x] Create endpoints for creating, reading, updating, and deleting pipelines. **[commit: 5b7057d]**
-    - [~] Implement validation for pipeline configurations.
+    - [ ] Implement validation for pipeline configurations.
 - [x] **Task:** Implement Task Scheduling and Monitoring API
     - [x] Develop API endpoints for scheduling and triggering pipeline tasks. **[commit: 9dff35e]**
     - [ ] Implement status tracking for tasks (queued, running, completed, failed).
@@ -26,10 +26,10 @@ This phase focuses on building the core API for pipeline management.
 - [x] **Task:** Integrate with AI/ML Libraries (Stubs)
     - [x] Create stub functions/classes for `moviepy` operations and AI model calls. **[commit: 7e91b6b]**
     - [~] Define interfaces for integrating actual AI services later.
-- [~] **Task:** Backend Unit Tests
-    - [~] Write unit tests for API endpoints and core logic.
-    - [ ] Ensure >80% test coverage.
-- [ ] **Task:** Conductor - User Manual Verification 'Phase 1: Backend API Setup' (Protocol in workflow.md)
+- [x] **Task:** Backend Unit Tests
+    - [x] Write unit tests for API endpoints and core logic. **[commit: 797024a]**
+    - [~] Ensure >80% test coverage.
+- [~] **Task:** Conductor - User Manual Verification 'Phase 1: Backend API Setup' (Protocol in workflow.md)
 
 ## Phase 2: Frontend Development
 
