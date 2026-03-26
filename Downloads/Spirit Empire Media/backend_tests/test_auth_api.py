@@ -14,25 +14,19 @@ client = TestClient(mock_app)
 
 # --- User Authentication and Access Control API Tests ---
 
-def test_register_user_endpoint_fails_without_implementation():
-    """Test that POST /register fails as the endpoint is not implemented."""
-    response = client.post("/register", json={
-        "username": "testuser",
-        "email": "test@example.com",
-        "password": "password123"
-    })
-    assert response.status_code == 404 or response.status_code == 500
+def test_jwt_authentication_setup_fails_without_implementation():
+    """Test that JWT authentication setup fails as it's not implemented."""
+    # This test is a placeholder and expects failure because JWT setup is pending.
+    assert True == False # Force failure
 
-def test_login_endpoint_fails_without_implementation():
-    """Test that POST /login fails as the endpoint is not implemented."""
-    response = client.post("/login", data={
-        "username": "testuser",
-        "password": "password123"
-    })
-    assert response.status_code == 404 or response.status_code == 500
+def test_login_returns_jwt_fails_without_implementation():
+    """Test that the login endpoint returns a JWT upon successful authentication."""
+    # This test is expected to fail as the login endpoint and JWT generation are not implemented.
+    response = client.post("/login", json={"username": "testuser", "password": "password123"})
+    assert response.status_code == 200 # Placeholder, would expect 200 upon success
+    assert "access_token" in response.json() # Placeholder check
 
-def test_get_current_user_endpoint_fails_without_implementation():
-    """Test that GET /users/me fails as the endpoint is not implemented."""
-    # This would require authentication, which is also pending.
-    response = client.get("/users/me")
-    assert response.status_code == 404 or response.status_code == 500
+def test_protected_endpoint_requires_jwt_fails_without_implementation():
+    """Test that a protected endpoint requires a valid JWT."""
+    response = client.get("/protected") # Assuming a protected endpoint exists
+    assert response.status_code == 401 # Expecting Unauthorized
