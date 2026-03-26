@@ -35,9 +35,9 @@ This phase focuses on building the core API for pipeline management.
 
 This phase focuses on building the user interface for pipeline management.
 
-- [ ] **Task:** Set up React/TypeScript Frontend
-    - [ ] Initialize React project with Vite and TypeScript.
-    - [ ] Configure Material-UI/Chakra UI.
+- [~] **Task:** Set up React/TypeScript Frontend
+    - [~] Initialize React project with Vite and TypeScript.
+    - [~] Configure Material-UI/Chakra UI.
 - [ ] **Task:** Implement Authentication UI
     - [ ] Create login and registration forms.
     - [ ] Integrate with backend authentication API.
