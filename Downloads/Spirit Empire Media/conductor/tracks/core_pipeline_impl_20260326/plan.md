@@ -22,12 +22,12 @@ This phase focuses on building the core API for pipeline management.
     - [~] Implement metadata storage for assets.
 - [x] **Task:** Implement User Authentication and Access Control API
     - [x] Set up JWT-based authentication. **[commit: e5c0818]**
-    - [~] Implement role-based access control for API endpoints.
-- [~] **Task:** Integrate with AI/ML Libraries (Stubs)
-    - [~] Create stub functions/classes for `moviepy` operations and AI model calls.
-    - [ ] Define interfaces for integrating actual AI services later.
-- [x] **Task:** Backend Unit Tests
-    - [x] Write unit tests for API endpoints and core logic. **[commit: 797024a]**
+    - [ ] Implement role-based access control for API endpoints.
+- [x] **Task:** Integrate with AI/ML Libraries (Stubs)
+    - [x] Create stub functions/classes for `moviepy` operations and AI model calls. **[commit: 7e91b6b]**
+    - [~] Define interfaces for integrating actual AI services later.
+- [~] **Task:** Backend Unit Tests
+    - [~] Write unit tests for API endpoints and core logic.
     - [ ] Ensure >80% test coverage.
 - [ ] **Task:** Conductor - User Manual Verification 'Phase 1: Backend API Setup' (Protocol in workflow.md)
 
