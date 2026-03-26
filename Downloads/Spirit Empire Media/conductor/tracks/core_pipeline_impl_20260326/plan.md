@@ -4,9 +4,9 @@
 
 This phase focuses on building the core API for pipeline management.
 
-- [~] **Task:** Set up FastAPI project structure
-    - [~] Initialize FastAPI application with basic endpoints.
-    - [~] Configure project structure (e.g., routers, models, services).
+- [x] **Task:** Set up FastAPI project structure
+    - [x] Initialize FastAPI application with basic endpoints.
+    - [x] Configure project structure (e.g., routers, models, services). **[commit: b73d74d]**
 - [ ] **Task:** Define Database Schema for Pipelines
     - [ ] Design SQLAlchemy models for `Pipeline`, `Stage`, `Task`, `Asset`, `User`, `Role`.
     - [ ] Implement database migrations for schema changes.
