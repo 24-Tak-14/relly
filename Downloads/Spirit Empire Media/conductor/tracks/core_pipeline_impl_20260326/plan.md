@@ -70,7 +70,7 @@ This phase focuses on connecting backend and frontend, and preparing for deploym
     - [~] Set up GitHub Actions/GitLab CI for automated builds and tests.
 - [~] **Task:** Containerize Application (Docker)
     - [~] Create Dockerfiles for backend and frontend.
-    - [ ] Set up Docker Compose for local development.
+    - [~] Set up Docker Compose for local development.
 - [ ] **Task:** Initial Deployment
     - [ ] Deploy to a staging environment (e.g., AWS/GCP).
 - [ ] **Task:** End-to-End Testing
