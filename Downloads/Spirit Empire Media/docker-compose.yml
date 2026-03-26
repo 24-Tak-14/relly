@@ -9,9 +9,9 @@ services:
       - ./backend:/app # Mount backend code for live reload (development)
     environment:
       - DB_HOST=db
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME:-dev_drillbot_db}
+      - DB_USER=${DB_USER:-delta_drill}
+      - DB_PASSWORD=${DB_PASSWORD:-FetVulture@78_2407} # Note: Use .env file for secrets
     depends_on:
       - db
 
@@ -31,9 +31,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME:-dev_drillbot_db}
+      POSTGRES_USER: ${DB_USER:-delta_drill}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-FetVulture@78_2407} # Note: Use .env file for secrets
 
 volumes:
   postgres_data:
