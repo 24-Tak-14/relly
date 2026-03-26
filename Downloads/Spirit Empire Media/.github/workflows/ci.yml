@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        # python-version: [3.9, 3.10, 3.11] # Example for Python
+        python-version: [3.9] # Use a specific Python version
 
     steps:
     - uses: actions/checkout@v3
@@ -34,23 +34,21 @@ jobs:
     - name: Run Frontend Tests
       run: CI=true npm test --prefix frontend
 
-    # Backend Setup (Python) - Example, adapt as needed
-    # - name: Use Python ${{ matrix.python-version }}
-    #   uses: actions/setup-python@v4
-    #   with:
-    #     python-version: ${{ matrix.python-version }}
-    #     cache: 'pip' # Cache pip dependencies
+    # Backend Setup (Python)
+    - name: Use Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip' # Cache pip dependencies
 
-    # - name: Install Backend Dependencies
-    #   run: pip install -r requirements.txt
+    - name: Install Backend Dependencies
+      run: pip install -r requirements.txt # Assuming requirements.txt will be created
 
-    # - name: Run Backend Tests
-    #   run: pytest
+    - name: Run Backend Tests
+      run: pytest
 
-    # - name: Run Backend Linting (e.g., ruff)
-    #   run: ruff check .
-
-    # Add steps for other languages/frameworks as needed
+    - name: Run Backend Linting (e.7.ruff)
+      run: ruff check .
 
     # Build and Deploy Steps (Placeholder)
     # - name: Build Frontend
