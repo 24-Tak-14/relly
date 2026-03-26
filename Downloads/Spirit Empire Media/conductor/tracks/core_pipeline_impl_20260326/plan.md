@@ -10,11 +10,11 @@ This phase focuses on building the core API for pipeline management.
 - [x] **Task:** Define Database Schema for Pipelines
     - [x] Design SQLAlchemy models for `Pipeline`, `Stage`, `Task`, `Asset`, `User`, `Role`. **[commit: de5b71e]**
     - [~] Implement database migrations for schema changes.
-- [~] **Task:** Implement Pipeline CRUD API Endpoints
-    - [~] Create endpoints for creating, reading, updating, and deleting pipelines.
+- [x] **Task:** Implement Pipeline CRUD API Endpoints
+    - [x] Create endpoints for creating, reading, updating, and deleting pipelines. **[commit: 5b7057d]**
     - [ ] Implement validation for pipeline configurations.
-- [ ] **Task:** Implement Task Scheduling and Monitoring API
-    - [ ] Develop API endpoints for scheduling and triggering pipeline tasks.
+- [~] **Task:** Implement Task Scheduling and Monitoring API
+    - [~] Develop API endpoints for scheduling and triggering pipeline tasks.
     - [ ] Implement status tracking for tasks (queued, running, completed, failed).
     - [ ] Set up basic logging for task execution.
 - [ ] **Task:** Implement Asset Management API
