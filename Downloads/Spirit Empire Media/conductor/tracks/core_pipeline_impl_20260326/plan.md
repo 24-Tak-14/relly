@@ -66,8 +66,8 @@ This phase focuses on connecting backend and frontend, and preparing for deploym
     - [~] Implement error handling for API calls.
 - [~] **Task:** Set up Database and Initial Data
     - [~] Configure PostgreSQL database connection.
-- [ ] **Task:** Configure CI/CD Pipeline
-    - [ ] Set up GitHub Actions/GitLab CI for automated builds and tests.
+- [~] **Task:** Configure CI/CD Pipeline
+    - [~] Set up GitHub Actions/GitLab CI for automated builds and tests.
 - [ ] **Task:** Containerize Application (Docker)
     - [ ] Create Dockerfiles for backend and frontend.
     - [ ] Set up Docker Compose for local development.
