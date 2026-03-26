@@ -17,8 +17,8 @@ This phase focuses on building the core API for pipeline management.
     - [x] Develop API endpoints for scheduling and triggering pipeline tasks. **[commit: 9dff35e]**
     - [ ] Implement status tracking for tasks (queued, running, completed, failed).
     - [ ] Set up basic logging for task execution.
-- [~] **Task:** Implement Asset Management API
-    - [~] Define endpoints for uploading/linking generated assets.
+- [x] **Task:** Implement Asset Management API
+    - [x] Define endpoints for uploading/linking generated assets. **[commit: ecde8f9]**
     - [ ] Implement metadata storage for assets.
 - [~] **Task:** Implement User Authentication and Access Control API
     - [~] Set up JWT-based authentication.
