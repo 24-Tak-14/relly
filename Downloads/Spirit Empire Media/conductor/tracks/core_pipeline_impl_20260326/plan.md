@@ -7,11 +7,11 @@ This phase focuses on building the core API for pipeline management.
 - [x] **Task:** Set up FastAPI project structure
     - [x] Initialize FastAPI application with basic endpoints.
     - [x] Configure project structure (e.g., routers, models, services). **[commit: b73d74d]**
-- [~] **Task:** Define Database Schema for Pipelines
-    - [~] Design SQLAlchemy models for `Pipeline`, `Stage`, `Task`, `Asset`, `User`, `Role`.
-    - [ ] Implement database migrations for schema changes.
-- [ ] **Task:** Implement Pipeline CRUD API Endpoints
-    - [ ] Create endpoints for creating, reading, updating, and deleting pipelines.
+- [x] **Task:** Define Database Schema for Pipelines
+    - [x] Design SQLAlchemy models for `Pipeline`, `Stage`, `Task`, `Asset`, `User`, `Role`. **[commit: de5b71e]**
+    - [~] Implement database migrations for schema changes.
+- [~] **Task:** Implement Pipeline CRUD API Endpoints
+    - [~] Create endpoints for creating, reading, updating, and deleting pipelines.
     - [ ] Implement validation for pipeline configurations.
 - [ ] **Task:** Implement Task Scheduling and Monitoring API
     - [ ] Develop API endpoints for scheduling and triggering pipeline tasks.
@@ -27,7 +27,7 @@ This phase focuses on building the core API for pipeline management.
     - [ ] Create stub functions/classes for `moviepy` operations and AI model calls.
     - [ ] Define interfaces for integrating actual AI services later.
 - [x] **Task:** Backend Unit Tests
-    - [x] Write unit tests for API endpoints and core logic. **[commit: 19e966c]**
+    - [x] Write unit tests for API endpoints and core logic. **[commit: 797024a]**
     - [ ] Ensure >80% test coverage.
 - [ ] **Task:** Conductor - User Manual Verification 'Phase 1: Backend API Setup' (Protocol in workflow.md)
 
