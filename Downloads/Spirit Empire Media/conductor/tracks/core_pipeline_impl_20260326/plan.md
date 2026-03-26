@@ -49,10 +49,10 @@ This phase focuses on building the user interface for pipeline management.
     - [ ] Implement visualization for task progress.
 - [ ] **Task:** Develop Asset Browsing and Management Interface
     - [ ] Interface to view and manage generated videos and assets.
-- [ ] **Task:** Implement Role-Based UI Logic
-    - [ ] Show/hide UI elements based on user roles.
-- [~] **Task:** Frontend Unit and Integration Tests
-    - [~] Write unit tests for UI components.
+- [~] **Task:** Implement Role-Based UI Logic
+    - [~] Show/hide UI elements based on user roles.
+- [ ] **Task:** Frontend Unit and Integration Tests
+    - [ ] Write unit tests for UI components.
     - [ ] Write integration tests for key user flows.
     - [ ] Ensure >80% test coverage.
 - [ ] **Task:** Conductor - User Manual Verification 'Phase 2: Frontend Development' (Protocol in workflow.md)
