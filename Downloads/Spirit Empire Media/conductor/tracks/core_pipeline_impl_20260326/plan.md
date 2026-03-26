@@ -63,7 +63,7 @@ This phase focuses on connecting backend and frontend, and preparing for deploym
 
 - [~] **Task:** Integrate Frontend with Backend API
     - [~] Connect frontend components to backend endpoints for data fetching and manipulation.
-    - [ ] Implement error handling for API calls.
+    - [~] Implement error handling for API calls.
 - [~] **Task:** Set up Database and Initial Data
     - [~] Configure PostgreSQL database connection.
 - [ ] **Task:** Configure CI/CD Pipeline
