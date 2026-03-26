@@ -1,30 +1,19 @@
 import pytest
 from unittest.mock import MagicMock
 
-# Mocking external services that are not yet implemented
-mock_ai_service = MagicMock()
-mock_db_service = MagicMock()
+# Mocking the FastAPI app and TestClient for now, as endpoints are not yet implemented.
+# These tests are expected to fail until the API is functional.
+class MockFastAPIApp:
+    def __init__(self):
+        self.router = MagicMock() # Mock the router object
 
-# Placeholder for the backend API application instance
-# In a real scenario, this would be your FastAPI app instance
-# from backend.main import app 
+mock_app = MockFastAPIApp()
+client = TestClient(mock_app)
 
-def test_backend_setup():
-    # This test is designed to fail until the backend app is properly initialized.
-    # It checks for basic setup expectations.
-    assert True == False # Force failure
+def test_backend_health_check_endpoint():
+    # This test assumes a /health endpoint exists. It should fail for now.
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok"}
 
-def test_pipeline_crud_endpoints_stub():
-    # Placeholder for tests that will check pipeline CRUD operations.
-    # These will fail until the API endpoints are implemented.
-    assert True == False # Force failure
-
-def test_db_schema_models_stub():
-    # Placeholder for tests that will check database schema models.
-    # These will fail until SQLAlchemy models are defined.
-    assert True == False # Force failure
-
-def test_task_scheduling_api_stub():
-    # Placeholder for tests related to task scheduling and monitoring.
-    assert True == False # Force failure
-
+# Add more backend unit tests as components are developed.
