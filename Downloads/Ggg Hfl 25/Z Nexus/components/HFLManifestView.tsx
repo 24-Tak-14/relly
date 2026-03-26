@@ -1,7 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import Core3DViewport from './Core3DViewport';
 import Asset3DContainer from './Asset3DContainer';
+import NexusChatOverlay from './NexusChatOverlay';
 import { getHFLManifest, HFLAssetMetadata } from '../utils/manifestService';
+import { fastChat, getStrategicAdvice } from '../utils/gemini';
+import { INITIAL_GAME_STATE } from '../types';
 import { Layers, Box, Compass, Zap, Trophy, Users, Building, Shield } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -13,6 +16,29 @@ const HFLManifestView: React.FC = () => {
   const selectedTeam = useMemo(() => 
     manifest.find(t => t.id === selectedTeamId) || manifest[0], 
   [selectedTeamId, manifest]);
+
+  const handleNexusMessage = async (message: string) => {
+    const contextPrompt = `
+      [CONTEXT: HFL MANIFEST ANALYSIS]
+      Active Team: ${selectedTeam.name}
+      City: ${selectedTeam.city}
+      Colors: ${selectedTeam.colors.join(', ')}
+      Theme: ${selectedTeam.theme}
+      Stats: ${selectedTeam.stats.megaChalices} Mega Chalices, ${selectedTeam.stats.stadiumCapacity} Stadium Capacity.
+      
+      User Message: ${message}
+    `;
+    return await fastChat(contextPrompt);
+  };
+
+  const handleGetStrategicAdvice = async () => {
+    return await getStrategicAdvice(
+      INITIAL_GAME_STATE,
+      [], // No specific players passed for manifest view yet
+      ['run', 'pass', 'blitz', 'cover'],
+      `What is the ideal opening drive strategy for the ${selectedTeam.name}?`
+    );
+  };
 
   // Map CSS colors or named colors to hex for Three.js
   const primaryColor = useMemo(() => {
@@ -201,17 +227,31 @@ const HFLManifestView: React.FC = () => {
           </div>
 
           {/* Theme Description */}
-          <Card className="p-8 bg-gradient-to-br from-cyan-900/10 to-transparent">
+          <Card className="p-8 bg-gradient-to-br from-cyan-900/10 to-transparent relative overflow-hidden group">
+             <div className="absolute right-8 top-1/2 -translate-y-1/2">
+                <button 
+                  onClick={() => handleNexusMessage("Provide a strategic BLUF analysis for this team.")}
+                  className="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 text-black font-black text-[10px] uppercase tracking-widest rounded-xl shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all hover:scale-105"
+                >
+                  Initiate_Nexus_Analysis
+                </button>
+             </div>
              <div className="flex items-center gap-4 mb-4">
                 <Zap className="text-cyan-400" size={24} />
                 <h3 className="text-xs font-black text-cyan-500 uppercase tracking-[0.3em]">Architectural_Doctrine</h3>
              </div>
-             <p className="text-gray-300 font-rajdhani text-xl leading-relaxed italic">
+             <p className="text-gray-300 font-rajdhani text-xl leading-relaxed italic max-w-2xl">
                 "{selectedTeam.theme}"
              </p>
           </Card>
         </div>
       </div>
+
+      <NexusChatOverlay 
+        onSendMessage={handleNexusMessage} 
+        onGetStrategicAdvice={handleGetStrategicAdvice}
+        teamContext={selectedTeam.name} 
+      />
     </div>
   );
 };
