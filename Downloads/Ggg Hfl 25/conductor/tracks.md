@@ -16,3 +16,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 - [x] **Track: Implement Dynamic Team Doctrine & Financial Visualizations**
   *Link: [./tracks/doctrine_financial_viz_20260325/](./tracks/doctrine_financial_viz_20260325/)*
+
+---
+
+- [x] **Track: Implement Interactive 3D Player Showcase and Tactical Play Visualization**
+  *Link: [./tracks/interactive_3d_player_showcase_20260325/](./tracks/interactive_3d_player_showcase_20260325/)*

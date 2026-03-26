@@ -1,16 +1,19 @@
 import React, { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas } from '@react-
+three/fiber';
 import { OrbitControls, PerspectiveCamera, Environment, ContactShadows } from '@react-three/drei';
 
 import DoctrineVisualizer from './DoctrineVisualizer';
+import Player3DModel from './Player3DModel';
 
 interface Core3DViewportProps {
   children?: React.ReactNode;
   doctrine?: string;
   color?: string;
+  playerModelUrl?: string; // Prop to pass the URL of the player model
 }
 
-const Core3DViewport: React.FC<Core3DViewportProps> = ({ children, doctrine, color = '#06b6d4' }) => {
+const Core3DViewport: React.FC<Core3DViewportProps> = ({ children, doctrine, color = '#06b6d4', playerModelUrl }) => {
   return (
     <div className="w-full h-[600px] bg-black/20 rounded-[2rem] border border-cyan-500/10 overflow-hidden relative shadow-inner">
       <Canvas shadows dpr={[1, 2]}>
@@ -23,6 +26,16 @@ const Core3DViewport: React.FC<Core3DViewportProps> = ({ children, doctrine, col
         
         {/* Doctrine Effects */}
         {doctrine && <DoctrineVisualizer doctrine={doctrine} color={color} />}
+        
+        {/* Player Model */}
+        {playerModelUrl && (
+          <Player3DModel 
+            modelUrl={playerModelUrl} 
+            scale={1.5} 
+            position={[0, 1.5, 0]} 
+            colors={[color]} 
+          />
+        )}
         
         {/* Environment & Effects */}
         <Suspense fallback={null}>
