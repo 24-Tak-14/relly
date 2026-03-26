@@ -44,15 +44,15 @@ This phase focuses on building the user interface for pipeline management.
 - [x] **Task:** Develop Pipeline Management UI
     - [x] Create components for viewing, creating, and editing pipelines. **[commit: 26e7ca0]**
     - [ ] Implement forms for configuring pipeline stages and parameters. (Pending backend API)
-- [~] **Task:** Build Task Monitoring Dashboard
-    - [~] Display real-time status of generation tasks.
+- [x] **Task:** Build Task Monitoring Dashboard
+    - [x] Display real-time status of generation tasks. **[commit: e6b723b]**
     - [ ] Implement visualization for task progress.
 - [ ] **Task:** Develop Asset Browsing and Management Interface
     - [ ] Interface to view and manage generated videos and assets.
 - [ ] **Task:** Implement Role-Based UI Logic
     - [ ] Show/hide UI elements based on user roles.
-- [ ] **Task:** Frontend Unit and Integration Tests
-    - [ ] Write unit tests for UI components.
+- [~] **Task:** Frontend Unit and Integration Tests
+    - [~] Write unit tests for UI components.
     - [ ] Write integration tests for key user flows.
     - [ ] Ensure >80% test coverage.
 - [ ] **Task:** Conductor - User Manual Verification 'Phase 2: Frontend Development' (Protocol in workflow.md)
