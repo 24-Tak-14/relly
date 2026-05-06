@@ -1,0 +1,15 @@
+{
+  "name": "hfl-workspace",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm --prefix \"Z Nexus\" run dev",
+    "lint": "npm --prefix \"Z Nexus\" run lint",
+    "test": "echo \"No tests configured in workspace; please add tests in subprojects\" && exit 0",
+    "test:e2e": "npm --prefix \"Z Nexus\" run test:e2e"
+  },
+  "dependencies": {
+    "framer-motion": "^12.38.0"
+  }
+}
