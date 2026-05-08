@@ -1,4 +1,4 @@
-import { getTeamData } from '../data/TeamData'; // From previous generation
+import { getTeamData } from '../data/TeamData.ts'; // From previous generation
 import type { Team } from '../types';
 
 interface Matchup {
