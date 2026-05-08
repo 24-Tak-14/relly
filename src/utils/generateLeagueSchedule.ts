@@ -1,4 +1,23 @@
-import { getTeamData } from '../data/TeamData.ts'; // From previous generation
+// runtime-load getTeamData to avoid TS resolution issues in Actions
+import type { Team } from '../types'; // Assume Team has 'depot/allegiance'
+let getTeamData: () => Record<string, Team>;
+try {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const path = require('path');
+  try {
+    // try resolving .ts file first
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    getTeamData = require(path.resolve(__dirname, '..', 'data', 'TeamData.ts')).getTeamData;
+  } catch (e) {
+    // fallback to no-extension
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    getTeamData = require(path.resolve(__dirname, '..', 'data', 'TeamData')).getTeamData;
+  }
+} catch (e) {
+  // last resort: resolve from process.cwd()
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  getTeamData = require(require('path').resolve(process.cwd(), 'src', 'data', 'TeamData')).getTeamData;
+}
 import type { Team } from '../types';
 
 interface Matchup {
