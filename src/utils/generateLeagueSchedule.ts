@@ -164,73 +164,80 @@ export function generateLeagueSchedule(seedStr = DEFAULT_SEED): Matchup[] {
   // At this point we should have totalMatches = sum(gamesPerTeam)/2
   const totalMatches = matchups.length;
 
-  // 5) Assign weeks (greedy): ensure no team has more than one game per week
-  type PendingMatch = { home: string; away: string; assigned?: number };
-  const pending: PendingMatch[] = matchups.map(m => ({ home: m.home, away: m.away }));
+  // 5) Assign weeks using Edmonds' blossom maximum matching per week
+  // @ts-ignore
+  const blossom = require('edmonds-blossom');
+  type PendingMatch = { home: string; away: string };
+  let pending: PendingMatch[] = matchups.map(m => ({ home: m.home, away: m.away }));
   // deterministic order
   pending.sort((a,b)=> (a.home + a.away).localeCompare(b.home + b.away));
 
   const weeks: PendingMatch[][] = Array.from({ length: TOTAL_WEEKS }, () => []);
   const teamsInWeek: Set<string>[] = Array.from({ length: TOTAL_WEEKS }, () => new Set());
+  const maxMatchesPerWeek = Math.floor(teams.length / 2);
 
-  // fill each week greedily
+  // For each week, run maximum matching on the graph of remaining pending matches, choose up to capacity
   for (let w = 0; w < TOTAL_WEEKS; w++) {
-    for (let i = 0; i < pending.length; i++) {
-      const m = pending[i];
-      if (m.assigned) continue;
-      if (teamsInWeek[w].has(m.home) || teamsInWeek[w].has(m.away)) continue;
+    // Build vertex index map
+    const vertexIndex = new Map<string, number>();
+    teamNames.forEach((n, idx) => vertexIndex.set(n, idx));
+    // Build edges list as [i, j, weight]
+    const edges: number[][] = [];
+    for (const m of pending) {
+      const i = vertexIndex.get(m.home)!;
+      const j = vertexIndex.get(m.away)!;
+      edges.push([i, j, 1]);
+    }
+    if (edges.length === 0) continue;
+    // run blossom
+    const mate = blossom(edges, true); // returns mate array
+    const taken = new Set<string>();
+    let placed = 0;
+    for (let i = 0; i < mate.length && placed < maxMatchesPerWeek; i++) {
+      const j = mate[i];
+      if (j === -1) continue;
+      if (i > j) continue; // handle each pair once
+      const a = teamNames[i];
+      const b = teamNames[j];
+      // ensure both are still free this week
+      if (teamsInWeek[w].has(a) || teamsInWeek[w].has(b)) continue;
+      // confirm pending contains this match in either order
+      const idx = pending.findIndex(p => (p.home === a && p.away === b) || (p.home === b && p.away === a));
+      if (idx === -1) continue;
       // assign
-      weeks[w].push(m);
-      teamsInWeek[w].add(m.home);
-      teamsInWeek[w].add(m.away);
-      m.assigned = w + 1;
-      // optional: limit to 18 matches per week (for 36 teams)
-      if (weeks[w].length >= Math.floor(teams.length / 2)) break;
+      weeks[w].push(pending[idx]);
+      teamsInWeek[w].add(a);
+      teamsInWeek[w].add(b);
+      // remove from pending
+      pending.splice(idx, 1);
+      placed++;
     }
   }
 
-  // If some matches unassigned, do additional passes trying to place them in any week without conflicts
-  let remaining = pending.filter(p=>!p.assigned);
-  let pass = 0;
-  while (remaining.length > 0 && pass < 10) {
-    for (const m of remaining) {
-      for (let w = 0; w < TOTAL_WEEKS; w++) {
-        if (teamsInWeek[w].has(m.home) || teamsInWeek[w].has(m.away)) continue;
-        weeks[w].push(m);
-        teamsInWeek[w].add(m.home);
-        teamsInWeek[w].add(m.away);
-        m.assigned = w + 1;
-        break;
+  // If any pending remain, attempt to place them greedily without causing conflicts
+  if (pending.length > 0) {
+    for (let w = 0; w < TOTAL_WEEKS; w++) {
+      for (let i = pending.length -1; i >=0; i--) {
+        const m = pending[i];
+        if (weeks[w].length >= maxMatchesPerWeek) continue;
+        if (!teamsInWeek[w].has(m.home) && !teamsInWeek[w].has(m.away)) {
+          weeks[w].push(m);
+          teamsInWeek[w].add(m.home);
+          teamsInWeek[w].add(m.away);
+          pending.splice(i,1);
+        }
       }
     }
-    remaining = pending.filter(p=>!p.assigned);
-    pass++;
   }
 
-  // If there are still unassigned matches (unlikely), append them to weeks in round-robin manner, respecting no double-team per week if possible
-  remaining = pending.filter(p=>!p.assigned);
-  let wIdx = 0;
-  for (const m of remaining) {
-    // try to find a week where neither plays
-    let placed = false;
-    for (let attempt = 0; attempt < TOTAL_WEEKS; attempt++) {
-      const w = (wIdx + attempt) % TOTAL_WEEKS;
-      if (!teamsInWeek[w].has(m.home) && !teamsInWeek[w].has(m.away)) {
-        weeks[w].push(m);
-        teamsInWeek[w].add(m.home);
-        teamsInWeek[w].add(m.away);
-        m.assigned = w + 1;
-        placed = true;
-        wIdx = (w + 1) % TOTAL_WEEKS;
-        break;
-      }
-    }
-    if (!placed) {
-      // force place into current week even if conflict (shouldn't happen)
+  // Any still pending: append to weeks round-robin (should be rare)
+  if (pending.length > 0) {
+    let wIdx = 0;
+    for (const m of pending) {
       weeks[wIdx].push(m);
-      m.assigned = wIdx + 1;
       wIdx = (wIdx + 1) % TOTAL_WEEKS;
     }
+    pending = [];
   }
 
   // Build final schedule array
@@ -239,6 +246,18 @@ export function generateLeagueSchedule(seedStr = DEFAULT_SEED): Matchup[] {
     for (const m of weeks[w]) {
       final.push({ week: w + 1, home: m.home, away: m.away });
     }
+  }
+
+  // Balance home/away counts across the season (best-effort)
+  try {
+    // import dynamically to avoid circular TS issues in this build step
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const bal = require('./homeAwayBalancer') as { balanceHomeAway?: Function };
+    if (bal && typeof bal.balanceHomeAway === 'function') {
+      bal.balanceHomeAway(final, teamNames, TOTAL_WEEKS);
+    }
+  } catch (e) {
+    // ignore balancing errors
   }
 
   // 6) Assign bye weeks: each team should have exactly one week where they do not play. Find a week where they are not scheduled and mark BYE.

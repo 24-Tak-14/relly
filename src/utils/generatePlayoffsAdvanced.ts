@@ -10,10 +10,12 @@ export type PlayoffRoundAdvanced = PlayoffMatchAdvanced[];
 // - home/away assignment: higher seed hosts second leg by default
 export function generatePlayoffBracketAdvanced(
   standings: Standing[],
-  opts: { twoLegRounds?: number; reseed?: boolean; seedKey?: string } = { twoLegRounds: 1, reseed: true }
+  opts: { twoLegRounds?: number; reseed?: boolean; seedKey?: string; aggregateAwayGoals?: boolean; higherSeedHostsSecondLeg?: boolean } = { twoLegRounds: 1, reseed: true, aggregateAwayGoals: false, higherSeedHostsSecondLeg: true }
 ) {
   const twoLegRounds = opts.twoLegRounds ?? 1; // number of early rounds that use two legs
   const reseed = opts.reseed ?? true;
+  const aggregateAwayGoals = opts.aggregateAwayGoals ?? false;
+  const higherSeedHostsSecondLeg = opts.higherSeedHostsSecondLeg ?? true;
 
   // deterministic sort by wins, tiebreaker, then provided seed
   function cmp(a: Standing, b: Standing) {
@@ -67,14 +69,20 @@ export function generatePlayoffBracketAdvanced(
       const legs: PlayoffLeg[] = [];
       const isTwoLeg = roundIndex < twoLegRounds;
       if (isTwoLeg) {
-        // leg1: lower-seed hosts, leg2: higher-seed hosts
-        legs.push({ home: awaySeed.team, away: homeSeed.team });
-        legs.push({ home: homeSeed.team, away: awaySeed.team });
+        if (higherSeedHostsSecondLeg) {
+          // leg1: lower-seed hosts, leg2: higher-seed hosts
+          legs.push({ home: awaySeed.team, away: homeSeed.team });
+          legs.push({ home: homeSeed.team, away: awaySeed.team });
+        } else {
+          // higher seed hosts first leg instead
+          legs.push({ home: homeSeed.team, away: awaySeed.team });
+          legs.push({ home: awaySeed.team, away: homeSeed.team });
+        }
       } else {
         // single leg: higher seed hosts
         legs.push({ home: homeSeed.team, away: awaySeed.team });
       }
-      roundMatches.push({ legs, seedHome: homeSeed.seed, seedAway: awaySeed.seed });
+      roundMatches.push({ legs, seedHome: homeSeed.seed, seedAway: awaySeed.seed, aggregate: aggregateAwayGoals ? 'awayGoals' : undefined });
     }
     rounds.push(roundMatches);
     // prepare placeholders for winners (preserve seed of higher seed by default)
