@@ -277,14 +277,33 @@ export function generateLeagueSchedule(seedStr = DEFAULT_SEED): Matchup[] {
     }
   }
 
-  // Any still pending: append to weeks round-robin (should be rare)
+  // Any still pending: place them in the first week where both teams are free. As a last resort, append.
   if (pending.length > 0) {
-    let wIdx = 0;
-    for (const m of pending) {
-      weeks[wIdx].push(m);
-      wIdx = (wIdx + 1) % TOTAL_WEEKS;
+    for (const m of [...pending]) {
+      let placed = false;
+      for (let w = 0; w < TOTAL_WEEKS; w++) {
+        if (!teamsInWeek[w].has(m.home) && !teamsInWeek[w].has(m.away)) {
+          weeks[w].push(m);
+          teamsInWeek[w].add(m.home);
+          teamsInWeek[w].add(m.away);
+          // remove one instance from pending
+          const idx = pending.findIndex(p => p === m);
+          if (idx !== -1) pending.splice(idx, 1);
+          placed = true;
+          break;
+        }
+      }
+      if (!placed) {
+        // last resort: put in week with least matches
+        let best = 0; let bestLen = Infinity;
+        for (let w = 0; w < TOTAL_WEEKS; w++) {
+          if (weeks[w].length < bestLen) { bestLen = weeks[w].length; best = w; }
+        }
+        weeks[best].push(m);
+        const idx = pending.findIndex(p => p === m);
+        if (idx !== -1) pending.splice(idx, 1);
+      }
     }
-    pending = [];
   }
 
   // Build final schedule array
