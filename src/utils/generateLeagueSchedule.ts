@@ -184,8 +184,6 @@ export function generateLeagueSchedule(seedStr = DEFAULT_SEED): Matchup[] {
   const totalMatches = matchups.length;
 
   // 5) Assign weeks using Edmonds' blossom maximum matching per week
-  // @ts-ignore
-  const blossom = require('edmonds-blossom');
   type PendingMatch = { home: string; away: string };
   let pending: PendingMatch[] = matchups.map(m => ({ home: m.home, away: m.away }));
   // deterministic order
@@ -195,7 +193,29 @@ export function generateLeagueSchedule(seedStr = DEFAULT_SEED): Matchup[] {
   const teamsInWeek: Set<string>[] = Array.from({ length: TOTAL_WEEKS }, () => new Set());
   const maxMatchesPerWeek = Math.floor(teams.length / 2);
 
-  // For each week, run maximum matching on the graph of remaining pending matches, choose up to capacity
+  // try to load edmonds-blossom; if not present, use a deterministic greedy fallback
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  let blossomFunc: ((edges: number[][], returnMateArray?: boolean) => number[]) | null = null;
+  try {
+    // @ts-ignore
+    blossomFunc = require('edmonds-blossom');
+  } catch (e) {
+    blossomFunc = null;
+  }
+
+  function greedyMatcher(edges: number[][], vertexCount: number) {
+    const mate = new Array(vertexCount).fill(-1);
+    // deterministic order already provided by pending sort; iterate edges in given order
+    for (const [i, j] of edges) {
+      if (mate[i] === -1 && mate[j] === -1) {
+        mate[i] = j;
+        mate[j] = i;
+      }
+    }
+    return mate;
+  }
+
+  // For each week, run maximum matching (blossom if available, else greedy) on the graph of remaining pending matches, choose up to capacity
   for (let w = 0; w < TOTAL_WEEKS; w++) {
     // Build vertex index map
     const vertexIndex = new Map<string, number>();
@@ -208,9 +228,17 @@ export function generateLeagueSchedule(seedStr = DEFAULT_SEED): Matchup[] {
       edges.push([i, j, 1]);
     }
     if (edges.length === 0) continue;
-    // run blossom
-    const mate = blossom(edges, true); // returns mate array
-    const taken = new Set<string>();
+    // run blossom or fallback
+    let mate: number[];
+    if (blossomFunc) {
+      try {
+        mate = blossomFunc(edges, true);
+      } catch (e) {
+        mate = greedyMatcher(edges, teamNames.length);
+      }
+    } else {
+      mate = greedyMatcher(edges, teamNames.length);
+    }
     let placed = 0;
     for (let i = 0; i < mate.length && placed < maxMatchesPerWeek; i++) {
       const j = mate[i];
