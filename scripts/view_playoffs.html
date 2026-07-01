@@ -1,0 +1,17 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>HFL Playoffs Viewer</title></head><body>
+<h1>HFL Schedule & Playoffs</h1>
+<div id="schedule"></div>
+<div id="playoffs"></div>
+<script>
+async function load(){
+  const s = await fetch('./output/schedule.json').then(r=>r.json());
+  const p = await fetch('./output/playoffs.json').then(r=>r.json());
+  const scheduleDiv = document.getElementById('schedule');
+  scheduleDiv.innerHTML = '<h2>Schedule (sample first 20)</h2><ul>' + s.slice(0,20).map(m=>`<li>Week ${m.week}: ${m.home} vs ${m.away}</li>`).join('') + '</ul>';
+  const playoffsDiv = document.getElementById('playoffs');
+  playoffsDiv.innerHTML = '<h2>Playoffs</h2>' + p.map((round, idx)=>`<h3>Round ${idx+1}</h3><ul>${round.map(match=>'<li>'+ match.legs.map(l=>l.home+' vs '+l.away).join(' | ') +'</li>').join('')}</ul>`).join('');
+}
+load().catch(e=>{ document.body.innerHTML += '<pre>'+e.toString()+'</pre>'; });
+</script>
+</body></html>

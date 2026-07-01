@@ -1,0 +1,26 @@
+name: Run tests
+
+on:
+  push:
+    branches: [ main, master, feat/* ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: |
+          if [ -f package.json ]; then
+            npm install
+          else
+            echo "No package.json found — skipping npm install"
+          fi
+      - name: Run tests
+        run: npx tsx scripts/run_all_tests.ts

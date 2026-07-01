@@ -1,0 +1,20 @@
+name: E2E Export Validation
+
+on:
+  push:
+    branches: [ master, feat/* ]
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Run export and validate
+        run: |
+          npx tsx scripts/export_data.ts
+          npx tsx scripts/validate_export.ts
